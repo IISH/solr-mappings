@@ -8,7 +8,7 @@
                     dataSource="null"
                     stream="true"
                     processor="FileListEntityProcessor"
-                    baseDir="/mnt/solr/ziegler/ziegler.1/import"
+                    baseDir="/data/datasets/ziegler/ziegler.1/import"
                     filename="^.*\.xml$"
                     recursive="true"
                     rootEntity="true"

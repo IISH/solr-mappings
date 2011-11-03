@@ -7,7 +7,7 @@
                 name="xmlfile"
                 stream="true"
                 processor="FileListEntityProcessor"
-                baseDir="/mnt/solr/archives/dorarussell/"
+                baseDir="/data/datasets/archives/dorarussell/"
                 fileName="concordance.xml"
                 recursive="true"
                 rootEntity="false"

@@ -652,8 +652,8 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
             <str name="config">import/dorarussell.1.xml</str>
             <str name="normalize">normalize/dorarussell.1.xsl</str>
             <str name="import">import/add.xsl</str>
-            <str name="ead_file">/mnt/solr/archives/dorarussell/ead_10767897.xml</str>
-            <str name="concordance">/mnt/solr/archives/dorarussell/concordance.xml</str>
+            <str name="ead_file">/data/datasets/archives/dorarussell/ead_10767897.xml</str>
+            <str name="concordance">/data/datasets/archives/dorarussell/concordance.xml</str>
             <str name="debugTraceFolder">C:\mnt\test</str>
         </lst>
     </requestHandler>

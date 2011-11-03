@@ -6,11 +6,11 @@ SSH to arges0.iisg.nl and run the following script to setup the base configurati
 java -jar /opt/import.jar
     -dataset collection.[collection name].[type of data].[sequence]
     -type [FileDataSource|JdbcDataSource]
-    -datasource [location of the datasource on the mount: /mnt/solr/...etc
+    -datasource [location of the datasource on the mount: /data/datasets/...etc
 
 For example to add the dataset "myorganization.afbeeldingen.1" under the main collection:
 http://api.socialhistoryservices.org/solr/all
-and the dataset is stored at /mnt/solr/migranten/myorganization.afbeeldingen.1
+and the dataset is stored at /data/datasets/migranten/myorganization.afbeeldingen.1
 
 
 This will produce all files to proceed with the dataset configuration:
@@ -35,14 +35,14 @@ conventional location. Datasets on ate ( just like records in a database ) must 
 example If the source data is a large file of 10 000 records, this must be split into 10 000 individual files.
 
 In the earlier example the data must be stored:
-ate.iisg.nl/mnt/solr/migranten/myorganization.afbeeldingen.1/work => documents, images
-ate.iisg.nl/mnt/solr/migranten/myorganization.afbeeldingen.1/import => The data to be imported
+ate.iisg.nl/data/datasets/migranten/myorganization.afbeeldingen.1/work => documents, images
+ate.iisg.nl/data/datasets/migranten/myorganization.afbeeldingen.1/import => The data to be imported
 
 Store data and mapping documents and other material thus:
-- ate.iisg.nl/mnt/solr/[collection]/[collection name].[type of data].[sequence]/import => contains unnormalized XML
+- ate.iisg.nl/data/datasets/[collection]/[collection name].[type of data].[sequence]/import => contains unnormalized XML
 to be imported. For 10 000 files or more, divide the normalized data in subfolders.
 Store the original data and any documentation that came with it ( usually cross walks ) under:
-- ate.iisg.nl/mnt/solr/[collection]/[collection name].[type of data].[sequence]/work
+- ate.iisg.nl/data/datasets/[collection]/[collection name].[type of data].[sequence]/work
 
 3. Import data using a data adapter
 The dataset must be read from the filesystem or database. The import document is an XML file and should be located

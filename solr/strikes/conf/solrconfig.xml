@@ -775,7 +775,7 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
 
     <requestHandler name="/dih" class="org.socialhistory.solr.importer.DataImportHandlers" enable="${is.index:false}">
         <lst name="defaults">
-            <str name="debugTraceFolder">/mnt/test</str>
+            <str name="debugTraceFolder">/data/datasets/test</str>
         </lst>
         <lst name="handlers">
             <str name="strikes.1"/>
