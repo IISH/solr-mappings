@@ -1,0 +1,97 @@
+Marc datasets
+
+
+1. Setup
+SSH to arges0.iisg.nl and run the following script to setup the base configuration:
+java -jar /opt/import.jar
+    -dataset collection.[collection name].[type of data].[sequence]
+    -type [FileDataSource|JdbcDataSource]
+    -datasource [location of the datasource on the mount: /mnt/solr/...etc
+
+For example to add the dataset "myorganization.afbeeldingen.1" under the main collection:
+http://api.socialhistoryservices.org/solr/all
+and the dataset is stored at /mnt/solr/migranten/myorganization.afbeeldingen.1
+
+
+This will produce all files to proceed with the dataset configuration:
+The import file that retrieved data from the source:
+ - /solr_configuration/solr/[collection]/conf/import/[collection name].[type of data].[sequence]
+
+The normalization file that maps the data to MarcXml
+ - /solr_configuration/solr/[collection]/conf/normalize/[collection name].[type of data].[sequence]
+
+The import handler that listens to HTTP requests and executes the import\normalization
+ - Registered the import handler in the requestHandler element:
+ /solr_configuration/solr/all/conf/solrconfig.xml:
+        <lst name="handlers">
+            <str name="[collection name].[type of data].[sequence]"/>
+        </lst>
+
+2. Persist the datasource
+a. Database: If the data is in a database, then move it to the datalayer of the IISH first such as the current poseidon2
+cluster.
+b. Filesystem: If it consists of a collection of files, then move it to the current filesystem ate.iisg.nl in an
+conventional location. Datasets on ate ( just like records in a database ) must be stored on a per record bases. For
+example If the source data is a large file of 10 000 records, this must be split into 10 000 individual files.
+
+In the earlier example the data must be stored:
+ate.iisg.nl/mnt/solr/migranten/myorganization.afbeeldingen.1/work => documents, images
+ate.iisg.nl/mnt/solr/migranten/myorganization.afbeeldingen.1/import => The data to be imported
+
+Store data and mapping documents and other material thus:
+- ate.iisg.nl/mnt/solr/[collection]/[collection name].[type of data].[sequence]/import => contains unnormalized XML
+to be imported. For 10 000 files or more, divide the normalized data in subfolders.
+Store the original data and any documentation that came with it ( usually cross walks ) under:
+- ate.iisg.nl/mnt/solr/[collection]/[collection name].[type of data].[sequence]/work
+
+3. Import data using a data adapter
+The dataset must be read from the filesystem or database. The import document is an XML file and should be located
+here:
+/solr_configuration/solr/all/conf/import/[collection name].[type of data].[sequence]
+
+And looks for example like this ( notice the relative baseDir ):
+<dataConfig>
+        <dataSource name="fs" type="FileDataSource" encoding="UTF-8" />
+        <document>
+	        <entity
+                    name="xmlfile"
+                    dataSource="null"
+                    stream="true"
+                    processor="FileListEntityProcessor"
+                    baseDir="[collection name].[type of data].[sequence]"
+                    filename="^.*\.xml$"
+                    recursive="true"
+                    rootEntity="true"
+                    transformer="org.socialhistory.solr.transformers.FSTransformer"
+            />
+        </document>
+</dataConfig>
+
+
+4. Map and normalize the dataset to Marc
+The dataset must be cross walked into a Marc21 XML schema and wrapped into a SRU like wrapper. For this we need a
+normalization xslt document. It is used to both map to Marc fields and remove idiosyncratic
+values. The normalization document has the convention name
+./solr_configuration/solr/all/conf/normalize/[collection name].[type of data].[sequence].xsl"
+
+and needs to map the dataset records to this end schema:
+<record>
+  <extraRecordData>
+    <iisg:iisg>
+      <iisg:identifier>[The unique identifier of the record]</iisg:identifier>
+      <iisg:isShownAt>The URL that points to a landing page where the descriptive metadata is presented. Usually a HTML
+      page on an online catalog.</iisg:isShownAt>
+      <iisg:isShownBy>The URL that points to a digital master or derivative. For example an image.</iisg:isShownBy>
+      <iisg:date_modified>In a  YYYY-mm-DD format the date of creation or modification</iisg:date_modified>
+    </iisg:iisg>
+  </extraRecordData>
+  <recordData>
+     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
+        <marc:controlfield tag="001">The catalog identifier</marc:controlfield>
+        <!--  the marc datafields and subfields -->
+     </marc:record>
+  </recordData>
+</record>
+
+
+
