@@ -9,7 +9,7 @@
                     stream="false"
                     onError="skip"
                     processor="FileListEntityProcessor"
-                    baseDir="/mnt/solr/harvest/iish.evergreen.1"
+                    baseDir="/data/datasets/iish.evergreen/iish.evergreen.1"
                     filename="^.*\.xml$"
                     recursive="true"
                     rootEntity="true"

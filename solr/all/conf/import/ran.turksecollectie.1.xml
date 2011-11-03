@@ -8,7 +8,7 @@
                     dataSource="null"
                     stream="true"
                     processor="FileListEntityProcessor"
-                    baseDir="/mnt/solr/migranten/ran.turksecollectie.1"
+                    baseDir="/data/datasets/migranten/ran.turksecollectie.1"
                     filename="^.*\.xml$"
                     recursive="true"
                     rootEntity="true"

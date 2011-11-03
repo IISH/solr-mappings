@@ -10,7 +10,7 @@
                     dataSource="null"
                     stream="true"
                     processor="FileListEntityProcessor"
-                    baseDir="/mnt/solr/migranten/eemland.afbeeldingen.1.a/import"
+                    baseDir="/data/datasets/migranten/eemland.afbeeldingen.1.a/import"
                     filename="^.*\.xml$"
                     recursive="true"
                     rootEntity="true"

@@ -10,7 +10,7 @@
             dataSource="null"
 		    stream="true"
 		    processor="FileListEntityProcessor"
-		    baseDir="/mnt/solr/migranten/aletta.verhalen.1/import"
+		    baseDir="/data/datasets/migranten/aletta.verhalen.1/import"
 		    filename="^.*\.xml$"
 		    recursive="true"
 		    rootEntity="true"
