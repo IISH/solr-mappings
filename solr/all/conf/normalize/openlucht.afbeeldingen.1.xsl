@@ -17,7 +17,7 @@
     <xsl:template match="record">
 
         <xsl:variable name="identifier" select="priref[1]"/>
-        <xsl:variable name="isShownBy" select="concat('http://webstore.iisg.nl/openlucht.afbeeldingen.1/', reproduction.identifier_URL)"/>
+        <xsl:variable name="isShownBy" select="concat('http://webstore.iisg.nl/openlucht.afbeeldingen.1/', reproduction.identifier_URL[1])"/>
 
         <record>
             <extraRecordData>
