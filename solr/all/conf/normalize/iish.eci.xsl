@@ -116,12 +116,17 @@
                         </xsl:call-template>
                     </xsl:if>
 
-                    <!-- ToDo: must become a pid reference -->
                     <xsl:call-template name="insertElement">
                         <xsl:with-param name="tag" select="'856'"/>
                         <xsl:with-param name="code" select="'u'"/>
                         <xsl:with-param name="value"
-                                        select="concat('http://api.socialhistoryservices.org/solr/all/oai?verb=GetRecord&amp;identifier=oai:socialhistoryservices:',$identifier,'&amp;metadataPrefix=eci')"/>
+                                        select="concat('http://api.socialhistoryservices.org/solr/all/oai?verb=GetRecord&amp;identifier=oai:socialhistoryservices.org:',$identifier,'&amp;metadataPrefix=eci')"/>
+                    </xsl:call-template>
+
+                    <xsl:call-template name="insertElement">
+                        <xsl:with-param name="tag" select="'902'"/>
+                        <xsl:with-param name="code" select="'a'"/>
+                        <xsl:with-param name="value" select="$identifier"/>
                     </xsl:call-template>
 
                 </marc:record>
