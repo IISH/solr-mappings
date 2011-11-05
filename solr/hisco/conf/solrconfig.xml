@@ -120,7 +120,7 @@ If replication is in use, this should match the replication configuration. -->
     </mainIndex>
 
     <!-- the default high-performance update handler -->
-    <updateHandler class="solr.DirectUpdateHandler2" enable="${is.index:false}">
+    <updateHandler class="solr.DirectUpdateHandler2" enable="${enable.master:false}">
 
         <!-- A prefix of "solr." for class names is an alias that
             causes solr to search appropriate packages, including
@@ -382,7 +382,7 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
     If you use multicore and want to use a specific SRW implementation for each core, then you can
     set the str[@name=solr.data] and str[@name=explain] fields accordingly.
     -->
-    <requestHandler name="/srw" class="org.socialhistory.solr.sru.SRURequestHandler" enable="${is.search:false}">
+    <requestHandler name="/srw" class="org.socialhistory.solr.sru.SRURequestHandler" enable="${enable.slave:false}">
         <str name="wt">srw</str>
         <lst name="srw_properties">
             <!--
@@ -503,7 +503,7 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
     </requestHandler>
 
     <!-- Custom IISG wt that is being called from the SRU handler -->
-    <queryResponseWriter name="srw" default="false" class="org.socialhistory.solr.sru.SRUQueryResponseWriter" enable="${is.search:false}"/>
+    <queryResponseWriter name="srw" default="false" class="org.socialhistory.solr.sru.SRUQueryResponseWriter" enable="${enable.slave:false}"/>
 
 
     <!--
@@ -562,7 +562,7 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
        "update.processor.class" is the class name for the UpdateRequestProcessor.  It is initalized
        only once.  This can not be changed for each request.
     -->
-    <requestHandler name="/update" class="solr.XmlUpdateRequestHandler" enable="${is.index:false}">
+    <requestHandler name="/update" class="solr.XmlUpdateRequestHandler" enable="${enable.master:false}">
         <!--
         <str name="update.processor.class">org.apache.solr.handler.UpdateRequestProcessor</str>
         -->
@@ -572,14 +572,14 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
     Analysis request handler.  Since Solr 1.3.  Use to returnhow a document is analyzed.  Useful
     for debugging and as a token server for other types of applications
     -->
-    <requestHandler name="/analysis" class="solr.AnalysisRequestHandler" enable="${is.index:false}">
+    <requestHandler name="/analysis" class="solr.AnalysisRequestHandler" enable="${enable.master:false}">
         <!--
         <str name="update.processor.class">org.apache.solr.handler.UpdateRequestProcessor</str>
         -->
     </requestHandler>
 
     <!-- CSV update handler, loaded on demand -->
-    <requestHandler name="/update/csv"  class="solr.CSVRequestHandler" enable="${is.index:false}" startup="lazy"/>
+    <requestHandler name="/update/csv"  class="solr.CSVRequestHandler" enable="${enable.master:false}" startup="lazy"/>
 
 
     <!--
@@ -601,7 +601,7 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
       </lst>
     </requestHandler>
     -->
-    <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" enable="${is.index:false}"/>
+    <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" enable="${enable.master:false}"/>
 
     <!-- ping/healthcheck -->
     <requestHandler name="/admin/ping" class="PingRequestHandler">
@@ -650,7 +650,7 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
         -->
     </admin>
 
-    <requestHandler name="/dih" class="org.socialhistory.solr.importer.DataImportHandlers" enable="${is.index:false}">
+    <requestHandler name="/dih" class="org.socialhistory.solr.importer.DataImportHandlers" enable="${enable.master:false}">
         <lst name="defaults">
             <str name="debugTraceFolder">/data/datasets/test</str>
         </lst>
