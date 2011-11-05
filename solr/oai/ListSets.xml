@@ -12,11 +12,11 @@
             <setName>Catalog</setName>
         </set>
         <set>
-            <setSpec>iish.archieven.1</setSpec>
+            <setSpec>iish.archieven</setSpec>
             <setName>Archives</setName>
         </set>
         <set>
-            <setSpec>iish.eci.1</setSpec>
+            <setSpec>iish.eci</setSpec>
             <setName>Audio and visual material</setName>
         </set>
 
