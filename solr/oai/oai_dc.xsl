@@ -17,7 +17,8 @@ limitations under the License.
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
                 xmlns:saxon="http://saxon.sf.net/"
-                xmlns:marc="http://www.loc.gov/MARC21/slim">
+                xmlns:marc="http://www.loc.gov/MARC21/slim"
+                exclude-result-prefixes="ead marc saxon">
 
     <xsl:import href="oai.xsl"/>
     <xsl:param name="prefix"/>

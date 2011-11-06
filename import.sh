@@ -19,6 +19,8 @@ fi
 
 # Load all of the .xml import files and call the import handler.
 for file in ${d}/$filter ; do
-    handler=$(basename $file .xml)
-    wget "http://localhost:8080/solr/${core}/dih/${handler}?command=full-import&clean=false&commit=true&optimize=true" -q
+   handler=$(basename $file .xml)
+   url="http://localhost:8080/solr/${core}/dih/${handler}?command=full-import&clean=false&commit=true&optimize=true"
+   echo "Calling handler at $url"
+   wget $url -q
 done
