@@ -1,8 +1,7 @@
 #!/bin/sh
 
 core=$1
-DIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-d=$DIR/solr/${core}/conf/import
+d="/data/solr-mappings.index0/solr/${core}/conf/import"
 
 if [ ! -d $d ];
 then
@@ -20,6 +19,8 @@ fi
 
 # Load all of the .xml import files and call the import handler.
 for file in ${d}/$filter ; do
-    handler=$(basename $file .xml)
-    echo wget "http://localhost:8080/solr/${core}/dih/${handler}?command=full-import&clean=false&commit=true&optimize=true" -q
+   handler=$(basename $file .xml)
+   url="http://localhost:8080/solr/${core}/dih/${handler}?command=full-import&clean=false&commit=true&optimize=true"
+   echo "Calling handler at $url"
+   wget $url -q
 done
