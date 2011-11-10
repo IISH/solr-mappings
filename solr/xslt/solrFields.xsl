@@ -31,7 +31,7 @@ limitations under the License.
     <xsl:template name="insertSolrField">
         <xsl:param name="field_name"/>
         <xsl:param name="field_value"/>
-        <xsl:if test="string-length($field_value)>0">
+        <xsl:if test="string-length($field_name)>0 and string-length($field_value)>0">
             <field name="{$field_name}">
                 <xsl:value-of select="normalize-space($field_value)"/>
             </field>
