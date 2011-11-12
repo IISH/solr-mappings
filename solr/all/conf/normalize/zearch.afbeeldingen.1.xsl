@@ -32,7 +32,10 @@
                     <iisg:isShownAt><xsl:value-of select="concat('http://database.zeeuwsarchief.nl/Atlantis/?application=tha&amp;database=thaza&amp;entrypoint=&amp;service=result&amp;templatename=result-template.htm&amp;exactzoeken=on&amp;Identificatie=', $identifier)"/></iisg:isShownAt>
                     <iisg:isShownBy><xsl:value-of select="$isShownBy"/></iisg:isShownBy>
                     <iisg:date_modified>
-                        <xsl:value-of select="$date_modified"/>
+                        <xsl:call-template name="insertDateModified">
+                            <xsl:with-param name="cfDate" select="marc:controlfield[@tag='005']"/>
+                            <xsl:with-param name="fsDate" select="$date_modified"/>
+                        </xsl:call-template>
                     </iisg:date_modified>
                 </iisg:iisg>
             </extraRecordData>

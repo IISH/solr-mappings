@@ -32,7 +32,10 @@
                     <iisg:isShownAt><xsl:value-of select="concat('http://85.158.253.205/muma-extern/dispatcher.aspx?action=search&amp;database=ChoiceCollect&amp;search=priref=', $identifier)"/></iisg:isShownAt>
                     <iisg:isShownBy><xsl:value-of select="$isShownBy"/></iisg:isShownBy>
                     <iisg:date_modified>
-                        <xsl:value-of select="$date_modified"/>
+                        <xsl:call-template name="insertDateModified">
+                            <xsl:with-param name="cfDate" select="marc:controlfield[@tag='005']"/>
+                            <xsl:with-param name="fsDate" select="$date_modified"/>
+                        </xsl:call-template>
                     </iisg:date_modified>
                 </iisg:iisg>
             </extraRecordData>

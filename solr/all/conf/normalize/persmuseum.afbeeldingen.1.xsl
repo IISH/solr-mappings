@@ -47,7 +47,10 @@
                                         select="concat('http://search.iisg.nl/search/search?action=get&amp;id=',$barcode,'&amp;col=images&amp;fieldname=resource')"/>
                             </iisg:isShownBy>
                             <iisg:date_modified>
-                                <xsl:value-of select="$date_modified"/>
+                                <xsl:call-template name="insertDateModified">
+                                    <xsl:with-param name="cfDate" select="marc:controlfield[@tag='005']"/>
+                                    <xsl:with-param name="fsDate" select="$date_modified"/>
+                                </xsl:call-template>
                             </iisg:date_modified>
                         </iisg:iisg>
                     </extraRecordData>

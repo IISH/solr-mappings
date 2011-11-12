@@ -11,6 +11,29 @@
         </iisg:identifier>
     </xsl:template>
 
+    <!-- cfDate is the control field's date. If not available,
+    we fall back to the system's date. Our format:
+     yyyy-MM-dd'T'HH:mm:ss'Z'
+     -->
+    <xsl:template name="insertDateModified">
+        <xsl:param name="cfDate"/>
+        <xsl:param name="fsDate"/>
+        <xsl:choose>
+            <xsl:when test="string-length($cfDate)>=14">
+                <xsl:variable name="yyyy" select="substring($cfDate, 1, 4)"/>
+                <xsl:variable name="MM" select="substring($cfDate, 5,2)"/>
+                <xsl:variable name="dd" select="substring($cfDate, 7,2)"/>
+                <xsl:variable name="HH" select="substring($cfDate, 9,2)"/>
+                <xsl:variable name="mm" select="substring($cfDate, 11,2)"/>
+                <xsl:variable name="ss" select="substring($cfDate, 13,2)"/>
+                <xsl:value-of select="concat($yyyy,'-',$MM,'-',$dd,'T',$HH,':',$mm,':', $ss, 'Z')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$fsDate"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
     <xsl:template name="insertCollection">
         <xsl:param name="collection"/>
         <xsl:call-template name="output-tokens">

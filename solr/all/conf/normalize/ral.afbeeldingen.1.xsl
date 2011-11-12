@@ -38,7 +38,10 @@
                         </iisg:isShownBy>
                     </xsl:if>
                     <iisg:date_modified>
-                        <xsl:value-of select="$date_modified"/>
+                        <xsl:call-template name="insertDateModified">
+                            <xsl:with-param name="cfDate" select="marc:controlfield[@tag='005']"/>
+                            <xsl:with-param name="fsDate" select="$date_modified"/>
+                        </xsl:call-template>
                     </iisg:date_modified>
                 </iisg:iisg>
             </extraRecordData>
