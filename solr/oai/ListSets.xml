@@ -8,8 +8,8 @@
 
     <ListSets>
         <set>
-            <setSpec>iisg_marcxml</setSpec>
-            <setName>Catalog</setName>
+            <setSpec>iish.evergreen.biblio</setSpec>
+            <setName>IISH library catalog</setName>
         </set>
         <set>
             <setSpec>iish.archieven</setSpec>
