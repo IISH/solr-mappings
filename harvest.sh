@@ -17,16 +17,16 @@ else
     exit 1
 fi
 
-rm -r $d*
+rm -r "$d"*20
 cd $VUFIND_HOME/harvest
-php last_harvest.php "$d"last_harvest.txt
+#php last_harvest.php "$d"last_harvest.txt
 php harvest_oai.php $dataset
 
 #Setting permissions
 chmod -R 744 $d
 
   # Now collate our material
-  f=/data/datasets/$dataset.xml
+  f=/data/datasets/"$dataset".xml
   rm $f
 
   # We import all records.
