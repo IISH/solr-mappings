@@ -1,6 +1,5 @@
 
 # Harvest
-export VUFIND_HOME=/data/search.socialhistory.org/vufind-1.1
 dataset=$1
 if [ "$dataset" == "" ];
 then
@@ -11,7 +10,9 @@ fi
 d=/data/datasets/$dataset/
 if [ -d $d ];
 then
-  // ok
+  # Write the desired harvest from parameter
+  now=$(date +"%Y-%m-%d")
+  php $VUFIND_HOME/harvest/LastHarvestFile.php "$now" "-3 day" "$"last_harvest.txt
 else
     echo "Not a valid folder: " . $d
     exit 1
@@ -19,7 +20,7 @@ fi
 
 rm -r "$d"*20
 cd $VUFIND_HOME/harvest
-#php last_harvest.php "$d"last_harvest.txt
+php last_harvest.php "$d"last_harvest.txt
 php harvest_oai.php $dataset
 
 #Setting permissions

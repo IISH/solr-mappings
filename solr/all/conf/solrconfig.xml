@@ -21,11 +21,8 @@
     <requestHandler name="/replication" class="solr.ReplicationHandler" enable="${enable.master:false}">
         <lst name="master">
             <!--Replicate on 'startup' and 'commit'. 'optimize' is also a valid value for replicateAfter. -->
-            <str name="replicateAfter">startup</str>
-            <str name="replicateAfter">commit</str>
-
+            <str name="replicateAfter">optimize</str>
             <!--Create a backup after 'optimize'. Other values can be 'commit', 'startup'. It is possible to have multiple entries of this config string.  Note that this is just for backup, replication does not require this. -->
-            <!-- <str name="backupAfter">optimize</str> -->
 
             <!--If configuration files need to be replicated give the names here, separated by comma -->
             <!-- We will not include any configuration files as we use a mount to share files -->
