@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Harvest
 dataset=$1
@@ -12,7 +13,7 @@ if [ -d $d ];
 then
   # Write the desired harvest from parameter
   now=$(date +"%Y-%m-%d")
-  php $VUFIND_HOME/harvest/LastHarvestFile.php "$now" "-3 day" "$"last_harvest.txt
+  php $VUFIND_HOME/harvest/LastHarvestFile.php "$now" "-3 day" "$d"last_harvest.txt
 else
     echo "Not a valid folder: " . $d
     exit 1
@@ -20,7 +21,6 @@ fi
 
 rm -r "$d"*20
 cd $VUFIND_HOME/harvest
-php last_harvest.php "$d"last_harvest.txt
 php harvest_oai.php $dataset
 
 #Setting permissions
