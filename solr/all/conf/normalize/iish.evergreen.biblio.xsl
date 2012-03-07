@@ -83,7 +83,6 @@
                 </xsl:for-each>
                 <xsl:if test="not(//marc:datafield[@tag='985']/marc:subfield[@code='a' and starts-with(text(), 'Geheugen')])
                             and //marc:datafield[@tag='852']/marc:subfield[@code='c' and text()='IISG']
-                            and //marc:datafield[@tag='655']/marc:subfield[@code='a' and ( text()='Poster.' or text()='Photo.' or text()='Poster' or text()='Photo')]
                             and //marc:datafield[@tag='651']/marc:subfield[@code='a' and (
                                 contains(text(),'Albania')
                                 or contains(text(),'Austria')
