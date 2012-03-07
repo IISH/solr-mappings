@@ -287,7 +287,7 @@ but may be good for SKUs.  Can insert dashes in the wrong place and still match.
         <field name="resource" type="string" indexed="false" stored="true" required="true" compressed="true"/>
         <field name="original" type="string" indexed="false" stored="true" required="false" compressed="true"/>
         <field name="bath_anywhere" type="text" indexed="true" stored="false" required="false" multiValued="true"/>
-        <field name="iisg_date_modified" type="date" indexed="true" stored="false" required="false"/>
+        <field name="iisg_date_modified" type="date" indexed="true" stored="true" required="false"/>
         <field name="iisg_deleted" type="boolean" indexed="true" stored="false" required="false"/>
         <dynamicField name="marc_*" type="text" indexed="true" stored="false" multiValued="true"/>
         <copyField source="marc_*" dest="bath_anywhere"/>

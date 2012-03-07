@@ -44,6 +44,24 @@ limitations under the License.
         </xsl:choose>
     </xsl:template>
 
+    <xsl:template name="header">
+        <header>
+            <identifier>
+                <xsl:value-of select="concat($prefix, $doc//str[@name='iisg_identifier'])"/>
+            </identifier>
+            <datestamp>
+                <xsl:value-of select="$doc//date[@name='iisg_date_modified']"/>
+            </datestamp>
+            <xsl:for-each select="$doc//arr[@name='iisg_collectionName']/str">
+                <setSpec>
+                    <xsl:value-of select="."/>
+                </setSpec>
+            </xsl:for-each>
+        </header>
+    </xsl:template>
+
+    <xsl:template name="about"/>
+
     <!--
     Usefull for debugging
         <xsl:template match="@*|node()">

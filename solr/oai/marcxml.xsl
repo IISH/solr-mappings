@@ -22,29 +22,11 @@ limitations under the License.
     <xsl:import href="oai.xsl"/>
     <xsl:param name="prefix"/>
 
-    <xsl:template name="header">
-        <header>
-            <identifier>
-                <xsl:value-of select="concat($prefix, $doc//str[@name='iisg_identifier'])"/>
-            </identifier>
-            <datestamp>
-                <xsl:value-of select="$doc//date[@name='iisg_date_modified']"/>
-            </datestamp>
-            <xsl:for-each select="$doc//arr[@name='iisg_collectionName']/str">
-                <setSpec>
-                    <xsl:value-of select="."/>
-                </setSpec>
-            </xsl:for-each>
-        </header>
-    </xsl:template>
-
     <xsl:template name="metadata">
         <metadata>
             <xsl:variable name="record" select="saxon:parse($doc//str[@name='resource']/text())/node()"/>
             <xsl:copy-of select="$record//recordData/*"/>
         </metadata>
     </xsl:template>
-
-    <xsl:template name="about"/>
 
 </xsl:stylesheet>
