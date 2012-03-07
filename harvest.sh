@@ -19,7 +19,7 @@ else
     exit 1
 fi
 
-rm -r "$d"*20
+rm -r "$d"20*
 cd $VUFIND_HOME/harvest
 php harvest_oai.php $dataset
 
@@ -33,7 +33,7 @@ chmod -R 744 $d
   # We import all records.
   # To limit this, we collate all to a single file.
   app=/home/maven/repo/org/socialhistory/solr/import/1.0/import-1.0.jar
-  java -cp $app org.socialhistoryservices.solr.importer.Collate $d $f
+  java -Dxsl=marc -cp $app org.socialhistoryservices.solr.importer.Collate $d $f
 
   # Then upload
   # For this we need stylesheets to normalize the marc documents into our model
