@@ -123,6 +123,31 @@
             <setSpec>zeeuwsebibliotheek.afbeeldingen.1</setSpec>
             <setName>zeeuwsebibliotheek</setName>
         </set>
+        <set>
+            <setSpec>VIS-DutchLabourMovements</setSpec>
+            <setName>Dutch labour Movements</setName>
+            <setDescription>Dutch labour Movements until 1918 image collection</setDescription>
+        </set>
+        <set>
+            <setSpec>VIS-ParadisoMelkweg</setSpec>
+            <setName>Posters paradiso en melkweg</setName>
+            <setDescription>Posters paradiso en melkweg image collection</setDescription>
+        </set>
+        <set>
+            <setSpec>VIS-AHP</setSpec>
+            <setName>Algemeen Hollands Fotopersburo</setName>
+            <setDescription>Algemeen Hollands Fotopersburo image collection</setDescription>
+        </set>
+        <set>
+            <setSpec>VIS-DutchPoliticalSocialMovements</setSpec>
+            <setName>Posters Dutch political and social movements 1890-1995</setName>
+            <setDescription>Posters Dutch political and social movements 1890-1995 image collection</setDescription>
+        </set>
+        <set>
+            <setSpec>VIS-EuropeanSocialMovements</setSpec>
+            <setName>Social movements 19-20th century photo's en posters</setName>
+            <setDescription>Image and Sound collection, social movements 19-20th century photo's en posters</setDescription>
+        </set>
     </ListSets>
 </OAI-PMH>
 
