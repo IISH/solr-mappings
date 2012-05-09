@@ -27,10 +27,10 @@
 <solr persistent="false" sharedLib="lib">
     <cores adminPath="/admin/multicore">
         <core name="all" instanceDir="all"/>
-        <core name="hisco" instanceDir="hisco"/>
+<!--        <core name="hisco" instanceDir="hisco"/>
         <core name="migranten" instanceDir="migranten"/>
         <core name="mets" instanceDir="mets"/>
         <core name="strikes" instanceDir="strikes"/>
-        <core name="ziegler" instanceDir="ziegler"/>
+        <core name="ziegler" instanceDir="ziegler"/>-->
     </cores>
 </solr>
