@@ -53,21 +53,54 @@
             </extraRecordData>
             <recordData>
                 <hisco:hisco>
+                    <xsl:call-template name="insertCustomElement">
+                        <xsl:with-param name="localname" select="'group_id'"/>
+                        <xsl:with-param name="value">
+                            <xsl:if test="final/table='major'">hisco</xsl:if>
+                            <xsl:if test="final/hisco_2_id">
+                                <xsl:value-of select="concat('hisco:',final/hisco_1_id)"/>
+                            </xsl:if>
+                            <xsl:if test="final/hisco_3_id">
+                                <xsl:value-of select="concat(':',final/hisco_2_id)"/>
+                            </xsl:if>
+                            <xsl:if test="final/hisco_45_id">
+                                <xsl:value-of select="concat(':',final/hisco_3_id)"/>
+                            </xsl:if>
+                        </xsl:with-param>
+                        <xsl:with-param name="p" select="$prefix"/>
+                    </xsl:call-template>
                     <xsl:apply-templates select="final/*"/>
                     <xsl:if test="final/images">
-                        <hisco:images><xsl:for-each select="final/images/image_url"><hisco:image_url>
-                            <xsl:variable name="tmp_before" select="substring-before(text(), '_')"/>
-                            <xsl:variable name="tmp_after" select="substring-after(text(), '_')"/>
-                            <xsl:choose>
-                                <xsl:when test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=1"><xsl:value-of select="concat('http://historyofwork.iisg.nl/docs/images/', $tmp_before, '_00', $tmp_after, '.jpg')"/></xsl:when>
-                                <xsl:when test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=2"><xsl:value-of select="concat('http://historyofwork.iisg.nl/docs/images/', $tmp_before, '_0', $tmp_after, '.jpg')"/></xsl:when>
-                            <xsl:otherwise><xsl:value-of select="concat('http://historyofwork.iisg.nl/docs/images/', text(), '.jpg')"/></xsl:otherwise></xsl:choose></hisco:image_url>
-                        </xsl:for-each></hisco:images>
+                        <hisco:images>
+                            <xsl:for-each select="final/images/image_url">
+                                <hisco:image_url>
+                                    <xsl:variable name="tmp_before" select="substring-before(text(), '_')"/>
+                                    <xsl:variable name="tmp_after" select="substring-after(text(), '_')"/>
+                                    <xsl:choose>
+                                        <xsl:when
+                                                test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=1">
+                                            <xsl:value-of
+                                                    select="concat('http://historyofwork.iisg.nl/docs/images/', $tmp_before, '_00', $tmp_after, '.jpg')"/>
+                                        </xsl:when>
+                                        <xsl:when
+                                                test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=2">
+                                            <xsl:value-of
+                                                    select="concat('http://historyofwork.iisg.nl/docs/images/', $tmp_before, '_0', $tmp_after, '.jpg')"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of
+                                                    select="concat('http://historyofwork.iisg.nl/docs/images/', text(), '.jpg')"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </hisco:image_url>
+                            </xsl:for-each>
+                        </hisco:images>
                     </xsl:if>
                 </hisco:hisco>
             </recordData>
         </record>
     </xsl:template>
+
 
     <xsl:template match="country_code">
 
@@ -108,18 +141,20 @@
         </xsl:call-template>
         <xsl:call-template name="insertCustomElement">
             <xsl:with-param name="localname" select="'language_code_label'"/>
-            <xsl:with-param name="value"><xsl:choose>
-                <xsl:when test=".='CA'">Catalan</xsl:when>
-                <xsl:when test=".='DK'">Danish</xsl:when>
-                <xsl:when test=".='NL'">Dutch</xsl:when>
-                <xsl:when test=".='UK'">English</xsl:when>
-                <xsl:when test=".='FR'">French</xsl:when>
-                <xsl:when test=".='GE'">German</xsl:when>
-                <xsl:when test=".='GR'">Greek</xsl:when>
-                <xsl:when test=".='NO'">Norwegian</xsl:when>
-                <xsl:when test=".='PT'">Portugese</xsl:when>
-                <xsl:when test=".='SP'">Spanish</xsl:when>
-                <xsl:when test=".='SW'">Swedish</xsl:when></xsl:choose>
+            <xsl:with-param name="value">
+                <xsl:choose>
+                    <xsl:when test=".='CA'">Catalan</xsl:when>
+                    <xsl:when test=".='DK'">Danish</xsl:when>
+                    <xsl:when test=".='NL'">Dutch</xsl:when>
+                    <xsl:when test=".='UK'">English</xsl:when>
+                    <xsl:when test=".='FR'">French</xsl:when>
+                    <xsl:when test=".='GE'">German</xsl:when>
+                    <xsl:when test=".='GR'">Greek</xsl:when>
+                    <xsl:when test=".='NO'">Norwegian</xsl:when>
+                    <xsl:when test=".='PT'">Portugese</xsl:when>
+                    <xsl:when test=".='SP'">Spanish</xsl:when>
+                    <xsl:when test=".='SW'">Swedish</xsl:when>
+                </xsl:choose>
             </xsl:with-param>
             <xsl:with-param name="p" select="$prefix"/>
         </xsl:call-template>
@@ -157,7 +192,7 @@
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="hisco_1_id">
+    <!-- <xsl:template match="hisco_1_id">
         <xsl:call-template name="insertCustomElement">
             <xsl:with-param name="localname" select="'major_id'"/>
             <xsl:with-param name="value" select="text()"/>
@@ -184,7 +219,8 @@
             <xsl:with-param name="value" select="text()"/>
             <xsl:with-param name="p" select="$prefix"/>
         </xsl:call-template>
-    </xsl:template>
+    </xsl:template>-->
+
     <xsl:template match="link_id">
         <xsl:call-template name="insertCustomElement">
             <xsl:with-param name="localname" select="'occupations_id'"/>
@@ -194,11 +230,11 @@
     </xsl:template>
     <xsl:template match="hisco_id">
         <xsl:if test="not(text()='-1')">
-        <xsl:call-template name="insertCustomElement">
-            <xsl:with-param name="localname" select="local-name(.)"/>
-            <xsl:with-param name="value" select="text()"/>
-            <xsl:with-param name="p" select="$prefix"/>
-        </xsl:call-template>
+            <xsl:call-template name="insertCustomElement">
+                <xsl:with-param name="localname" select="local-name(.)"/>
+                <xsl:with-param name="value" select="text()"/>
+                <xsl:with-param name="p" select="$prefix"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -210,7 +246,7 @@
         </xsl:call-template>
     </xsl:template>
 
-        <xsl:template name="insertCustomElement">
+    <xsl:template name="insertCustomElement">
         <xsl:param name="localname"/>
         <xsl:param name="value"/>
         <xsl:param name="p"/>
