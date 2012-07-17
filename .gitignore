@@ -2,7 +2,8 @@
 data
 index
 *.properties
-
+logs
+log
 # Compiled source #
 ###################
 *.com
