@@ -66,6 +66,16 @@ limitations under the License.
         </index>
 
         <index>
+            <title>Group identifier</title>
+            <map>
+                <name set="hisco">group_id</name>
+            </map>
+            <map>
+                <name set="solr" search="group_id" search_exact="group_id" />
+            </map>
+        </index>
+
+        <index>
             <title>Hisco major identifier</title>
             <map>
                 <name set="hisco">major_id</name>

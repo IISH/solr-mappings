@@ -80,6 +80,9 @@ limitations under the License.
                     <xsl:apply-templates select="hisco:language_code_label" mode="m"/>
                     <xsl:apply-templates select="hisco:description" mode="m"/>
                     <xsl:apply-templates select="hisco:hisco_id" mode="m"/>
+                    <xsl:apply-templates select="hisco:group_id" mode="m"/>
+                    <xsl:apply-templates select="hisco:label" mode="m"/>
+
              </dl>
     </xsl:template>
 
