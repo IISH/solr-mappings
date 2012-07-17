@@ -69,6 +69,23 @@
                         </xsl:with-param>
                         <xsl:with-param name="p" select="$prefix"/>
                     </xsl:call-template>
+
+                    <xsl:call-template name="insertCustomElement">
+                        <xsl:with-param name="localname" select="'group_id'"/>
+                        <xsl:with-param name="value">
+                            <xsl:if test="final/table='major'">hisco</xsl:if>
+                            <xsl:if test="final/hisco_2_id">
+                                <xsl:value-of select="concat('hisco:',final/hisco_1_id)"/>
+                            </xsl:if>
+                            <xsl:if test="final/hisco_3_id">
+                                <xsl:value-of select="concat(':',final/hisco_2_id)"/>
+                            </xsl:if>
+                            <xsl:if test="final/hisco_45_id">
+                                <xsl:value-of select="concat(':',final/hisco_3_id)"/>
+                            </xsl:if>
+                        </xsl:with-param>
+                        <xsl:with-param name="p" select="$prefix"/>
+                    </xsl:call-template>
                     <xsl:apply-templates select="final/*"/>
                     <xsl:if test="final/images">
                         <hisco:images>
