@@ -18,7 +18,10 @@
 
         <xsl:variable name="identifier">
             <xsl:choose>
-                <xsl:when test="final/hisco_1_id">
+                <xsl:when test="final/link_id">
+                    <xsl:value-of select="concat($prefix, ':', final/link_id)"/>
+                </xsl:when>
+                <xsl:otherwise>
                     <xsl:value-of select="concat($prefix, ':', final/hisco_1_id)"/>
                     <xsl:if test="final/hisco_2_id">
                         <xsl:value-of select="concat(':', final/hisco_2_id)"/>
@@ -29,9 +32,6 @@
                     <xsl:if test="final/hisco_45_id">
                         <xsl:value-of select="concat(':', final/hisco_45_id)"/>
                     </xsl:if>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="concat($prefix, ':', final/link_id)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -53,39 +53,68 @@
             </extraRecordData>
             <recordData>
                 <hisco:hisco>
-                    <xsl:call-template name="insertCustomElement">
-                        <xsl:with-param name="localname" select="'group_id'"/>
-                        <xsl:with-param name="value">
-                            <xsl:if test="final/table='major'">hisco</xsl:if>
-                            <xsl:if test="final/hisco_2_id">
-                                <xsl:value-of select="concat('hisco:',final/hisco_1_id)"/>
-                            </xsl:if>
-                            <xsl:if test="final/hisco_3_id">
-                                <xsl:value-of select="concat(':',final/hisco_2_id)"/>
-                            </xsl:if>
-                            <xsl:if test="final/hisco_45_id">
-                                <xsl:value-of select="concat(':',final/hisco_3_id)"/>
-                            </xsl:if>
-                        </xsl:with-param>
-                        <xsl:with-param name="p" select="$prefix"/>
-                    </xsl:call-template>
+                    <xsl:choose>
+                        <xsl:when test="final/hisco_1_id">
+                            <xsl:call-template name="insertCustomElement">
+                                <xsl:with-param name="localname" select="'group_id'"/>
+                                <xsl:with-param name="value">
+                                    <xsl:if test="final/table='major'">hisco</xsl:if>
+                                    <xsl:if test="final/hisco_2_id">
+                                        <xsl:value-of select="concat('hisco:',final/hisco_1_id)"/>
+                                    </xsl:if>
+                                    <xsl:if test="final/hisco_3_id">
+                                        <xsl:value-of select="concat(':',final/hisco_2_id)"/>
+                                    </xsl:if>
+                                    <xsl:if test="final/hisco_45_id">
+                                        <xsl:value-of select="concat(':',final/hisco_3_id)"/>
+                                    </xsl:if>
+                                </xsl:with-param>
+                                <xsl:with-param name="p" select="$prefix"/>
+                            </xsl:call-template>
+                        </xsl:when>
+                        <xsl:otherwise>
 
-                    <xsl:call-template name="insertCustomElement">
-                        <xsl:with-param name="localname" select="'group_id'"/>
-                        <xsl:with-param name="value">
-                            <xsl:if test="final/table='major'">hisco</xsl:if>
-                            <xsl:if test="final/hisco_2_id">
-                                <xsl:value-of select="concat('hisco:',final/hisco_1_id)"/>
-                            </xsl:if>
-                            <xsl:if test="final/hisco_3_id">
-                                <xsl:value-of select="concat(':',final/hisco_2_id)"/>
-                            </xsl:if>
-                            <xsl:if test="final/hisco_45_id">
-                                <xsl:value-of select="concat(':',final/hisco_3_id)"/>
-                            </xsl:if>
-                        </xsl:with-param>
-                        <xsl:with-param name="p" select="$prefix"/>
-                    </xsl:call-template>
+                            <!-- the hisco value must be split into the four parts that constitute it's compound index
+                             0.0.0.00
+                             -->
+                            <xsl:call-template name="insertCustomElement">
+                                <xsl:with-param name="localname" select="'group_id'"/>
+                                <xsl:with-param name="value">
+                                    <xsl:value-of select="substring(final/hisco_id, 1, 1)"/>
+                                </xsl:with-param>
+                                <xsl:with-param name="p" select="$prefix"/>
+                            </xsl:call-template>
+
+                            <xsl:call-template name="insertCustomElement">
+                                <xsl:with-param name="localname" select="'group_id'"/>
+                                <xsl:with-param name="value">
+                                    <xsl:value-of
+                                            select="concat(substring(final/hisco_id, 1, 1), substring(final/hisco_id, 2, 1))"/>
+                                </xsl:with-param>
+                                <xsl:with-param name="p" select="$prefix"/>
+                            </xsl:call-template>
+
+                            <xsl:call-template name="insertCustomElement">
+                                <xsl:with-param name="localname" select="'group_id'"/>
+                                <xsl:with-param name="value">
+                                    <xsl:value-of
+                                            select="concat(substring(final/hisco_id, 1, 1), substring(final/hisco_id, 2, 1), substring(final/hisco_id, 3, 1))"/>
+                                </xsl:with-param>
+                                <xsl:with-param name="p" select="$prefix"/>
+                            </xsl:call-template>
+
+                            <xsl:call-template name="insertCustomElement">
+                                <xsl:with-param name="localname" select="'group_id'"/>
+                                <xsl:with-param name="value">
+                                    <xsl:value-of
+                                            select="concat(substring(final/hisco_id, 1, 1), substring(final/hisco_id, 2, 1), substring(final/hisco_id, 3, 1), substring(final/hisco_id, 4))"/>
+                                </xsl:with-param>
+                                <xsl:with-param name="p" select="$prefix"/>
+                            </xsl:call-template>
+
+                        </xsl:otherwise>
+                    </xsl:choose>
+
                     <xsl:apply-templates select="final/*"/>
                     <xsl:if test="final/images">
                         <hisco:images>

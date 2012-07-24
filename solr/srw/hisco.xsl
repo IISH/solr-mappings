@@ -81,6 +81,7 @@ limitations under the License.
                     <xsl:apply-templates select="hisco:description" mode="m"/>
                     <xsl:apply-templates select="hisco:hisco_id" mode="m"/>
                     <xsl:apply-templates select="hisco:group_id" mode="m"/>
+                    <xsl:apply-templates select="hisco:prefix_group_id" mode="m"/>
                     <xsl:apply-templates select="hisco:label" mode="m"/>
 
              </dl>

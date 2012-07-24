@@ -287,7 +287,7 @@
      <field name="label" type="text" indexed="true" stored="false"/>
      <field name="description" type="text" indexed="true" stored="false"/>
 
-     <field name="group_id" type="string" indexed="true" stored="false" />
+     <field name="group_id" type="string" indexed="true" stored="false" multiValued="true" />
      <field name="major_id" type="string" indexed="true" stored="false"/>
      <field name="minor_id" type="string" indexed="true" stored="false"/>
      <field name="unit_id" type="string" indexed="true" stored="false"/>
