@@ -26,7 +26,7 @@
 -->
 <solr persistent="false" sharedLib="lib">
     <cores adminPath="/admin/multicore">
-        <!--<core name="all" instanceDir="all"/>-->
+        <core name="all" instanceDir="all"/>
         <core name="hisco" instanceDir="hisco"/>
     <!--    <core name="migranten" instanceDir="migranten"/>
         <core name="mets" instanceDir="mets"/>
