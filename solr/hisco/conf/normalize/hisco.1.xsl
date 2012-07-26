@@ -114,6 +114,8 @@
                     </xsl:choose>
 
                     <xsl:apply-templates select="final/*"/>
+
+                    <!-- Here we give the images a base URL and apply some formatting. -->
                     <xsl:if test="final/images">
                         <hisco:images>
                             <xsl:for-each select="final/images/image_url">
@@ -124,16 +126,16 @@
                                         <xsl:when
                                                 test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=1">
                                             <xsl:value-of
-                                                    select="concat('http://historyofwork.iisg.nl/docs/images/', $tmp_before, '_00', $tmp_after, '.jpg')"/>
+                                                    select="concat('http://webstore.iisg.nl/historyofwork/', $tmp_before, '_00', $tmp_after, '.jpg')"/>
                                         </xsl:when>
                                         <xsl:when
                                                 test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=2">
                                             <xsl:value-of
-                                                    select="concat('http://historyofwork.iisg.nl/docs/images/', $tmp_before, '_0', $tmp_after, '.jpg')"/>
+                                                    select="concat('http://webstore.iisg.nl/historyofwork/', $tmp_before, '_0', $tmp_after, '.jpg')"/>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:value-of
-                                                    select="concat('http://historyofwork.iisg.nl/docs/images/', text(), '.jpg')"/>
+                                                    select="concat('http://webstore.iisg.nl/historyofwork/', text(), '.jpg')"/>
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </hisco:image_url>
