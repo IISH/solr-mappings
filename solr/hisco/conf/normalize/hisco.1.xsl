@@ -119,26 +119,25 @@
                     <xsl:if test="final/images">
                         <hisco:images>
                             <xsl:for-each select="final/images/image_url">
-                                <hisco:image_url>
-                                    <xsl:variable name="tmp_before" select="substring-before(text(), '_')"/>
-                                    <xsl:variable name="tmp_after" select="substring-after(text(), '_')"/>
-                                    <xsl:choose>
-                                        <xsl:when
-                                                test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=1">
+                                <xsl:variable name="tmp_before" select="substring-before(text(), '_')"/>
+                                <xsl:variable name="tmp_after" select="substring-after(text(), '_')"/>
+                                <xsl:choose>
+                                    <xsl:when
+                                            test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=1">
+                                        <hisco:image_url>
                                             <xsl:value-of
                                                     select="concat('http://webstore.iisg.nl/historyofwork/', $tmp_before, '_00', $tmp_after, '.jpg')"/>
-                                        </xsl:when>
-                                        <xsl:when
-                                                test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=2">
+                                        </hisco:image_url>
+                                    </xsl:when>
+                                    <xsl:when
+                                            test="string(number($tmp_after)) != 'NaN' and string-length($tmp_after)=2">
+                                        <hisco:image_url>
                                             <xsl:value-of
                                                     select="concat('http://webstore.iisg.nl/historyofwork/', $tmp_before, '_0', $tmp_after, '.jpg')"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of
-                                                    select="concat('http://webstore.iisg.nl/historyofwork/', text(), '.jpg')"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </hisco:image_url>
+                                        </hisco:image_url>
+                                    </xsl:when>
+                                    <xsl:otherwise/>
+                                </xsl:choose>
                             </xsl:for-each>
                         </hisco:images>
                     </xsl:if>
