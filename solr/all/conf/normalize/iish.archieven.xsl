@@ -46,7 +46,7 @@
                 </iisg:iisg>
             </extraRecordData>
 
-            <xsl:variable name="geogname" select="//controlaccess/geogname"/>
+            <xsl:variable name="geognames" select="tokenize(//controlaccess/geogname, ',')"/>
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
 
@@ -69,7 +69,7 @@
                     </marc:controlfield>
                     <marc:controlfield tag="008">
                         <xsl:value-of
-                                select="concat('199507suuuuuuuu', $geogname[1],' |||||||||||||||||',$language,' d')"/>
+                                select="concat('199507suuuuuuuu', $geognames[1],' |||||||||||||||||',$language,' d')"/>
                     </marc:controlfield>
 
                     <xsl:if test="$language">
@@ -129,11 +129,14 @@
                         <xsl:with-param name="value" select="//scopecontent/p"/>
                     </xsl:call-template>
 
-                    <xsl:call-template name="insertElement">
-                        <xsl:with-param name="tag" select="'651'"/>
-                        <xsl:with-param name="code" select="'a'"/>
-                        <xsl:with-param name="value" select="$geogname"/>
-                    </xsl:call-template>
+                    <xsl:for-each select="$geognames">
+                        <xsl:call-template name="insertElement">
+                            <xsl:with-param name="tag" select="'651'"/>
+                            <xsl:with-param name="code" select="'a'"/>
+                            <xsl:with-param name="value" select="."/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+
 
                     <xsl:if test="//origination/persname">
                         <marc:datafield tag="700" ind1="1" ind2=" ">
