@@ -115,6 +115,12 @@
                                 <xsl:value-of select="$p2"/>
                             </marc:subfield>
                         </xsl:if>
+                        <xsl:variable name="href" select="//accessrestrict/p[2]/extref/@href"/>
+                        <xsl:if test="$href">
+                            <marc:subfield code="c">
+                                <xsl:value-of select="$href"/>
+                            </marc:subfield>
+                        </xsl:if>
                     </marc:datafield>
 
                     <xsl:call-template name="insertElement">
@@ -139,7 +145,7 @@
 
 
                     <xsl:if test="//origination/persname">
-                        <marc:datafield tag="700" ind1="1" ind2=" ">
+                        <marc:datafield tag="100" ind1="1" ind2=" ">
                             <marc:subfield code="a">
                                 <xsl:call-template name="addLastComma">
                                     <xsl:with-param name="tmp" select="//origination/persname[1]"/>
@@ -149,7 +155,7 @@
                         </marc:datafield>
                     </xsl:if>
                     <xsl:if test="//origination/corpname">
-                        <marc:datafield tag="710" ind1="2" ind2=" ">
+                        <marc:datafield tag="110" ind1="2" ind2=" ">
                             <marc:subfield code="a">
                                 <xsl:call-template name="addLastComma">
                                     <xsl:with-param name="tmp" select="//origination/corpname[1]"/>
@@ -159,7 +165,7 @@
                         </marc:datafield>
                     </xsl:if>
                     <xsl:if test="//origination/name">
-                        <marc:datafield tag="711" ind1="2" ind2=" ">
+                        <marc:datafield tag="111" ind1="2" ind2=" ">
                             <marc:subfield code="a">
                                 <xsl:call-template name="addLastComma">
                                     <xsl:with-param name="tmp" select="//origination/name[1]"/>
