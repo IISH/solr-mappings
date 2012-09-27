@@ -143,33 +143,50 @@
                         </xsl:call-template>
                     </xsl:for-each>
 
-
                     <xsl:if test="//origination/persname">
                         <marc:datafield tag="100" ind1="1" ind2=" ">
                             <marc:subfield code="a">
-                                <xsl:call-template name="addLastComma">
-                                    <xsl:with-param name="tmp" select="//origination/persname[1]"/>
-                                </xsl:call-template>
+                                <xsl:value-of select="//origination/persname[1]"/>
                             </marc:subfield>
                             <marc:subfield code="e">collector</marc:subfield>
                         </marc:datafield>
                     </xsl:if>
                     <xsl:if test="//origination/corpname">
-                        <marc:datafield tag="110" ind1="2" ind2=" ">
-                            <marc:subfield code="a">
-                                <xsl:call-template name="addLastComma">
-                                    <xsl:with-param name="tmp" select="//origination/corpname[1]"/>
-                                </xsl:call-template>
-                            </marc:subfield>
-                            <marc:subfield code="e">collector</marc:subfield>
-                        </marc:datafield>
+
+                        <xsl:variable name="tmp110"
+                                      select="normalize-space(substring-before(//origination/corpname[1], '. '))"/>
+                        <xsl:variable name="tmp111"
+                                      select="normalize-space(substring-after(//origination/corpname[1], '. '))"/>
+                        <xsl:choose>
+                            <xsl:when test="$tmp111">
+                                <marc:datafield tag="110" ind1="2" ind2=" ">
+                                    <marc:subfield code="a">
+                                        <xsl:value-of select="$tmp110"/>
+                                    </marc:subfield>
+                                    <marc:subfield code="e">collector</marc:subfield>
+                                </marc:datafield>
+                                <marc:datafield tag="111" ind1="2" ind2=" ">
+                                    <marc:subfield code="a">
+                                        <xsl:value-of select="$tmp111"/>
+                                    </marc:subfield>
+                                    <marc:subfield code="e">collector</marc:subfield>
+                                </marc:datafield>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <marc:datafield tag="110" ind1="2" ind2=" ">
+                                    <marc:subfield code="a">
+                                        <xsl:value-of select="$tmp110"/>
+                                    </marc:subfield>
+                                    <marc:subfield code="e">collector</marc:subfield>
+                                </marc:datafield>
+                            </xsl:otherwise>
+                        </xsl:choose>
+
                     </xsl:if>
                     <xsl:if test="//origination/name">
                         <marc:datafield tag="111" ind1="2" ind2=" ">
                             <marc:subfield code="a">
-                                <xsl:call-template name="addLastComma">
-                                    <xsl:with-param name="tmp" select="//origination/name[1]"/>
-                                </xsl:call-template>
+                                <xsl:value-of select="//origination/name[1]"/>
                             </marc:subfield>
                             <marc:subfield code="e">collector</marc:subfield>
                         </marc:datafield>
