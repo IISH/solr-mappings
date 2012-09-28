@@ -80,6 +80,52 @@
                         </xsl:call-template>
                     </xsl:if>
 
+                    <xsl:if test="//origination/persname">
+                        <marc:datafield tag="100" ind1="1" ind2=" ">
+                            <marc:subfield code="a">
+                                <xsl:value-of select="//origination/persname[1]"/>
+                            </marc:subfield>
+                            <marc:subfield code="e">creator</marc:subfield>
+                        </marc:datafield>
+                    </xsl:if>
+                    <xsl:if test="//origination/corpname">
+
+                        <xsl:variable name="tmp110"
+                                      select="normalize-space(substring-before(//origination/corpname[1], '. '))"/>
+                        <xsl:variable name="tmp111"
+                                      select="normalize-space(substring-after(//origination/corpname[1], '. '))"/>
+                        <xsl:choose>
+                            <xsl:when test="$tmp111">
+                                <marc:datafield tag="110" ind1="2" ind2=" ">
+                                    <marc:subfield code="a">
+                                        <xsl:value-of select="$tmp110"/>
+                                    </marc:subfield>
+                                    <marc:subfield code="b">
+                                        <xsl:value-of select="$tmp111"/>
+                                    </marc:subfield>
+                                    <marc:subfield code="e">creator</marc:subfield>
+                                </marc:datafield>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <marc:datafield tag="110" ind1="2" ind2=" ">
+                                    <marc:subfield code="a">
+                                        <xsl:value-of select="$tmp110"/>
+                                    </marc:subfield>
+                                    <marc:subfield code="e">creator</marc:subfield>
+                                </marc:datafield>
+                            </xsl:otherwise>
+                        </xsl:choose>
+
+                    </xsl:if>
+                    <xsl:if test="//origination/name">
+                        <marc:datafield tag="111" ind1="2" ind2=" ">
+                            <marc:subfield code="a">
+                                <xsl:value-of select="//origination/name[1]"/>
+                            </marc:subfield>
+                            <marc:subfield code="e">creator</marc:subfield>
+                        </marc:datafield>
+                    </xsl:if>
+
                     <marc:datafield tag="245" ind1=" " ind2=" ">
                         <marc:subfield code="a">
                             <xsl:value-of select="//archdesc/did/unittitle"/>
@@ -139,55 +185,92 @@
                         <xsl:call-template name="insertElement">
                             <xsl:with-param name="tag" select="'651'"/>
                             <xsl:with-param name="code" select="'a'"/>
-                            <xsl:with-param name="value" select="."/>
+                            <xsl:with-param name="value">
+                                <xsl:choose>
+                                    <xsl:when test="text()='ao'">ao</xsl:when>
+                                    <xsl:when test="text()='ar'">ag</xsl:when>
+                                    <xsl:when test="text()='am'">ai</xsl:when>
+                                    <xsl:when test="text()='au'">au</xsl:when>
+                                    <xsl:when test="text()='at'">at</xsl:when>
+                                    <xsl:when test="text()='az'">aj</xsl:when>
+                                    <xsl:when test="text()='bd'">bg</xsl:when>
+                                    <xsl:when test="text()='be'">be</xsl:when>
+                                    <xsl:when test="text()='bo'">bo</xsl:when>
+                                    <xsl:when test="text()='br'">bl</xsl:when>
+                                    <xsl:when test="text()='bg'">bu</xsl:when>
+                                    <xsl:when test="text()='kh'">cb</xsl:when>
+                                    <xsl:when test="text()='cm'">cm</xsl:when>
+                                    <xsl:when test="text()='cl'">cl</xsl:when>
+                                    <xsl:when test="text()='cn'">ch</xsl:when>
+                                    <xsl:when test="text()='hr'">ci</xsl:when>
+                                    <xsl:when test="text()='cu'">cu</xsl:when>
+                                    <xsl:when test="text()='cz'">xr</xsl:when>
+                                    <xsl:when test="text()='cs'">cs</xsl:when>
+                                    <xsl:when test="text()='cshh'">cs</xsl:when>
+                                    <xsl:when test="text()='dk'">dk</xsl:when>
+                                    <xsl:when test="text()='eg'">ua</xsl:when>
+                                    <xsl:when test="text()='sv'">es</xsl:when>
+                                    <xsl:when test="text()='fr'">fr</xsl:when>
+                                    <xsl:when test="text()='ge'">gs</xsl:when>
+                                    <xsl:when test="text()='de'">gw</xsl:when>
+                                    <xsl:when test="text()='gr'">gr</xsl:when>
+                                    <xsl:when test="text()='gd'">gd</xsl:when>
+                                    <xsl:when test="text()='gt'">gt</xsl:when>
+                                    <xsl:when test="text()='hk'">hk</xsl:when>
+                                    <xsl:when test="text()='hu'">hu</xsl:when>
+                                    <xsl:when test="text()='in'">ii</xsl:when>
+                                    <xsl:when test="text()='id'">io</xsl:when>
+                                    <xsl:when test="text()='ia'">vp</xsl:when>
+                                    <xsl:when test="text()='ir'">ir</xsl:when>
+                                    <xsl:when test="text()='iq'">iq</xsl:when>
+                                    <xsl:when test="text()='ie'">ie</xsl:when>
+                                    <xsl:when test="text()='il'">is</xsl:when>
+                                    <xsl:when test="text()='it'">it</xsl:when>
+                                    <xsl:when test="text()='lv'">lv</xsl:when>
+                                    <xsl:when test="text()='lb'">le</xsl:when>
+                                    <xsl:when test="text()='mk'">xn</xsl:when>
+                                    <xsl:when test="text()='my'">my</xsl:when>
+                                    <xsl:when test="text()='mx'">mx</xsl:when>
+                                    <xsl:when test="text()='bu'">br</xsl:when>
+                                    <xsl:when test="text()='mm'">br</xsl:when>
+                                    <xsl:when test="text()='na'">sx</xsl:when>
+                                    <xsl:when test="text()='nl'">ne</xsl:when>
+                                    <xsl:when test="text()='ni'">nq</xsl:when>
+                                    <xsl:when test="text()='ne'">ng</xsl:when>
+                                    <xsl:when test="text()='ng'">nr</xsl:when>
+                                    <xsl:when test="text()='pk'">pk</xsl:when>
+                                    <xsl:when test="text()='py'">py</xsl:when>
+                                    <xsl:when test="text()='pe'">pe</xsl:when>
+                                    <xsl:when test="text()='ph'">ph</xsl:when>
+                                    <xsl:when test="text()='pl'">pl</xsl:when>
+                                    <xsl:when test="text()='pt'">po</xsl:when>
+                                    <xsl:when test="text()='pr'">pr</xsl:when>
+                                    <xsl:when test="text()='ro'">ru</xsl:when>
+                                    <xsl:when test="text()='ru'">ru</xsl:when>
+                                    <xsl:when test="text()='sa'">su</xsl:when>
+                                    <xsl:when test="text()='si'">xv</xsl:when>
+                                    <xsl:when test="text()='za'">sa</xsl:when>
+                                    <xsl:when test="text()='su'">xxr</xsl:when>
+                                    <xsl:when test="text()='suhh'">xxr</xsl:when>
+                                    <xsl:when test="text()='es'">sp</xsl:when>
+                                    <xsl:when test="text()='lk'">ce</xsl:when>
+                                    <xsl:when test="text()='sd'">sj</xsl:when>
+                                    <xsl:when test="text()='sr'">sr</xsl:when>
+                                    <xsl:when test="text()='se'">sw</xsl:when>
+                                    <xsl:when test="text()='ch'">sz</xsl:when>
+                                    <xsl:when test="text()='th'">th</xsl:when>
+                                    <xsl:when test="text()='tr'">tu</xsl:when>
+                                    <xsl:when test="text()='uk'">xxk</xsl:when>
+                                    <xsl:when test="text()='us'">xxu</xsl:when>
+                                    <xsl:when test="text()='vn'">vm</xsl:when>
+                                    <xsl:when test="text()='yu'">yu</xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:value-of select="text()"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:with-param>
                         </xsl:call-template>
                     </xsl:for-each>
-
-                    <xsl:if test="//origination/persname">
-                        <marc:datafield tag="100" ind1="1" ind2=" ">
-                            <marc:subfield code="a">
-                                <xsl:value-of select="//origination/persname[1]"/>
-                            </marc:subfield>
-                            <marc:subfield code="e">creator</marc:subfield>
-                        </marc:datafield>
-                    </xsl:if>
-                    <xsl:if test="//origination/corpname">
-
-                        <xsl:variable name="tmp110"
-                                      select="normalize-space(substring-before(//origination/corpname[1], '. '))"/>
-                        <xsl:variable name="tmp111"
-                                      select="normalize-space(substring-after(//origination/corpname[1], '. '))"/>
-                        <xsl:choose>
-                            <xsl:when test="$tmp111">
-                                <marc:datafield tag="110" ind1="2" ind2=" ">
-                                    <marc:subfield code="a">
-                                        <xsl:value-of select="$tmp110"/>
-                                    </marc:subfield>
-                                    <marc:subfield code="b">
-                                        <xsl:value-of select="$tmp111"/>
-                                    </marc:subfield>
-                                    <marc:subfield code="e">creator</marc:subfield>
-                                </marc:datafield>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <marc:datafield tag="110" ind1="2" ind2=" ">
-                                    <marc:subfield code="a">
-                                        <xsl:value-of select="$tmp110"/>
-                                    </marc:subfield>
-                                    <marc:subfield code="e">creator</marc:subfield>
-                                </marc:datafield>
-                            </xsl:otherwise>
-                        </xsl:choose>
-
-                    </xsl:if>
-                    <xsl:if test="//origination/name">
-                        <marc:datafield tag="111" ind1="2" ind2=" ">
-                            <marc:subfield code="a">
-                                <xsl:value-of select="//origination/name[1]"/>
-                            </marc:subfield>
-                            <marc:subfield code="e">creator</marc:subfield>
-                        </marc:datafield>
-                    </xsl:if>
 
                     <xsl:call-template name="insertElement">
                         <xsl:with-param name="tag" select="'856'"/>
