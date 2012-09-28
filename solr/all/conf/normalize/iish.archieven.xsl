@@ -148,7 +148,7 @@
                             <marc:subfield code="a">
                                 <xsl:value-of select="//origination/persname[1]"/>
                             </marc:subfield>
-                            <marc:subfield code="e">collector</marc:subfield>
+                            <marc:subfield code="e">creator</marc:subfield>
                         </marc:datafield>
                     </xsl:if>
                     <xsl:if test="//origination/corpname">
@@ -163,13 +163,10 @@
                                     <marc:subfield code="a">
                                         <xsl:value-of select="$tmp110"/>
                                     </marc:subfield>
-                                    <marc:subfield code="e">collector</marc:subfield>
-                                </marc:datafield>
-                                <marc:datafield tag="111" ind1="2" ind2=" ">
-                                    <marc:subfield code="a">
+                                    <marc:subfield code="b">
                                         <xsl:value-of select="$tmp111"/>
                                     </marc:subfield>
-                                    <marc:subfield code="e">collector</marc:subfield>
+                                    <marc:subfield code="e">creator</marc:subfield>
                                 </marc:datafield>
                             </xsl:when>
                             <xsl:otherwise>
@@ -177,7 +174,7 @@
                                     <marc:subfield code="a">
                                         <xsl:value-of select="$tmp110"/>
                                     </marc:subfield>
-                                    <marc:subfield code="e">collector</marc:subfield>
+                                    <marc:subfield code="e">creator</marc:subfield>
                                 </marc:datafield>
                             </xsl:otherwise>
                         </xsl:choose>
@@ -188,7 +185,7 @@
                             <marc:subfield code="a">
                                 <xsl:value-of select="//origination/name[1]"/>
                             </marc:subfield>
-                            <marc:subfield code="e">collector</marc:subfield>
+                            <marc:subfield code="e">creator</marc:subfield>
                         </marc:datafield>
                     </xsl:if>
 
