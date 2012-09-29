@@ -68,8 +68,92 @@
                         <xsl:value-of select="$identifier"/>
                     </marc:controlfield>
                     <marc:controlfield tag="008">
+                        <xsl:variable name="geocode">
+                            <xsl:choose>
+                                <xsl:when test="$geognames[1]='ao'">ao</xsl:when>
+                                <xsl:when test="$geognames[1]='ar'">ag</xsl:when>
+                                <xsl:when test="$geognames[1]='am'">ai</xsl:when>
+                                <xsl:when test="$geognames[1]='au'">au</xsl:when>
+                                <xsl:when test="$geognames[1]='at'">at</xsl:when>
+                                <xsl:when test="$geognames[1]='az'">aj</xsl:when>
+                                <xsl:when test="$geognames[1]='bd'">bg</xsl:when>
+                                <xsl:when test="$geognames[1]='be'">be</xsl:when>
+                                <xsl:when test="$geognames[1]='bo'">bo</xsl:when>
+                                <xsl:when test="$geognames[1]='br'">bl</xsl:when>
+                                <xsl:when test="$geognames[1]='bg'">bu</xsl:when>
+                                <xsl:when test="$geognames[1]='kh'">cb</xsl:when>
+                                <xsl:when test="$geognames[1]='cm'">cm</xsl:when>
+                                <xsl:when test="$geognames[1]='cl'">cl</xsl:when>
+                                <xsl:when test="$geognames[1]='cn'">ch</xsl:when>
+                                <xsl:when test="$geognames[1]='hr'">ci</xsl:when>
+                                <xsl:when test="$geognames[1]='cu'">cu</xsl:when>
+                                <xsl:when test="$geognames[1]='cz'">xr</xsl:when>
+                                <xsl:when test="$geognames[1]='cs'">cs</xsl:when>
+                                <xsl:when test="$geognames[1]='cshh'">cs</xsl:when>
+                                <xsl:when test="$geognames[1]='dk'">dk</xsl:when>
+                                <xsl:when test="$geognames[1]='eg'">ua</xsl:when>
+                                <xsl:when test="$geognames[1]='sv'">es</xsl:when>
+                                <xsl:when test="$geognames[1]='fr'">fr</xsl:when>
+                                <xsl:when test="$geognames[1]='ge'">gs</xsl:when>
+                                <xsl:when test="$geognames[1]='de'">gw</xsl:when>
+                                <xsl:when test="$geognames[1]='gr'">gr</xsl:when>
+                                <xsl:when test="$geognames[1]='gd'">gd</xsl:when>
+                                <xsl:when test="$geognames[1]='gt'">gt</xsl:when>
+                                <xsl:when test="$geognames[1]='hk'">hk</xsl:when>
+                                <xsl:when test="$geognames[1]='hu'">hu</xsl:when>
+                                <xsl:when test="$geognames[1]='in'">ii</xsl:when>
+                                <xsl:when test="$geognames[1]='id'">io</xsl:when>
+                                <xsl:when test="$geognames[1]='ia'">vp</xsl:when>
+                                <xsl:when test="$geognames[1]='ir'">ir</xsl:when>
+                                <xsl:when test="$geognames[1]='iq'">iq</xsl:when>
+                                <xsl:when test="$geognames[1]='ie'">ie</xsl:when>
+                                <xsl:when test="$geognames[1]='il'">is</xsl:when>
+                                <xsl:when test="$geognames[1]='it'">it</xsl:when>
+                                <xsl:when test="$geognames[1]='lv'">lv</xsl:when>
+                                <xsl:when test="$geognames[1]='lb'">le</xsl:when>
+                                <xsl:when test="$geognames[1]='mk'">xn</xsl:when>
+                                <xsl:when test="$geognames[1]='my'">my</xsl:when>
+                                <xsl:when test="$geognames[1]='mx'">mx</xsl:when>
+                                <xsl:when test="$geognames[1]='bu'">br</xsl:when>
+                                <xsl:when test="$geognames[1]='mm'">br</xsl:when>
+                                <xsl:when test="$geognames[1]='na'">sx</xsl:when>
+                                <xsl:when test="$geognames[1]='nl'">ne</xsl:when>
+                                <xsl:when test="$geognames[1]='ni'">nq</xsl:when>
+                                <xsl:when test="$geognames[1]='ne'">ng</xsl:when>
+                                <xsl:when test="$geognames[1]='ng'">nr</xsl:when>
+                                <xsl:when test="$geognames[1]='pk'">pk</xsl:when>
+                                <xsl:when test="$geognames[1]='py'">py</xsl:when>
+                                <xsl:when test="$geognames[1]='pe'">pe</xsl:when>
+                                <xsl:when test="$geognames[1]='ph'">ph</xsl:when>
+                                <xsl:when test="$geognames[1]='pl'">pl</xsl:when>
+                                <xsl:when test="$geognames[1]='pt'">po</xsl:when>
+                                <xsl:when test="$geognames[1]='pr'">pr</xsl:when>
+                                <xsl:when test="$geognames[1]='ro'">ru</xsl:when>
+                                <xsl:when test="$geognames[1]='ru'">ru</xsl:when>
+                                <xsl:when test="$geognames[1]='sa'">su</xsl:when>
+                                <xsl:when test="$geognames[1]='si'">xv</xsl:when>
+                                <xsl:when test="$geognames[1]='za'">sa</xsl:when>
+                                <xsl:when test="$geognames[1]='su'">xxr</xsl:when>
+                                <xsl:when test="$geognames[1]='suhh'">xxr</xsl:when>
+                                <xsl:when test="$geognames[1]='es'">sp</xsl:when>
+                                <xsl:when test="$geognames[1]='lk'">ce</xsl:when>
+                                <xsl:when test="$geognames[1]='sd'">sj</xsl:when>
+                                <xsl:when test="$geognames[1]='sr'">sr</xsl:when>
+                                <xsl:when test="$geognames[1]='se'">sw</xsl:when>
+                                <xsl:when test="$geognames[1]='ch'">sz</xsl:when>
+                                <xsl:when test="$geognames[1]='th'">th</xsl:when>
+                                <xsl:when test="$geognames[1]='tr'">tu</xsl:when>
+                                <xsl:when test="$geognames[1]='uk'">xxk</xsl:when>
+                                <xsl:when test="$geognames[1]='us'">xxu</xsl:when>
+                                <xsl:when test="$geognames[1]='vn'">vm</xsl:when>
+                                <xsl:when test="$geognames[1]='yu'">yu</xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$geognames[1]"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
                         <xsl:value-of
-                                select="concat('199507suuuuuuuu', $geognames[1],' |||||||||||||||||',$language,' d')"/>
+                                select="concat('199507suuuuuuuu', $geocode,' |||||||||||||||||',$language,' d')"/>
                     </marc:controlfield>
 
                     <xsl:if test="$language">
@@ -144,11 +228,6 @@
                         <xsl:with-param name="value" select="//archdesc/did/physdesc"/>
                     </xsl:call-template>
 
-                    <xsl:call-template name="insertElement">
-                        <xsl:with-param name="tag" select="'852'"/>
-                        <xsl:with-param name="code" select="'a'"/>
-                        <xsl:with-param name="value" select="//repository/corpname"/>
-                    </xsl:call-template>
 
                     <marc:datafield tag="506" ind1=" " ind2=" ">
                         <xsl:variable name="p1" select="//accessrestrict/p[1]"/>
@@ -182,96 +261,18 @@
                     </xsl:call-template>
 
                     <xsl:for-each select="$geognames">
-                        <xsl:variable name="geocode" select="normalize-space(.)"/>
                         <xsl:call-template name="insertElement">
                             <xsl:with-param name="tag" select="'651'"/>
                             <xsl:with-param name="code" select="'a'"/>
-                            <xsl:with-param name="value">
-                                <xsl:choose>
-                                    <xsl:when test="$geocode='ao'">ao</xsl:when>
-                                    <xsl:when test="$geocode='ar'">ag</xsl:when>
-                                    <xsl:when test="$geocode='am'">ai</xsl:when>
-                                    <xsl:when test="$geocode='au'">au</xsl:when>
-                                    <xsl:when test="$geocode='at'">at</xsl:when>
-                                    <xsl:when test="$geocode='az'">aj</xsl:when>
-                                    <xsl:when test="$geocode='bd'">bg</xsl:when>
-                                    <xsl:when test="$geocode='be'">be</xsl:when>
-                                    <xsl:when test="$geocode='bo'">bo</xsl:when>
-                                    <xsl:when test="$geocode='br'">bl</xsl:when>
-                                    <xsl:when test="$geocode='bg'">bu</xsl:when>
-                                    <xsl:when test="$geocode='kh'">cb</xsl:when>
-                                    <xsl:when test="$geocode='cm'">cm</xsl:when>
-                                    <xsl:when test="$geocode='cl'">cl</xsl:when>
-                                    <xsl:when test="$geocode='cn'">ch</xsl:when>
-                                    <xsl:when test="$geocode='hr'">ci</xsl:when>
-                                    <xsl:when test="$geocode='cu'">cu</xsl:when>
-                                    <xsl:when test="$geocode='cz'">xr</xsl:when>
-                                    <xsl:when test="$geocode='cs'">cs</xsl:when>
-                                    <xsl:when test="$geocode='cshh'">cs</xsl:when>
-                                    <xsl:when test="$geocode='dk'">dk</xsl:when>
-                                    <xsl:when test="$geocode='eg'">ua</xsl:when>
-                                    <xsl:when test="$geocode='sv'">es</xsl:when>
-                                    <xsl:when test="$geocode='fr'">fr</xsl:when>
-                                    <xsl:when test="$geocode='ge'">gs</xsl:when>
-                                    <xsl:when test="$geocode='de'">gw</xsl:when>
-                                    <xsl:when test="$geocode='gr'">gr</xsl:when>
-                                    <xsl:when test="$geocode='gd'">gd</xsl:when>
-                                    <xsl:when test="$geocode='gt'">gt</xsl:when>
-                                    <xsl:when test="$geocode='hk'">hk</xsl:when>
-                                    <xsl:when test="$geocode='hu'">hu</xsl:when>
-                                    <xsl:when test="$geocode='in'">ii</xsl:when>
-                                    <xsl:when test="$geocode='id'">io</xsl:when>
-                                    <xsl:when test="$geocode='ia'">vp</xsl:when>
-                                    <xsl:when test="$geocode='ir'">ir</xsl:when>
-                                    <xsl:when test="$geocode='iq'">iq</xsl:when>
-                                    <xsl:when test="$geocode='ie'">ie</xsl:when>
-                                    <xsl:when test="$geocode='il'">is</xsl:when>
-                                    <xsl:when test="$geocode='it'">it</xsl:when>
-                                    <xsl:when test="$geocode='lv'">lv</xsl:when>
-                                    <xsl:when test="$geocode='lb'">le</xsl:when>
-                                    <xsl:when test="$geocode='mk'">xn</xsl:when>
-                                    <xsl:when test="$geocode='my'">my</xsl:when>
-                                    <xsl:when test="$geocode='mx'">mx</xsl:when>
-                                    <xsl:when test="$geocode='bu'">br</xsl:when>
-                                    <xsl:when test="$geocode='mm'">br</xsl:when>
-                                    <xsl:when test="$geocode='na'">sx</xsl:when>
-                                    <xsl:when test="$geocode='nl'">ne</xsl:when>
-                                    <xsl:when test="$geocode='ni'">nq</xsl:when>
-                                    <xsl:when test="$geocode='ne'">ng</xsl:when>
-                                    <xsl:when test="$geocode='ng'">nr</xsl:when>
-                                    <xsl:when test="$geocode='pk'">pk</xsl:when>
-                                    <xsl:when test="$geocode='py'">py</xsl:when>
-                                    <xsl:when test="$geocode='pe'">pe</xsl:when>
-                                    <xsl:when test="$geocode='ph'">ph</xsl:when>
-                                    <xsl:when test="$geocode='pl'">pl</xsl:when>
-                                    <xsl:when test="$geocode='pt'">po</xsl:when>
-                                    <xsl:when test="$geocode='pr'">pr</xsl:when>
-                                    <xsl:when test="$geocode='ro'">ru</xsl:when>
-                                    <xsl:when test="$geocode='ru'">ru</xsl:when>
-                                    <xsl:when test="$geocode='sa'">su</xsl:when>
-                                    <xsl:when test="$geocode='si'">xv</xsl:when>
-                                    <xsl:when test="$geocode='za'">sa</xsl:when>
-                                    <xsl:when test="$geocode='su'">xxr</xsl:when>
-                                    <xsl:when test="$geocode='suhh'">xxr</xsl:when>
-                                    <xsl:when test="$geocode='es'">sp</xsl:when>
-                                    <xsl:when test="$geocode='lk'">ce</xsl:when>
-                                    <xsl:when test="$geocode='sd'">sj</xsl:when>
-                                    <xsl:when test="$geocode='sr'">sr</xsl:when>
-                                    <xsl:when test="$geocode='se'">sw</xsl:when>
-                                    <xsl:when test="$geocode='ch'">sz</xsl:when>
-                                    <xsl:when test="$geocode='th'">th</xsl:when>
-                                    <xsl:when test="$geocode='tr'">tu</xsl:when>
-                                    <xsl:when test="$geocode='uk'">xxk</xsl:when>
-                                    <xsl:when test="$geocode='us'">xxu</xsl:when>
-                                    <xsl:when test="$geocode='vn'">vm</xsl:when>
-                                    <xsl:when test="$geocode='yu'">yu</xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$geocode"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:with-param>
+                            <xsl:with-param name="value" select="normalize-space(.)"/>
                         </xsl:call-template>
                     </xsl:for-each>
+
+                    <xsl:call-template name="insertElement">
+                        <xsl:with-param name="tag" select="'852'"/>
+                        <xsl:with-param name="code" select="'a'"/>
+                        <xsl:with-param name="value" select="//repository/corpname"/>
+                    </xsl:call-template>
 
                     <xsl:call-template name="insertElement">
                         <xsl:with-param name="tag" select="'856'"/>
