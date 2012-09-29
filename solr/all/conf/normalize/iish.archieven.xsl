@@ -46,7 +46,7 @@
                 </iisg:iisg>
             </extraRecordData>
 
-            <xsl:variable name="geognames" select="tokenize(//controlaccess/geogname, ',')"/>
+            <xsl:variable name="geognames" select="tokenize(//controlaccess/geogname[1], ',')"/>
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
 
