@@ -175,15 +175,13 @@
                     </xsl:if>
                     <xsl:if test="//origination/corpname">
 
-                        <xsl:variable name="tmp110"
-                                      select="normalize-space(substring-before(//origination/corpname[1], '. '))"/>
                         <xsl:variable name="tmp111"
                                       select="normalize-space(substring-after(//origination/corpname[1], '. '))"/>
                         <xsl:choose>
                             <xsl:when test="$tmp111">
                                 <marc:datafield tag="110" ind1="2" ind2=" ">
                                     <marc:subfield code="a">
-                                        <xsl:value-of select="$tmp110"/>
+                                        <xsl:value-of select="normalize-space(substring-before(//origination/corpname[1], '. '))"/>
                                     </marc:subfield>
                                     <marc:subfield code="b">
                                         <xsl:value-of select="$tmp111"/>
@@ -194,7 +192,7 @@
                             <xsl:otherwise>
                                 <marc:datafield tag="110" ind1="2" ind2=" ">
                                     <marc:subfield code="a">
-                                        <xsl:value-of select="$tmp110"/>
+                                        <xsl:value-of select="normalize-space(//origination/corpname[1])"/>
                                     </marc:subfield>
                                     <marc:subfield code="e">creator</marc:subfield>
                                 </marc:datafield>
