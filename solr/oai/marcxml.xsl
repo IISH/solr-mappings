@@ -23,10 +23,12 @@ limitations under the License.
     <xsl:param name="prefix"/>
 
     <xsl:template name="metadata">
-        <metadata>
-            <xsl:variable name="record" select="saxon:parse($doc//str[@name='resource']/text())/node()"/>
-            <xsl:copy-of select="$record//recordData/*"/>
-        </metadata>
+        <xsl:variable name="record" select="saxon:parse($doc//str[@name='resource']/text())/node()"/>
+        <xsl:if test="$record//recordData">
+            <metadata>
+                <xsl:copy-of select="$record//recordData/*"/>
+            </metadata>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>
