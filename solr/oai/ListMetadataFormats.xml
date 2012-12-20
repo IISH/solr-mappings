@@ -5,7 +5,7 @@
          http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
     <responseDate>2002-02-08T14:27:19Z</responseDate>
     <request verb="ListMetadataFormats"
-             identifier="oai:perseus.tufts.edu:Perseus:text:1999.02.0119">.
+             identifier="oai:domain.org:1">.
     </request>
     <ListMetadataFormats>
         <metadataFormat>
@@ -17,6 +17,21 @@
             <metadataPrefix>marcxml</metadataPrefix>
             <schema>http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd</schema>
             <metadataNamespace>http://www.loc.gov/MARC21/slim</metadataNamespace>
+        </metadataFormat>
+        <metadataFormat>
+            <metadataPrefix>rdfvufind</metadataPrefix>
+            <schema>http://www.w3.org/1999/02/22-rdf-syntax-ns#</schema>
+            <metadataNamespace>http://www.w3.org/1999/02/22-rdf-syntax-ns#</metadataNamespace>
+        </metadataFormat>
+        <metadataFormat>
+            <metadataPrefix>rdfsimili</metadataPrefix>
+            <schema>http://www.w3.org/1999/02/22-rdf-syntax-ns#</schema>
+            <metadataNamespace>http://www.w3.org/1999/02/22-rdf-syntax-ns#</metadataNamespace>
+        </metadataFormat>
+        <metadataFormat>
+            <metadataPrefix>mods</metadataPrefix>
+            <schema>http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-0.xsd</schema>
+            <metadataNamespace>http://www.loc.gov/mods/v3</metadataNamespace>
         </metadataFormat>
         <metadataFormat>
             <metadataPrefix>solr</metadataPrefix>

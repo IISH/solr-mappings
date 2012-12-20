@@ -18,6 +18,7 @@ limitations under the License.
                 version="2.0"
                 xmlns:saxon="http://saxon.sf.net/"
                 xmlns:marc="http://www.loc.gov/MARC21/slim"
+                xmlns:ead="urn:isbn:1-931666-22-9"
                 exclude-result-prefixes="ead marc saxon">
 
     <xsl:import href="oai.xsl"/>
