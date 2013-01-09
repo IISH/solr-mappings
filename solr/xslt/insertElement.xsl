@@ -84,6 +84,21 @@
         </xsl:if>
     </xsl:template>
 
+    <xsl:template name="insertSingleElement">
+        <xsl:param name="tag"/>
+        <xsl:param name="value"/>
+        <xsl:param name="code"/>
+        <xsl:variable name="tmp2" select="normalize-space($value)"/>
+
+        <xsl:if test="$tmp2 and string-length($tmp2)!=0">
+            <marc:datafield tag="{$tag}" ind1=" " ind2=" ">
+                <marc:subfield code="{$code}">
+                    <xsl:value-of select="$tmp2"/>
+                </marc:subfield>
+            </marc:datafield>
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template name="marc_elements">
         <xsl:param name="tag"/>
         <xsl:param name="code"/>

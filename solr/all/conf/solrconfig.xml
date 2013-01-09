@@ -735,6 +735,8 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
             <str name="saa.archieven.1"/>
             <str name="zearch.afbeeldingen.1"/>
             <str name="zebi.afbeeldingen.1"/>
+            <str name="irsh.digital.archive.1"/>
+            <str name="irsh.digital.archive.2"/>
         </lst>
     </requestHandler>
 
