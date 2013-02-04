@@ -27,15 +27,20 @@ php harvest_oai.php $dataset
 chmod -R 744 $d
 
   # Now collate our material
-  f=/data/datasets/"$dataset".xml
-  rm $f
+  fnew=/data/datasets/"$dataset".xml
+  rm $fnew
+  fdel=/data/datasets/"$dataset".deleted.xml
+  rm $fdel
 
   # We import all records.
   # To limit this, we collate all to a single file.
-  app=/home/maven/repo/org/socialhistory/solr/import/1.0/import-1.0.jar
-  java -Dxsl=marc -cp $app org.socialhistoryservices.solr.importer.Collate $d $f
+  app=/usr/bin/vufind/import-1.0.jar
+  java -Dxsl=marc -cp $app org.socialhistoryservices.solr.importer.Collate $d $fnew *.xml
+  java -Dxsl=marc -cp $app org.socialhistoryservices.solr.importer.Collate $d $fdel *.deleted
 
   # Then upload
   # For this we need stylesheets to normalize the marc documents into our model
-  java -cp $app org.socialhistoryservices.solr/importer.DirtyImporter $f "http://localhost:8080/solr/all/update" "/data/solr-mappings.index0/solr/all/conf/normalize/$dataset.xsl,/data/solr-mappings.index0/solr/all/conf/import/add.xsl,/data/solr-mappings.index0/solr/all/conf/import/addSolrDocument.xsl" "collectionName:$dataset"
+  java -cp $app org.socialhistoryservices.solr/importer.DirtyImporter $fnew "http://localhost:8080/solr/all/update" "/data/solr-mappings.index0/solr/all/conf/normalize/$dataset.xsl,/data/solr-mappings.index0/solr/all/conf/import/add.xsl,/data/solr-mappings.index0/solr/all/conf/import/addSolrDocument.xsl" "collectionName:$dataset"
+
+  java -cp $app org.socialhistoryservices.solr/importer.DirtyImporter $fdel "http://localhost:8080/solr/all/update" "/data/solr-mappings.index0/solr/all/conf/normalize/$dataset.deleted.xsl,/data/solr-mappings.index0/solr/all/conf/import/add.xsl,/data/solr-mappings.index0/solr/all/conf/import/addSolrDocument.xsl" "collectionName:$dataset"
 
