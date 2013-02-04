@@ -46,10 +46,6 @@
                             <xsl:with-param name="fsDate" select="$date_modified"/>
                         </xsl:call-template>
                     </iisg:date_modified>
-                    <xsl:if test="@status">
-                        <iisg:deleted>true</iisg:deleted>
-                        <iisg:collectionName>deleted</iisg:collectionName>
-                    </xsl:if>
                 </iisg:iisg>
             </extraRecordData>
 
