@@ -157,11 +157,12 @@
                                 select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',$language,' d')"/>
                     </marc:controlfield>
 
-                    <xsl:for-each select="//langmaterial">
+                    <xsl:variable name="lm" select="tokenize(//langmaterial[1], ',')"/>
+                    <xsl:for-each select="$lm">
                         <xsl:call-template name="insertElement">
                             <xsl:with-param name="tag" select="'041'"/>
                             <xsl:with-param name="code" select="'a'"/>
-                            <xsl:with-param name="value" select="text()"/>
+                            <xsl:with-param name="value" select="."/>
                         </xsl:call-template>
                     </xsl:for-each>
 
