@@ -52,10 +52,10 @@
 
                     <xsl:variable name="language">
                         <xsl:choose>
-                            <xsl:when test="//langusage = 'Nederlands'">dut</xsl:when>
+                            <xsl:when test="//langmaterial[1] = 'Nederlands'">dut</xsl:when>
                             <xsl:otherwise>
                                 <xsl:choose>
-                                    <xsl:when test="//langusage = 'dut'">dut</xsl:when>
+                                    <xsl:when test="//langmaterial[1] = 'dut'">dut</xsl:when>
                                     <xsl:otherwise>eng</xsl:otherwise>
                                 </xsl:choose>
                             </xsl:otherwise>
@@ -157,13 +157,13 @@
                                 select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',$language,' d')"/>
                     </marc:controlfield>
 
-                    <xsl:if test="$language">
+                    <xsl:for-each select="//langmaterial">
                         <xsl:call-template name="insertElement">
                             <xsl:with-param name="tag" select="'041'"/>
                             <xsl:with-param name="code" select="'a'"/>
-                            <xsl:with-param name="value" select="substring($language, 1, 2)"/>
+                            <xsl:with-param name="value" select="text()"/>
                         </xsl:call-template>
-                    </xsl:if>
+                    </xsl:for-each>
 
                     <xsl:if test="//origination/persname">
                         <marc:datafield tag="100" ind1="1" ind2=" ">
@@ -181,14 +181,15 @@
                             <xsl:when test="$tmp111">
                                 <marc:datafield tag="110" ind1="2" ind2=" ">
                                     <marc:subfield code="a">
-                                        <xsl:value-of select="normalize-space(substring-before(//origination/corpname[1], '. '))"/>
+                                        <xsl:value-of
+                                                select="normalize-space(substring-before(//origination/corpname[1], '. '))"/>
                                     </marc:subfield>
                                     <marc:subfield code="b">
                                         <xsl:value-of select="$tmp111"/>
                                     </marc:subfield>
                                     <marc:subfield code="e">creator</marc:subfield>
                                 </marc:datafield>
-                           </xsl:when>
+                            </xsl:when>
                             <xsl:otherwise>
                                 <marc:datafield tag="110" ind1="2" ind2=" ">
                                     <marc:subfield code="a">
@@ -201,11 +202,11 @@
 
                     </xsl:if>
                     <xsl:if test="//origination/name">
-                        <marc:datafield tag="111" ind1="2" ind2=" ">
+                        <marc:datafield tag="130" ind1="2" ind2=" ">
                             <marc:subfield code="a">
                                 <xsl:value-of select="//origination/name[1]"/>
                             </marc:subfield>
-                            <marc:subfield code="e">creator</marc:subfield>
+                            <marc:subfield code="k">Collection</marc:subfield>
                         </marc:datafield>
                     </xsl:if>
 
