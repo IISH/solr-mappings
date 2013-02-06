@@ -46,8 +46,8 @@ limitations under the License.
 
     <xsl:template name="header">
         <header>
-            <xsl:if test="$doc//str[@name='iisg_deleted']='true'">
-                <xsl:attribute name="status">true</xsl:attribute>
+            <xsl:if test="$doc//bool[@name='iisg_deleted']='true'">
+                <xsl:attribute name="status">deleted</xsl:attribute>
             </xsl:if>
             <identifier>
                 <xsl:value-of select="concat($prefix, $doc//str[@name='iisg_identifier'])"/>
