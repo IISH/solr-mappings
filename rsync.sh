@@ -15,7 +15,7 @@ fi
 for i in {0..1}
 	do
 		be=/data/solr-mappings.be"$i"/solr/
-		rsync --delete -avv $index0 $be
+		rsync --delete -av $index0 $be
 		chown -R tomcat6:tomcat6 $be
 		url=http://api.be"$i".socialhistoryservices.org:8080/solr/admin/multicore?action="RELOAD&core=all"
 		wget -O /tmp/reload.txt "$url"

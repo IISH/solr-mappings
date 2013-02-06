@@ -723,6 +723,7 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
             <str name="hmr.afbeeldingen.1"/>
             <str name="iish.archieven"/>
             <str name="iish.evergreen.biblio"/>
+            <str name="iish.evergreen.biblio.deleted"/>
             <str name="iish.eci"/>
             <str name="limburgsmuseum.afbeeldingen.1"/>
             <str name="muma.afbeeldingen.1"/>

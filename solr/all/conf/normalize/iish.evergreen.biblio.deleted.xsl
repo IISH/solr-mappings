@@ -50,14 +50,14 @@
                     <iisg:collectionName>deleted</iisg:collectionName>
                 </iisg:iisg>
             </extraRecordData>
-
+<!--
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
                     <xsl:copy-of select="marc:leader"/>
                     <xsl:copy-of select="marc:controlfield"/>
                     <xsl:copy-of select="marc:datafield"/>
                 </marc:record>
-            </recordData>
+            </recordData>-->
         </record>
 
     </xsl:template>
