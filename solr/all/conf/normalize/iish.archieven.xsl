@@ -157,16 +157,18 @@
                             </xsl:choose>
                         </xsl:variable>
                         <xsl:value-of
-                                select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',$language[1],' d')"/>
+                                select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',substring(concat($language[1], '   '), 1, 3),' d')"/>
                     </marc:controlfield>
 
-                    <xsl:for-each select="$lm">
-                        <xsl:call-template name="insertElement">
-                            <xsl:with-param name="tag" select="'041'"/>
-                            <xsl:with-param name="code" select="'a'"/>
-                            <xsl:with-param name="value" select="."/>
-                        </xsl:call-template>
-                    </xsl:for-each>
+                    <xsl:if test="$lm">
+                        <marc:datafield tag="041">
+                            <xsl:for-each select="$lm">
+                                <marc:subfield code="a">
+                                    <xsl:value-of select="."/>
+                                </marc:subfield>
+                            </xsl:for-each>
+                        </marc:datafield>
+                    </xsl:if>
 
                     <xsl:if test="//origination/persname">
                         <marc:datafield tag="100" ind1="1" ind2=" ">
