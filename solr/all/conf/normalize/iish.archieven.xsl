@@ -67,6 +67,9 @@
                     <marc:controlfield tag="001">
                         <xsl:value-of select="$identifier"/>
                     </marc:controlfield>
+
+                    <xsl:variable name="lm" select="tokenize(//langmaterial[1], ',')"/>
+
                     <marc:controlfield tag="008">
                         <xsl:variable name="tmp" select="normalize-space($geognames[1])"/>
                         <xsl:variable name="geocode">
@@ -154,10 +157,9 @@
                             </xsl:choose>
                         </xsl:variable>
                         <xsl:value-of
-                                select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',$language,' d')"/>
+                                select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',$language[1],' d')"/>
                     </marc:controlfield>
 
-                    <xsl:variable name="lm" select="tokenize(//langmaterial[1], ',')"/>
                     <xsl:for-each select="$lm">
                         <xsl:call-template name="insertElement">
                             <xsl:with-param name="tag" select="'041'"/>
