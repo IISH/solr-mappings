@@ -160,11 +160,11 @@
                                 select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',substring(concat($language[1], '   '), 1, 3),' d')"/>
                     </marc:controlfield>
 
-                    <xsl:if test="$lm">
+                    <xsl:if test="count($lm)>0">
                         <marc:datafield tag="041">
                             <xsl:for-each select="$lm">
                                 <marc:subfield code="a">
-                                    <xsl:value-of select="."/>
+                                    <xsl:value-of select="normalize-space(.)"/>
                                 </marc:subfield>
                             </xsl:for-each>
                         </marc:datafield>
