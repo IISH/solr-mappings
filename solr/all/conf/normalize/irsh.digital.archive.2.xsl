@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
+<!-- legacy xml mappings -->
+
 <xsl:stylesheet
         version="2.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -63,14 +65,20 @@
                     </marc:controlfield>
                     <marc:controlfield tag="008">199902suuuuuuuu||||||||||||||||||||eng d</marc:controlfield>
 
-                    <xsl:if test="front/article-meta/contrib-group/contrib/name/given-name and front/article-meta/contrib-group/contrib/name/surname">
+                    <xsl:for-each select="front/article-meta/contrib-group/contrib">
+                        <xsl:variable name="tag">
+                        <xsl:choose>
+                            <xsl:when test="position()=1">100</xsl:when>
+                            <xsl:otherwise>700</xsl:otherwise>
+                        </xsl:choose></xsl:variable>
                         <xsl:call-template name="insertSingleElement">
-                            <xsl:with-param name="tag">100</xsl:with-param>
+                            <xsl:with-param name="tag"><xsl:value-of select="$tag"/></xsl:with-param>
                             <xsl:with-param name="code">a</xsl:with-param>
                             <xsl:with-param name="value"
-                                            select="concat(front/article-meta/contrib-group/contrib/name/given-name, ', ', front/article-meta/contrib-group/contrib/name/surname)"/>
+                                            select="concat(name/given-names, ', ', name/surname)"/>
                         </xsl:call-template>
-                    </xsl:if>
+
+                    </xsl:for-each>
 
                     <marc:datafield tag="260" ind0=" " ind1=" ">
                         <marc:subfield code="a">
@@ -105,7 +113,7 @@
                     <marc:datafield tag="500" ind0=" " ind1=" ">
                         <marc:subfield code="a">
                             <xsl:value-of
-                                    select="concat('From the ', front/journal-meta/journal-title, ', ', front/article-meta/volume, '(', front/article-meta/pub-date[@pub-type='ppub']/year, ') no.', front/article-meta/issue, ', p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
+                                    select="concat(@article-type, ' from the ', front/journal-meta/journal-title, ', ', front/article-meta/volume, '(', front/article-meta/pub-date[@pub-type='ppub']/year, ') no.', front/article-meta/issue, ', p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
                         </marc:subfield>
                     </marc:datafield>
 

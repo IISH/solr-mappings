@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
+<!-- legacy sgm mappings -->
+
 <xsl:stylesheet
         version="2.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -103,14 +105,14 @@
 
                     <marc:datafield tag="245" ind0=" " ind1=" ">
                         <marc:subfield code="a">
-                            <xsl:value-of select="ARTCON/GENHDR/TIG/ATL"/>
+                            <xsl:value-of select="ARTCON/GENHDR/TIG/ATL/text()"/>
                         </marc:subfield>
                     </marc:datafield>
 
                     <marc:datafield tag="500" ind0=" " ind1=" ">
                         <marc:subfield code="a">
                             <xsl:value-of
-                                    select="concat('From the ', ISSUE/JINFO/JTL, ', ', ISSUE/PUBINFO/VID, '(', ISSUE/PUBINFO/CD/@YEAR, ') no.', ISSUE/PUBINFO/IID, ', p. ',ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPF, '-', ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPL, '.')"/>
+                                    select="concat(ARTCON/GENHDR/ARTINFO/ARTTY/DISPART, ' from the ', ISSUE/JINFO/JTL, ', ', ISSUE/PUBINFO/VID, '(', ISSUE/PUBINFO/CD/@YEAR, ') no.', ISSUE/PUBINFO/IID, ', p. ',ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPF, '-', ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPL, '.')"/>
                         </marc:subfield>
                     </marc:datafield>
 
@@ -120,11 +122,11 @@
                         <xsl:with-param name="value" select="ARTCON/GENHDR/ABS/P"/>
                     </xsl:call-template>
 
-                    <xsl:if test="ARTCON/ARTINFO/CRN">
+                    <xsl:if test="//CRN">
                         <xsl:call-template name="insertSingleElement">
                             <xsl:with-param name="tag">845</xsl:with-param>
                             <xsl:with-param name="code">a</xsl:with-param>
-                            <xsl:with-param name="value" select="ARTCON/ARTINFO/CRN"/>
+                            <xsl:with-param name="value" select="//CRN[1]"/>
                         </xsl:call-template>
                     </xsl:if>
 
