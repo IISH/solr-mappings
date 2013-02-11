@@ -157,7 +157,7 @@
                             </xsl:choose>
                         </xsl:variable>
                         <xsl:value-of
-                                select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',substring(concat($language[1], '   '), 1, 3),' d')"/>
+                                select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',substring(concat($lm[1], '   '), 1, 3),' d')"/>
                     </marc:controlfield>
 
                     <xsl:if test="$lm">
