@@ -50,18 +50,6 @@
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
 
-                    <xsl:variable name="language">
-                        <xsl:choose>
-                            <xsl:when test="//langmaterial[1] = 'Nederlands'">dut</xsl:when>
-                            <xsl:otherwise>
-                                <xsl:choose>
-                                    <xsl:when test="//langmaterial[1] = 'dut'">dut</xsl:when>
-                                    <xsl:otherwise>eng</xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:variable>
-
                     <marc:leader>00742nbm a22001930a 45 0</marc:leader>
 
                     <marc:controlfield tag="001">
@@ -156,8 +144,18 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:variable>
+                        <xsl:variable name="firstlanguagematerial">
+                            <xsl:choose>
+                                <xsl:when test="count($lm)>0">
+                                    <xsl:value-of select="normalize-space($lm[1])"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>   </xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
                         <xsl:value-of
-                                select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',substring(concat($lm[1], '   '), 1, 3),' d')"/>
+                                select="concat('199507suuuuuuuu', substring(concat($geocode, '   '), 1, 3),'|||||||||||||||||',$firstlanguagematerial,' d')"/>
                     </marc:controlfield>
 
                     <xsl:if test="count($lm)>0">
