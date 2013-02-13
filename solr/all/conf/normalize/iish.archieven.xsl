@@ -159,7 +159,7 @@
                     </marc:controlfield>
 
                     <xsl:if test="count($lm)>0">
-                        <marc:datafield tag="041">
+                        <marc:datafield tag="041" ind1=" " ind2=" ">
                             <xsl:for-each select="$lm">
                                 <marc:subfield code="a">
                                     <xsl:value-of select="normalize-space(.)"/>
