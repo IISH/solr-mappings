@@ -53,7 +53,14 @@ limitations under the License.
                 <xsl:value-of select="concat($prefix, $doc//str[@name='iisg_identifier'])"/>
             </identifier>
             <datestamp>
-                <xsl:value-of select="$doc//date[@name='iisg_date_modified']"/>
+                <xsl:choose>
+                    <xsl:when test="$doc//date[@name='iisg_date_modified']">
+                        <xsl:value-of select="$doc//date[@name='iisg_date_modified']"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$doc//date[@name='iisg_datestamp']"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </datestamp>
             <xsl:for-each select="$doc//arr[@name='iisg_collectionName']/str">
                 <setSpec>

@@ -7,7 +7,7 @@
         xmlns:iisg="http://www.iisg.nl/api/sru/"
         exclude-result-prefixes="iisg">
 
-    <xsl:import href="iish.evergreen.biblio.xsl"/>
+    <xsl:import href="../../../xslt/insertElement.xsl"/>
     <xsl:output method="xml" indent="no" omit-xml-declaration="yes"/>
     <xsl:strip-space elements="*"/>
     <xsl:param name="marc_controlfield_005"/>
@@ -50,14 +50,6 @@
                     <iisg:collectionName>deleted</iisg:collectionName>
                 </iisg:iisg>
             </extraRecordData>
-<!--
-            <recordData>
-                <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
-                    <xsl:copy-of select="marc:leader"/>
-                    <xsl:copy-of select="marc:controlfield"/>
-                    <xsl:copy-of select="marc:datafield"/>
-                </marc:record>
-            </recordData>-->
         </record>
 
     </xsl:template>
