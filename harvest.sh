@@ -41,4 +41,3 @@ chmod -R 744 $d
   java -cp $app org.socialhistoryservices.solr/importer.DirtyImporter $f "http://localhost:8080/solr/all/update" "/data/solr-mappings.index0/solr/all/conf/normalize/$dataset.xsl,/data/solr-mappings.index0/solr/all/conf/import/add.xsl,/data/solr-mappings.index0/solr/all/conf/import/addSolrDocument.xsl" "collectionName:$dataset"
 
 wget -O /tmp/commit.txt http://localhost:8080/solr/all/update?commit=true
-wget http://localhost:8080/solr/all/update?commit=true
