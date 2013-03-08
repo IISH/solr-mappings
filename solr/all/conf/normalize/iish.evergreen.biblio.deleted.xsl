@@ -47,7 +47,6 @@
                         </xsl:call-template>
                     </iisg:date_modified>
                     <iisg:deleted>true</iisg:deleted>
-                    <iisg:collectionName>deleted</iisg:collectionName>
                 </iisg:iisg>
             </extraRecordData>
         </record>
