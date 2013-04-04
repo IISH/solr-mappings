@@ -16,9 +16,9 @@
     <xsl:param name="marc_controlfield_008"/>
     <xsl:param name="date_modified"/>
     <xsl:param name="collectionName"/>
-    
+
     <xsl:template match="ARTICLE">
-        <xsl:apply-templates select="HEADER" />
+        <xsl:apply-templates select="HEADER"/>
     </xsl:template>
 
     <xsl:template match="HEADER">
@@ -61,29 +61,47 @@
 
                     <marc:leader>00857nas a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
-                        <xsl:value-of select="$identifier"/>
+                        <xsl:value-of select="ARTCON/GENHDR/ARTINFO/ALTID/PII"/>
                     </marc:controlfield>
                     <marc:controlfield tag="003">NL-AMISG</marc:controlfield>
                     <marc:controlfield tag="005">
                         <xsl:value-of select="$marc_controlfield_005"/>
                     </marc:controlfield>
-                    <marc:controlfield tag="008">199902suuuuuuuu||||||||||||||||||||eng d</marc:controlfield>
+                    <marc:controlfield tag="008">199902suuuuuuuu||||||||||||||||||||||| d</marc:controlfield>
 
-                    <xsl:call-template name="insertSingleElement">
-                        <xsl:with-param name="tag">041</xsl:with-param>
-                        <xsl:with-param name="code">a</xsl:with-param>
-                        <xsl:with-param name="value">eng</xsl:with-param>
-                    </xsl:call-template>
+                    <!--
+                                        <xsl:call-template name="insertSingleElement">
+                                            <xsl:with-param name="tag">041</xsl:with-param>
+                                            <xsl:with-param name="code">a</xsl:with-param>
+                                            <xsl:with-param name="value">eng</xsl:with-param>
+                                        </xsl:call-template>
+                    -->
 
-                    <xsl:if test="ARTCON/GENHDR/AUG/AU/FNMS and ARTCON/GENHDR/AUG/AU/SNM">
+                    <xsl:for-each select="ARTCON/GENHDR/AUG/AU[FNMS and SNM]">
+                        <xsl:variable name="tag">
+                            <xsl:choose>
+                                <xsl:when test="position()=1">100</xsl:when>
+                                <xsl:otherwise>700</xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
                         <xsl:call-template name="insertSingleElement">
-                            <xsl:with-param name="tag">100</xsl:with-param>
+                            <xsl:with-param name="tag" select="$tag"/>
                             <xsl:with-param name="code">a</xsl:with-param>
                             <xsl:with-param name="value"
-                                            select="concat(ARTCON/GENHDR/AUG/AU[1]/SNM, ', ', ARTCON/GENHDR/AUG/AU[1]/FNMS)"/>
+                                            select="concat(SNM, ', ', FNMS)"/>
                         </xsl:call-template>
-                    </xsl:if>
 
+                    </xsl:for-each>
+                    <marc:datafield tag="245" ind0=" " ind1=" ">
+                        <marc:subfield code="a">
+                            <xsl:value-of select="ARTCON/GENHDR/TIG/ATL[1]"/>
+                        </marc:subfield>
+                        <xsl:if test="ARTCON/GENHDR/ARTINFO/ARTTY/DISPART">
+                        <marc:subfield code="k">
+                            <xsl:value-of select="ARTCON/GENHDR/ARTINFO/ARTTY/DISPART"/>
+                        </marc:subfield>
+                        </xsl:if>
+                    </marc:datafield>
                     <marc:datafield tag="260" ind0=" " ind1=" ">
                         <marc:subfield code="a">
                             <xsl:value-of select="concat(ISSUE/PINFO/LOC, ' :')"/>
@@ -103,16 +121,14 @@
                                         select="concat(ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/@COUNT, ' p.')"/>
                     </xsl:call-template>
 
-                    <marc:datafield tag="245" ind0=" " ind1=" ">
-                        <marc:subfield code="a">
-                            <xsl:value-of select="ARTCON/GENHDR/TIG/ATL/text()"/>
-                        </marc:subfield>
-                    </marc:datafield>
-
-                    <marc:datafield tag="500" ind0=" " ind1=" ">
+                    <marc:datafield tag="773" ind0="0" ind1="#">
                         <marc:subfield code="a">
                             <xsl:value-of
-                                    select="concat(ARTCON/GENHDR/ARTINFO/ARTTY/DISPART, ' from the ', ISSUE/JINFO/JTL, ', ', ISSUE/PUBINFO/VID, '(', ISSUE/PUBINFO/CD/@YEAR, ') no.', ISSUE/PUBINFO/IID, ', p. ',ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPF, '-', ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPL, '.')"/>
+                                    select="ISSUE/JINFO/JTL"/>
+                        </marc:subfield>
+                        <marc:subfield code="g">
+                            <xsl:value-of
+                                    select="concat(ISSUE/PUBINFO/VID, '(', ISSUE/PUBINFO/CD/@YEAR, ') no.', ISSUE/PUBINFO/IID, ', p. ',ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPF, '-', ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPL, '.')"/>
                         </marc:subfield>
                     </marc:datafield>
 
@@ -135,11 +151,7 @@
                         <xsl:with-param name="code">u</xsl:with-param>
                         <xsl:with-param name="value" select="$isShownByPdf"/>
                     </xsl:call-template>
-                    <xsl:call-template name="insertSingleElement">
-                        <xsl:with-param name="tag">856</xsl:with-param>
-                        <xsl:with-param name="code">u</xsl:with-param>
-                        <xsl:with-param name="value" select="$isShownByThumbnail"/>
-                    </xsl:call-template>
+
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
