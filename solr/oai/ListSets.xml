@@ -84,8 +84,9 @@
             <setSpec>hmr.afbeeldingen.1</setSpec>
             <setName>Hbm</setName>
         </set>
-        <set><setSpec>limburgsmuseum.afbeeldingen.1</setSpec>limburgsmuseum
-            <setName></setName>
+        <set>
+            <setSpec>limburgsmuseum.afbeeldingen.1</setSpec>
+            <setName>limburgsmuseum</setName>
         </set>
         <set>
             <setSpec>muma.afbeeldingen.1</setSpec>
@@ -147,6 +148,10 @@
             <setSpec>VIS-EuropeanSocialMovements</setSpec>
             <setName>Social movements 19-20th century photo's en posters</setName>
             <setDescription>Image and Sound collection, social movements 19-20th century photo's en posters</setDescription>
+        </set>
+        <set>
+            <setSpec>irsh</setSpec>
+            <setName>International Review of Social History</setName>
         </set>
     </ListSets>
 </OAI-PMH>

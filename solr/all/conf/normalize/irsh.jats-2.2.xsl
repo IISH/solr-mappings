@@ -19,7 +19,7 @@
 
     <xsl:template match="article">
 
-        <xsl:variable name="identifier">
+        <xsl:variable name="controlfield_001">
             <xsl:choose>
                 <xsl:when test="front/article-meta/issue">
                     <xsl:value-of
@@ -31,11 +31,10 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+        <xsl:variable name="identifier" select="concat('10622/', $controlfield_001)"/>
 
-        <xsl:variable name="isShownByPdf"
-                      select="concat('http://hdl.handle.net/10622/', front/article-meta/article-id[@pub-id-type='pii'], '?locatt=view:master')"/>
-        <xsl:variable name="isShownByThumbnail"
-                      select="concat('http://hdl.handle.net/10622/', front/article-meta/article-id[@pub-id-type='pii'], '?locatt=view:level3')"/>
+        <xsl:variable name="isShownBy"
+                      select="concat('http://hdl.handle.net/10622/', front/article-meta/article-id[@pub-id-type='pii'])"/>
         <record>
             <extraRecordData>
                 <iisg:iisg>
@@ -49,10 +48,7 @@
                         <xsl:value-of select="concat('http://hdl.handle.net/', $identifier)"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
-                        <xsl:copy-of select="$isShownByPdf"/>
-                    </iisg:isShownBy>
-                    <iisg:isShownBy>
-                        <xsl:copy-of select="$isShownByThumbnail"/>
+                        <xsl:copy-of select="concat($isShownBy,'?locatt=view:master')"/>
                     </iisg:isShownBy>
                     <iisg:date_modified>
                         <xsl:call-template name="insertDateModified">
@@ -68,7 +64,7 @@
 
                     <marc:leader>00857nas a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
-                        <xsl:value-of select="front/article-meta/article-id[@pub-id-type='pii']"/>
+                        <xsl:value-of select="$controlfield_001"/>
                     </marc:controlfield>
                     <marc:controlfield tag="003">NL-AMISG</marc:controlfield>
                     <marc:controlfield tag="005">
@@ -166,7 +162,7 @@
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">856</xsl:with-param>
                         <xsl:with-param name="code">u</xsl:with-param>
-                        <xsl:with-param name="value" select="$isShownByPdf"/>
+                        <xsl:with-param name="value" select="$isShownBy"/>
                     </xsl:call-template>
 
                     <xsl:call-template name="insertSingleElement">

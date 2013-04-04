@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- import for sgml 2012 format -->
+        <!-- import for JATS 2012 format -->
 
 <dataConfig>
 	<dataSource name="fs" type="FileDataSource" encoding="UTF-8" />
@@ -10,7 +10,7 @@
             dataSource="null"
 		    stream="true"
 		    processor="FileListEntityProcessor"
-		    baseDir="/data/datasets/irsh/irsh.digital.archive.1"
+		    baseDir="/data/datasets/irsh/jats-2.2"
 		    filename="^.*\.xml$"
 		    recursive="true"
 		    rootEntity="true"

@@ -23,12 +23,19 @@
 
     <xsl:template match="HEADER">
 
-        <xsl:variable name="identifier"
-                      select="concat('10622/', ISSUE/JINFO/ISSN, '.', ISSUE/PUBINFO/VID, '.', ISSUE/PUBINFO/IID)"/>
-        <xsl:variable name="isShownByPdf"
-                      select="concat('http://hdl.handle.net/10622/',ARTCON/GENHDR/ARTINFO/ALTID/PII, '?locatt=view:master')"/>
-        <xsl:variable name="isShownByThumbnail"
-                      select="concat('http://hdl.handle.net/10622/', ARTCON/GENHDR/ARTINFO/ALTID/PII, '?locatt=view:level3')"/>
+        <xsl:variable name="controlfield_001">
+        <xsl:choose>
+            <xsl:when test="ISSUE/PUBINFO/IID">
+                <xsl:value-of select="concat( ISSUE/JINFO/ISSN, '.', ISSUE/PUBINFO/VID, '.', ISSUE/PUBINFO/IID)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat( ISSUE/JINFO/ISSN, '.', ISSUE/PUBINFO/VID)"/>
+            </xsl:otherwise>
+        </xsl:choose></xsl:variable>
+
+        <xsl:variable name="identifier" select="concat('10622/', $controlfield_001)"/>
+        <xsl:variable name="isShownBy"
+                      select="concat('http://hdl.handle.net/10622/',ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
         <record>
             <extraRecordData>
                 <iisg:iisg>
@@ -42,10 +49,7 @@
                         <xsl:value-of select="concat('http://hdl.handle.net/', $identifier)"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
-                        <xsl:copy-of select="$isShownByPdf"/>
-                    </iisg:isShownBy>
-                    <iisg:isShownBy>
-                        <xsl:copy-of select="$isShownByThumbnail"/>
+                        <xsl:copy-of select="concat($isShownBy,'?locatt=view:master')"/>
                     </iisg:isShownBy>
                     <iisg:date_modified>
                         <xsl:call-template name="insertDateModified">
@@ -61,7 +65,7 @@
 
                     <marc:leader>00857nas a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
-                        <xsl:value-of select="ARTCON/GENHDR/ARTINFO/ALTID/PII"/>
+                        <xsl:value-of select="$controlfield_001"/>
                     </marc:controlfield>
                     <marc:controlfield tag="003">NL-AMISG</marc:controlfield>
                     <marc:controlfield tag="005">
@@ -97,9 +101,9 @@
                             <xsl:value-of select="ARTCON/GENHDR/TIG/ATL[1]"/>
                         </marc:subfield>
                         <xsl:if test="ARTCON/GENHDR/ARTINFO/ARTTY/DISPART">
-                        <marc:subfield code="k">
-                            <xsl:value-of select="ARTCON/GENHDR/ARTINFO/ARTTY/DISPART"/>
-                        </marc:subfield>
+                            <marc:subfield code="k">
+                                <xsl:value-of select="ARTCON/GENHDR/ARTINFO/ARTTY/DISPART"/>
+                            </marc:subfield>
                         </xsl:if>
                     </marc:datafield>
                     <marc:datafield tag="260" ind0=" " ind1=" ">
@@ -149,7 +153,7 @@
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">856</xsl:with-param>
                         <xsl:with-param name="code">u</xsl:with-param>
-                        <xsl:with-param name="value" select="$isShownByPdf"/>
+                        <xsl:with-param name="value" select="$isShownBy"/>
                     </xsl:call-template>
 
                     <xsl:call-template name="insertSingleElement">
