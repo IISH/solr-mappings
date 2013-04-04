@@ -23,11 +23,11 @@
             <xsl:choose>
                 <xsl:when test="front/article-meta/issue">
                     <xsl:value-of
-                            select="concat('10622/', front/journal-meta/issn[@pub-type='ppub'], '.', front/article-meta/volume, '.', front/article-meta/issue)"/>
+                            select="concat(front/journal-meta/issn[@pub-type='ppub'], '.', front/article-meta/volume, '.', front/article-meta/issue)"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of
-                            select="concat('10622/', front/journal-meta/issn[@pub-type='ppub'], '.', front/article-meta/volume)"/>
+                            select="concat(front/journal-meta/issn[@pub-type='ppub'], '.', front/article-meta/volume)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
