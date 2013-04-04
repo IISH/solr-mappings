@@ -19,22 +19,22 @@
 
     <xsl:template match="article">
 
-        <xsl:variable name="controlfield_001">
+        <xsl:variable name="issue">
             <xsl:choose>
                 <xsl:when test="front/article-meta/issue">
                     <xsl:value-of
-                            select="concat('irsh.',front/article-meta/pub-date/year, '.', front/article-meta/volume, '.', front/article-meta/issue)"/>
+                            select="concat('irsh.',front/article-meta/pub-date[1]/year, '.', front/article-meta/volume, '.', front/article-meta/issue)"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of
-                            select="concat('irsh.',front/article-meta/pub-date/year, '.', front/article-meta/volume)"/>
+                            select="concat('irsh.',front/article-meta/pub-date[1]/year, '.', front/article-meta/volume)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="identifier" select="concat('10622/', $controlfield_001)"/>
+        <xsl:variable name="identifier" select="concat('10622/', front/article-meta/article-id[@pub-id-type='pii'])"/>
 
         <xsl:variable name="isShownBy"
-                      select="concat('http://hdl.handle.net/10622/', front/article-meta/article-id[@pub-id-type='pii'])"/>
+                      select="concat('http://hdl.handle.net/10622/', $identifier, '?locatt=view:master')"/>
         <record>
             <extraRecordData>
                 <iisg:iisg>
@@ -45,10 +45,10 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/', $identifier)"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/', $issue)"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
-                        <xsl:copy-of select="concat($isShownBy,'?locatt=view:master')"/>
+                        <xsl:value-of select="$isShownBy"/>
                     </iisg:isShownBy>
                     <iisg:date_modified>
                         <xsl:call-template name="insertDateModified">
@@ -64,7 +64,7 @@
 
                     <marc:leader>00857nas a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
-                        <xsl:value-of select="$controlfield_001"/>
+                        <xsl:value-of select="front/article-meta/article-id[@pub-id-type='pii']"/>
                     </marc:controlfield>
                     <marc:controlfield tag="003">NL-AMISG</marc:controlfield>
                     <marc:controlfield tag="005">
@@ -117,7 +117,7 @@
                             <xsl:value-of select="concat(front/journal-meta/publisher/publisher-name, ',')"/>
                         </marc:subfield>
                         <marc:subfield code="c">
-                            <xsl:value-of select="front/article-meta/pub-date/year"/>
+                            <xsl:value-of select="front/article-meta/pub-date[1]/year"/>
                         </marc:subfield>
                     </marc:datafield>
 

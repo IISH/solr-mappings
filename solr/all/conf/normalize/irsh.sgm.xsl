@@ -23,7 +23,7 @@
 
     <xsl:template match="HEADER">
 
-        <xsl:variable name="controlfield_001">
+        <xsl:variable name="issue">
             <xsl:choose>
                 <xsl:when test="ISSUE/PUBINFO/IID">
                     <xsl:value-of
@@ -35,9 +35,9 @@
             </xsl:choose>
         </xsl:variable>
 
-        <xsl:variable name="identifier" select="concat('10622/', $controlfield_001)"/>
+        <xsl:variable name="identifier" select="concat('10622/', ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
         <xsl:variable name="isShownBy"
-                      select="concat('http://hdl.handle.net/10622/',ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
+                      select="concat('http://hdl.handle.net/10622/',$identifier,'?locatt=view:master')"/>
         <record>
             <extraRecordData>
                 <iisg:iisg>
@@ -48,10 +48,10 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/', $identifier)"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/10622/',$issue)"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
-                        <xsl:copy-of select="concat($isShownBy,'?locatt=view:master')"/>
+                        <xsl:copy-of select="$isShownBy"/>
                     </iisg:isShownBy>
                     <iisg:date_modified>
                         <xsl:call-template name="insertDateModified">
@@ -67,7 +67,7 @@
 
                     <marc:leader>00857nas a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
-                        <xsl:value-of select="$controlfield_001"/>
+                        <xsl:value-of select="ARTCON/GENHDR/ARTINFO/ALTID/PII"/>
                     </marc:controlfield>
                     <marc:controlfield tag="003">NL-AMISG</marc:controlfield>
                     <marc:controlfield tag="005">
