@@ -37,7 +37,7 @@
 
         <xsl:variable name="identifier" select="concat('10622/', ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
         <xsl:variable name="isShownBy"
-                      select="concat('http://hdl.handle.net/10622/',$identifier,'?locatt=view:master')"/>
+                      select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:master')"/>
         <record>
             <extraRecordData>
                 <iisg:iisg>

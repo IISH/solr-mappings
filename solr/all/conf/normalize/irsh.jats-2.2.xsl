@@ -34,7 +34,7 @@
         <xsl:variable name="identifier" select="concat('10622/', front/article-meta/article-id[@pub-id-type='pii'])"/>
 
         <xsl:variable name="isShownBy"
-                      select="concat('http://hdl.handle.net/10622/', $identifier, '?locatt=view:master')"/>
+                      select="concat('http://hdl.handle.net/', $identifier, '?locatt=view:master')"/>
         <record>
             <extraRecordData>
                 <iisg:iisg>
