@@ -24,14 +24,16 @@
     <xsl:template match="HEADER">
 
         <xsl:variable name="controlfield_001">
-        <xsl:choose>
-            <xsl:when test="ISSUE/PUBINFO/IID">
-                <xsl:value-of select="concat( ISSUE/JINFO/ISSN, '.', ISSUE/PUBINFO/VID, '.', ISSUE/PUBINFO/IID)"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="concat( ISSUE/JINFO/ISSN, '.', ISSUE/PUBINFO/VID)"/>
-            </xsl:otherwise>
-        </xsl:choose></xsl:variable>
+            <xsl:choose>
+                <xsl:when test="ISSUE/PUBINFO/IID">
+                    <xsl:value-of
+                            select="concat( 'irsh.',ISSUE/PUBINFO/CD/@YEAR, '.', ISSUE/PUBINFO/VID, '.', ISSUE/PUBINFO/IID)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat( 'irsh.',ISSUE/PUBINFO/CD/@YEAR, '.', ISSUE/PUBINFO/VID)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
 
         <xsl:variable name="identifier" select="concat('10622/', $controlfield_001)"/>
         <xsl:variable name="isShownBy"
