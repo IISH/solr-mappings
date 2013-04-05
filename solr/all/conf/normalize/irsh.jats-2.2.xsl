@@ -96,11 +96,11 @@
                     <marc:datafield tag="245" ind0=" " ind1=" ">
                         <marc:subfield code="a">
                             <xsl:choose>
-                                <xsl:when test="front/article-meta/title-group/article-title">
+                                <xsl:when test="front/article-meta/title-group/article-title/text()">
                                     <xsl:value-of select="front/article-meta/title-group/article-title"/>
                                 </xsl:when>
-                                <xsl:when test="//source">
-                                    <xsl:value-of select="//source"/>
+                                <xsl:when test="front/article-meta/product/source">
+                                    <xsl:value-of select="front/article-meta/product/source"/>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:value-of
