@@ -35,6 +35,9 @@
 
         <xsl:variable name="isShownBy"
                       select="concat('http://hdl.handle.net/', $identifier, '?locatt=view:master')"/>
+        <xsl:variable name="isGroupedBy"
+                      select="concat('http://hdl.handle.net/', $objid)"/>
+
         <record>
             <extraRecordData>
                 <iisg:iisg>
@@ -85,7 +88,7 @@
                             </xsl:with-param>
                             <xsl:with-param name="code">a</xsl:with-param>
                             <xsl:with-param name="value"
-                                            select="concat(name/given-names, ', ', name/surname)"/>
+                                            select="concat(name/surname, ', ', name/given-names)"/>
                         </xsl:call-template>
 
                     </xsl:for-each>
@@ -95,6 +98,9 @@
                             <xsl:choose>
                                 <xsl:when test="front/article-meta/title-group/article-title">
                                     <xsl:value-of select="front/article-meta/title-group/article-title"/>
+                                </xsl:when>
+                                <xsl:when test="//source">
+                                    <xsl:value-of select="//source"/>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:value-of
@@ -142,28 +148,35 @@
                             <xsl:choose>
                                 <xsl:when test="front/article-meta/issue">
                                     <xsl:value-of
-                                            select="concat('vol. ', front/article-meta/volume, '(', front/article-meta/pub-date[@pub-type='ppub']/year, ') no.', front/article-meta/issue, ', p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
+                                            select="concat('vol. ', front/article-meta/volume, '(', front/article-meta/pub-date[1]/year, ') no.', front/article-meta/issue, ', p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:value-of
-                                            select="concat('vol. ', front/article-meta/volume, '(', front/article-meta/pub-date[@pub-type='ppub']/year, ') p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
+                                            select="concat('vol. ', front/article-meta/volume, '(', front/article-meta/pub-date[1]/year, ') p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </marc:subfield>
                     </marc:datafield>
                     <xsl:if test="front/article-meta/permissions/copyright-statement">
                         <xsl:call-template name="insertSingleElement">
-                            <xsl:with-param name="tag">845</xsl:with-param>
-                            <xsl:with-param name="code">a</xsl:with-param>
+                            <xsl:with-param name="tag">540</xsl:with-param>
+                            <xsl:with-param name="code">b</xsl:with-param>
                             <xsl:with-param name="value" select="front/article-meta/permissions/copyright-statement"/>
                         </xsl:call-template>
                     </xsl:if>
 
-                    <xsl:call-template name="insertSingleElement">
-                        <xsl:with-param name="tag">856</xsl:with-param>
-                        <xsl:with-param name="code">u</xsl:with-param>
-                        <xsl:with-param name="value" select="$isShownBy"/>
-                    </xsl:call-template>
+                    <marc:datafield tag="856">
+                        <marc:subfield code="u">
+                            <xsl:value-of select="$isShownBy"/>
+                        </marc:subfield>
+                        <marc:subfield code="q">application/pdf</marc:subfield>
+                    </marc:datafield>
+                    <marc:datafield tag="856">
+                        <marc:subfield code="u">
+                            <xsl:value-of select="$isGroupedBy"/>
+                        </marc:subfield>
+                        <marc:subfield code="q">text/html</marc:subfield>
+                    </marc:datafield>
 
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>

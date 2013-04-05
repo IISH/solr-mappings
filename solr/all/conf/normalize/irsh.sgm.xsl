@@ -38,6 +38,8 @@
         <xsl:variable name="identifier" select="concat('10622/', ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
         <xsl:variable name="isShownBy"
                       select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:master')"/>
+        <xsl:variable name="isGroupedBy"
+                      select="concat('http://hdl.handle.net/', $objid)"/>
         <record>
             <extraRecordData>
                 <iisg:iisg>
@@ -74,14 +76,6 @@
                         <xsl:value-of select="$marc_controlfield_005"/>
                     </marc:controlfield>
                     <marc:controlfield tag="008">199902suuuuuuuu||||||||||||||||||||||| d</marc:controlfield>
-
-                    <!--
-                                        <xsl:call-template name="insertSingleElement">
-                                            <xsl:with-param name="tag">041</xsl:with-param>
-                                            <xsl:with-param name="code">a</xsl:with-param>
-                                            <xsl:with-param name="value">eng</xsl:with-param>
-                                        </xsl:call-template>
-                    -->
 
                     <xsl:for-each select="ARTCON/GENHDR/AUG/AU[FNMS and SNM]">
                         <xsl:variable name="tag">
@@ -146,17 +140,24 @@
 
                     <xsl:if test="//CRN">
                         <xsl:call-template name="insertSingleElement">
-                            <xsl:with-param name="tag">845</xsl:with-param>
-                            <xsl:with-param name="code">a</xsl:with-param>
+                            <xsl:with-param name="tag">540</xsl:with-param>
+                            <xsl:with-param name="code">b</xsl:with-param>
                             <xsl:with-param name="value" select="//CRN[1]"/>
                         </xsl:call-template>
                     </xsl:if>
 
-                    <xsl:call-template name="insertSingleElement">
-                        <xsl:with-param name="tag">856</xsl:with-param>
-                        <xsl:with-param name="code">u</xsl:with-param>
-                        <xsl:with-param name="value" select="$isShownBy"/>
-                    </xsl:call-template>
+                    <marc:datafield tag="856">
+                        <marc:subfield code="u">
+                            <xsl:value-of select="$isShownBy"/>
+                        </marc:subfield>
+                        <marc:subfield code="q">application/pdf</marc:subfield>
+                    </marc:datafield>
+                    <marc:datafield tag="856">
+                        <marc:subfield code="u">
+                            <xsl:value-of select="$isGroupedBy"/>
+                        </marc:subfield>
+                        <marc:subfield code="q">text/html</marc:subfield>
+                    </marc:datafield>
 
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
