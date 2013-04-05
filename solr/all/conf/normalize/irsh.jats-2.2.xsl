@@ -19,15 +19,15 @@
 
     <xsl:template match="article">
 
-        <xsl:variable name="issue">
+        <xsl:variable name="objid">
             <xsl:choose>
                 <xsl:when test="front/article-meta/issue">
                     <xsl:value-of
-                            select="concat('irsh.',front/article-meta/pub-date[1]/year, '.', front/article-meta/volume, '.', front/article-meta/issue)"/>
+                            select="concat('10622/irsh.',front/article-meta/pub-date[1]/year, '.', front/article-meta/volume, '.', front/article-meta/issue)"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of
-                            select="concat('irsh.',front/article-meta/pub-date[1]/year, '.', front/article-meta/volume)"/>
+                            select="concat('10622/irsh.',front/article-meta/pub-date[1]/year, '.', front/article-meta/volume)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -45,7 +45,7 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/', $issue)"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/', $objid)"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
                         <xsl:value-of select="$isShownBy"/>
@@ -168,7 +168,7 @@
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
-                        <xsl:with-param name="value" select="$identifier"/>
+                        <xsl:with-param name="value" select="$objid"/>
                     </xsl:call-template>
 
                 </marc:record>

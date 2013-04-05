@@ -23,14 +23,14 @@
 
     <xsl:template match="HEADER">
 
-        <xsl:variable name="issue">
+        <xsl:variable name="objid">
             <xsl:choose>
                 <xsl:when test="ISSUE/PUBINFO/IID">
                     <xsl:value-of
-                            select="concat( 'irsh.',ISSUE/PUBINFO/CD/@YEAR, '.', ISSUE/PUBINFO/VID, '.', ISSUE/PUBINFO/IID)"/>
+                            select="concat( '10622/irsh.',ISSUE/PUBINFO/CD/@YEAR, '.', ISSUE/PUBINFO/VID, '.', ISSUE/PUBINFO/IID)"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat( 'irsh.',ISSUE/PUBINFO/CD/@YEAR, '.', ISSUE/PUBINFO/VID)"/>
+                    <xsl:value-of select="concat( '10622/irsh.',ISSUE/PUBINFO/CD/@YEAR, '.', ISSUE/PUBINFO/VID)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -48,7 +48,7 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/10622/',$issue)"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/',$objid)"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
                         <xsl:copy-of select="$isShownBy"/>
@@ -161,7 +161,7 @@
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
-                        <xsl:with-param name="value" select="$identifier"/>
+                        <xsl:with-param name="value" select="$objid"/>
                     </xsl:call-template>
 
                 </marc:record>
