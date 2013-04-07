@@ -153,6 +153,18 @@
             <setSpec>irsh</setSpec>
             <setName>International Review of Social History</setName>
         </set>
+        <set>
+            <setSpec>IISG</setSpec>
+            <setName>IISG collections</setName>
+        </set>
+        <set>
+            <setSpec>PM</setSpec>
+            <setName>Persmuseum</setName>
+        </set>
+        <set>
+            <setSpec>PM.HahnAlbert</setSpec>
+            <setName>Persmuseum Hahn Albert</setName>
+        </set>
     </ListSets>
 </OAI-PMH>
 

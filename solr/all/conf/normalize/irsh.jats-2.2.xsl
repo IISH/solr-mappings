@@ -165,13 +165,13 @@
                         </xsl:call-template>
                     </xsl:if>
 
-                    <marc:datafield tag="856">
+                    <marc:datafield tag="856" ind0=" " ind1=" ">
                         <marc:subfield code="u">
                             <xsl:value-of select="$isShownBy"/>
                         </marc:subfield>
                         <marc:subfield code="q">application/pdf</marc:subfield>
                     </marc:datafield>
-                    <marc:datafield tag="856">
+                    <marc:datafield tag="856" ind0=" " ind1=" ">
                         <marc:subfield code="u">
                             <xsl:value-of select="$isGroupedBy"/>
                         </marc:subfield>
@@ -181,7 +181,7 @@
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
-                        <xsl:with-param name="value" select="$objid"/>
+                        <xsl:with-param name="value" select="concat('10622/',front/article-meta/article-id[@pub-id-type='pii'])"/>
                     </xsl:call-template>
 
                 </marc:record>

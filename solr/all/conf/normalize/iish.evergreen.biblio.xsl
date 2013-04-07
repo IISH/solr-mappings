@@ -29,9 +29,10 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <!-- Hope sets. See API-4 -->
-                    <xsl:call-template name="collectionNames">
+                    <xsl:call-template name="collectionGeheugen">
                         <xsl:with-param name="material" select="substring(marc:leader, 7, 2)"/>
                     </xsl:call-template>
+                    <xsl:call-template name="collector"/>
                     <iisg:isShownAt>
                         <xsl:value-of select="concat('http://hdl.handle.net/', $identifier)"/>
                     </iisg:isShownAt>
@@ -60,7 +61,7 @@
 
     </xsl:template>
 
-    <xsl:template name="collectionNames">
+    <xsl:template name="collectionGeheugen">
         <xsl:param name="material"/>
         <xsl:if test="contains(',rm,gm,pv,km,kc,', $material)">
             <xsl:if test="//marc:datafield[@tag='852']/marc:subfield[@code='p' and starts-with( text(), '30051')]">
@@ -114,4 +115,18 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
+
+    <xsl:template name="collector">
+        <xsl:variable name="collection" select="marc:datafield[@tag='852'][1]/marc:subfield[@code='c']"/>
+        <xsl:if test="$collection">
+            <xsl:for-each
+                    select="marc:datafield[@tag='700' and marc:subfield[@code='e' and starts-with( text(),'collector')]]/marc:subfield[@code='a']">
+                <xsl:call-template name="insertCollection">
+                    <xsl:with-param name="collection"
+                                    select="normalize-space(concat($collection, '.', translate( text(), ' ,.()[]{}', '')))"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+
 </xsl:stylesheet>
