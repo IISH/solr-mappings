@@ -21,7 +21,7 @@ fi
 
 rm -r "$d"20*
 cd $VUFIND_HOME/harvest
-php harvest_oai.php $dataset
+php harvest_oai.php $dataset > /data/log/$dataset.$now.harvest.log
 
 #Setting permissions
 chmod -R 744 $d
