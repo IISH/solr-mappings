@@ -92,7 +92,7 @@
                         </xsl:call-template>
 
                     </xsl:for-each>
-                    <marc:datafield tag="245" ind0=" " ind1=" ">
+                    <marc:datafield tag="245" ind1=" " ind2=" ">
                         <marc:subfield code="a">
                             <xsl:value-of select="ARTCON/GENHDR/TIG/ATL[1]"/>
                         </marc:subfield>
@@ -102,7 +102,7 @@
                             </marc:subfield>
                         </xsl:if>
                     </marc:datafield>
-                    <marc:datafield tag="260" ind0=" " ind1=" ">
+                    <marc:datafield tag="260" ind1=" " ind2=" ">
                         <marc:subfield code="a">
                             <xsl:value-of select="concat(ISSUE/PINFO/LOC, ' :')"/>
                         </marc:subfield>
@@ -121,7 +121,7 @@
                                         select="concat(ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/@COUNT, ' p.')"/>
                     </xsl:call-template>
 
-                    <marc:datafield tag="773" ind0="0" ind1="#">
+                    <marc:datafield tag="773" ind1="0" ind2="#">
                         <marc:subfield code="a">
                             <xsl:value-of
                                     select="ISSUE/JINFO/JTL"/>
@@ -146,13 +146,13 @@
                         </xsl:call-template>
                     </xsl:if>
 
-                    <marc:datafield tag="856" ind0=" " ind1=" ">
+                    <marc:datafield tag="856" ind1=" " ind2=" ">
                         <marc:subfield code="u">
                             <xsl:value-of select="$isShownBy"/>
                         </marc:subfield>
                         <marc:subfield code="q">application/pdf</marc:subfield>
                     </marc:datafield>
-                    <marc:datafield tag="856" ind0=" " ind1=" ">
+                    <marc:datafield tag="856" ind1=" " ind2=" ">
                         <marc:subfield code="u">
                             <xsl:value-of select="$isGroupedBy"/>
                         </marc:subfield>
@@ -162,7 +162,7 @@
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
-                        <xsl:with-param name="value" select="concat('10622/',ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
+                        <xsl:with-param name="value" select="concat($objid,'.',ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
                     </xsl:call-template>
 
                 </marc:record>

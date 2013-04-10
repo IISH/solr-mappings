@@ -90,18 +90,25 @@
                             <xsl:with-param name="value"
                                             select="concat(name/surname, ', ', name/given-names)"/>
                         </xsl:call-template>
-
                     </xsl:for-each>
 
-                    <marc:datafield tag="245" ind0=" " ind1=" ">
+                    <marc:datafield tag="245" ind1=" " ind2=" ">
                         <marc:subfield code="a">
                             <xsl:choose>
-                                <xsl:when test="front/article-meta/title-group/article-title/text()">
-                                    <xsl:value-of select="front/article-meta/title-group/article-title"/>
+                                <xsl:when test="front/article-meta/title-group/article-title">
+                                    <xsl:value-of select="front/article-meta/title-group/article-title/text()"/>
                                 </xsl:when>
                                 <xsl:when test="front/article-meta/product/source">
                                     <xsl:value-of select="front/article-meta/product/source"/>
+                                    <xsl:for-each select="front/article-meta/product/name">
+                                        <xsl:value-of select="surname"/>,
+                                        <xsl:value-of select="given-names"/>
+                                        <xsl:if test="not(position()=last())">;</xsl:if>
+                                    </xsl:for-each>
+                                    <xsl:text>.</xsl:text>
+                                    <xsl:value-of select="front/article-meta/product/publisher-loc"/>
                                 </xsl:when>
+
                                 <xsl:otherwise>
                                     <xsl:value-of
                                             select="concat('Article from the ', front/journal-meta/journal-title, ', ', front/article-meta/volume, '(', front/article-meta/pub-date[@pub-type='ppub']/year, ') no.', front/article-meta/issue, ', p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
@@ -115,7 +122,7 @@
                         </xsl:if>
                     </marc:datafield>
 
-                    <marc:datafield tag="260" ind0=" " ind1=" ">
+                    <marc:datafield tag="260" ind1=" " ind2=" ">
                         <marc:subfield code="a">
                             <xsl:value-of select="concat(front/journal-meta/publisher/publisher-loc, ' :')"/>
                         </marc:subfield>
@@ -139,7 +146,7 @@
                         <xsl:with-param name="code">a</xsl:with-param>
                         <xsl:with-param name="value" select="front/article-meta/abstract"/>
                     </xsl:call-template>
-                    <marc:datafield tag="773" ind0="0" ind1="#">
+                    <marc:datafield tag="773" ind1="0" ind2="#">
                         <marc:subfield code="a">
                             <xsl:value-of
                                     select="front/journal-meta/journal-title"/>
@@ -165,13 +172,13 @@
                         </xsl:call-template>
                     </xsl:if>
 
-                    <marc:datafield tag="856" ind0=" " ind1=" ">
+                    <marc:datafield tag="856" ind1=" " ind2=" ">
                         <marc:subfield code="u">
                             <xsl:value-of select="$isShownBy"/>
                         </marc:subfield>
                         <marc:subfield code="q">application/pdf</marc:subfield>
                     </marc:datafield>
-                    <marc:datafield tag="856" ind0=" " ind1=" ">
+                    <marc:datafield tag="856" ind1=" " ind2=" ">
                         <marc:subfield code="u">
                             <xsl:value-of select="$isGroupedBy"/>
                         </marc:subfield>
@@ -181,7 +188,8 @@
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
-                        <xsl:with-param name="value" select="concat('10622/',front/article-meta/article-id[@pub-id-type='pii'])"/>
+                        <xsl:with-param name="value"
+                                        select="concat($objid,',',front/article-meta/article-id[@pub-id-type='pii'])"/>
                     </xsl:call-template>
 
                 </marc:record>
