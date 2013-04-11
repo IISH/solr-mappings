@@ -23,23 +23,9 @@
 
     <xsl:template match="HEADER">
 
-        <xsl:variable name="objid">
-            <xsl:choose>
-                <xsl:when test="ISSUE/PUBINFO/IID">
-                    <xsl:value-of
-                            select="concat( '10622/irsh.',ISSUE/PUBINFO/CD/@YEAR, '.', ISSUE/PUBINFO/VID, '.', ISSUE/PUBINFO/IID)"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="concat( '10622/irsh.',ISSUE/PUBINFO/CD/@YEAR, '.', ISSUE/PUBINFO/VID)"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
         <xsl:variable name="identifier" select="concat('10622/', ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
         <xsl:variable name="isShownBy"
                       select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:master')"/>
-        <xsl:variable name="isGroupedBy"
-                      select="concat('http://hdl.handle.net/', $objid)"/>
         <record>
             <extraRecordData>
                 <iisg:iisg>
@@ -50,7 +36,7 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/',$objid)"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:splash')"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
                         <xsl:copy-of select="$isShownBy"/>
@@ -152,17 +138,11 @@
                         </marc:subfield>
                         <marc:subfield code="q">application/pdf</marc:subfield>
                     </marc:datafield>
-                    <marc:datafield tag="856" ind1=" " ind2=" ">
-                        <marc:subfield code="u">
-                            <xsl:value-of select="$isGroupedBy"/>
-                        </marc:subfield>
-                        <marc:subfield code="q">text/html</marc:subfield>
-                    </marc:datafield>
 
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
-                        <xsl:with-param name="value" select="concat($objid,'.',ARTCON/GENHDR/ARTINFO/ALTID/PII)"/>
+                        <xsl:with-param name="value" select="$identifier"/>
                     </xsl:call-template>
 
                 </marc:record>

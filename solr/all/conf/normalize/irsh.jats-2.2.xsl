@@ -19,24 +19,9 @@
 
     <xsl:template match="article">
 
-        <xsl:variable name="objid">
-            <xsl:choose>
-                <xsl:when test="front/article-meta/issue">
-                    <xsl:value-of
-                            select="concat('10622/irsh.',front/article-meta/pub-date[1]/year, '.', front/article-meta/volume, '.', front/article-meta/issue)"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of
-                            select="concat('10622/irsh.',front/article-meta/pub-date[1]/year, '.', front/article-meta/volume)"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
         <xsl:variable name="identifier" select="concat('10622/', front/article-meta/article-id[@pub-id-type='pii'])"/>
-
         <xsl:variable name="isShownBy"
                       select="concat('http://hdl.handle.net/', $identifier, '?locatt=view:master')"/>
-        <xsl:variable name="isGroupedBy"
-                      select="concat('http://hdl.handle.net/', $objid)"/>
 
         <record>
             <extraRecordData>
@@ -48,7 +33,7 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/', $objid)"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:splash')"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
                         <xsl:value-of select="$isShownBy"/>
@@ -67,7 +52,7 @@
 
                     <marc:leader>00857nas a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
-                        <xsl:value-of select="front/article-meta/article-id[@pub-id-type='pii']"/>
+                        <xsl:value-of select="$identifier"/>
                     </marc:controlfield>
                     <marc:controlfield tag="003">NL-AMISG</marc:controlfield>
                     <marc:controlfield tag="005">
@@ -178,18 +163,12 @@
                         </marc:subfield>
                         <marc:subfield code="q">application/pdf</marc:subfield>
                     </marc:datafield>
-                    <marc:datafield tag="856" ind1=" " ind2=" ">
-                        <marc:subfield code="u">
-                            <xsl:value-of select="$isGroupedBy"/>
-                        </marc:subfield>
-                        <marc:subfield code="q">text/html</marc:subfield>
-                    </marc:datafield>
 
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">902</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
                         <xsl:with-param name="value"
-                                        select="concat($objid,',',front/article-meta/article-id[@pub-id-type='pii'])"/>
+                                        select="$identifier"/>
                     </xsl:call-template>
 
                 </marc:record>
