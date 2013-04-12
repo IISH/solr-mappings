@@ -27,13 +27,13 @@
             <extraRecordData>
                 <iisg:iisg>
                     <xsl:call-template name="insertIISHIdentifiers">
-                        <xsl:with-param name="identifier" select="$identifier"/>
+                        <xsl:with-param name="identifier" select="front/article-meta/article-id[@pub-id-type='pii']"/>
                     </xsl:call-template>
                     <xsl:call-template name="insertCollection">
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:splash')"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:catalog')"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
                         <xsl:value-of select="$isShownBy"/>
@@ -52,7 +52,7 @@
 
                     <marc:leader>00857nas a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
-                        <xsl:value-of select="$identifier"/>
+                        <xsl:value-of select="front/article-meta/article-id[@pub-id-type='pii']"/>
                     </marc:controlfield>
                     <marc:controlfield tag="003">NL-AMISG</marc:controlfield>
                     <marc:controlfield tag="005">
@@ -80,17 +80,17 @@
                     <marc:datafield tag="245" ind1=" " ind2=" ">
                         <marc:subfield code="a">
                             <xsl:choose>
-                                <xsl:when test="front/article-meta/title-group/article-title">
+                                <xsl:when test="front/article-meta/title-group/article-title/text()">
                                     <xsl:value-of select="front/article-meta/title-group/article-title/text()"/>
                                 </xsl:when>
-                                <xsl:when test="front/article-meta/product/source">
-                                    <xsl:value-of select="front/article-meta/product/source"/>
+                                <xsl:when test="front/article-meta/product/source">Review of "<xsl:value-of select="front/article-meta/product/source"/>"
+                                    <xsl:text> </xsl:text>by<xsl:text> </xsl:text>
                                     <xsl:for-each select="front/article-meta/product/name">
                                         <xsl:value-of select="surname"/>,
                                         <xsl:value-of select="given-names"/>
                                         <xsl:if test="not(position()=last())">;</xsl:if>
                                     </xsl:for-each>
-                                    <xsl:text>.</xsl:text>
+                                    <xsl:text>. </xsl:text>
                                     <xsl:value-of select="front/article-meta/product/publisher-loc"/>
                                 </xsl:when>
 
@@ -156,6 +156,13 @@
                             <xsl:with-param name="value" select="front/article-meta/permissions/copyright-statement"/>
                         </xsl:call-template>
                     </xsl:if>
+
+                    <marc:datafield tag="852" ind1=" " ind2=" ">
+                        <marc:subfield code="a">IISG</marc:subfield>
+                        <marc:subfield code="b">IISG</marc:subfield>
+                        <marc:subfield code="c">IRSH</marc:subfield>
+                        <marc:subfield code="j">IRSH</marc:subfield>
+                    </marc:datafield>
 
                     <marc:datafield tag="856" ind1=" " ind2=" ">
                         <marc:subfield code="u">

@@ -36,7 +36,7 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:splash')"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/',$identifier,'?locatt=view:catalog')"/>
                     </iisg:isShownAt>
                     <iisg:isShownBy>
                         <xsl:copy-of select="$isShownBy"/>
@@ -131,6 +131,13 @@
                             <xsl:with-param name="value" select="//CRN[1]"/>
                         </xsl:call-template>
                     </xsl:if>
+
+                    <marc:datafield tag="852" ind1=" " ind2=" ">
+                        <marc:subfield code="a">IISG</marc:subfield>
+                        <marc:subfield code="b">IISG</marc:subfield>
+                        <marc:subfield code="c">IRSH</marc:subfield>
+                        <marc:subfield code="j">IRSH</marc:subfield>
+                    </marc:datafield>
 
                     <marc:datafield tag="856" ind1=" " ind2=" ">
                         <marc:subfield code="u">
