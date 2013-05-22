@@ -147,7 +147,8 @@
         <set>
             <setSpec>VIS-EuropeanSocialMovements</setSpec>
             <setName>Social movements 19-20th century photo's en posters</setName>
-            <setDescription>Image and Sound collection, social movements 19-20th century photo's en posters</setDescription>
+            <setDescription>Image and Sound collection, social movements 19-20th century photo's en posters
+            </setDescription>
         </set>
         <set>
             <setSpec>irsh</setSpec>
@@ -164,6 +165,35 @@
         <set>
             <setSpec>PM.HahnAlbert</setSpec>
             <setName>Persmuseum Hahn Albert</setName>
+        </set>
+
+        <set>
+            <setSpec>nondig</setSpec>
+            <setName>No digital content</setName>
+        </set>
+        <set>
+            <setSpec>nondig.books</setSpec>
+            <setName>No digital content book type</setName>
+        </set>
+        <set>
+            <setSpec>nondig.serials</setSpec>
+            <setName>No digital content serial type</setName>
+        </set>
+        <set>
+            <setSpec>nondig.video</setSpec>
+            <setName>No digital content video type</setName>
+        </set>
+        <set>
+            <setSpec>nondig.audio</setSpec>
+            <setName>No digital content audio type</setName>
+        </set>
+        <set>
+            <setSpec>nondig.visual</setSpec>
+            <setName>No digital content visual type</setName>
+        </set>
+        <set>
+            <setSpec>nondig.objects</setSpec>
+            <setName>No digital content objects type</setName>
         </set>
     </ListSets>
 </OAI-PMH>

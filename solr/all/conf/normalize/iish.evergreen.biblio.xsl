@@ -32,6 +32,9 @@
                     <xsl:call-template name="collectionGeheugen">
                         <xsl:with-param name="material" select="substring(marc:leader, 7, 2)"/>
                     </xsl:call-template>
+                    <xsl:call-template name="non-digital">
+                        <xsl:with-param name="material" select="substring(marc:leader, 7, 2)"/>
+                    </xsl:call-template>
                     <xsl:call-template name="collector"/>
                     <iisg:isShownAt>
                         <xsl:value-of select="concat('http://hdl.handle.net/', $identifier)"/>
@@ -59,6 +62,42 @@
             </recordData>
         </record>
 
+    </xsl:template>
+
+    <xsl:template name="non-digital">
+        <xsl:param name="material"/>
+        <xsl:if test="not(//marc:datafield[@tag='856']/marc:subfield[@code='u']) and //marc:datafield[@tag='852']/marc:subfield[@code='c' and text()='IISG']">
+            <iisg:collectionName>nondig</iisg:collectionName>
+            <xsl:choose>
+                <xsl:when test="$material='am'">
+                    <iisg:collectionName>nondig.books</iisg:collectionName>
+                </xsl:when>
+                <xsl:when
+                        test="$material='ac' and //marc:datafield[@tag='245']/marc:subfield[@code='k' and text()='Book collection']">
+                    <iisg:collectionName>nondig.books</iisg:collectionName>
+                </xsl:when>
+                <xsl:when test="$material='as'">
+                    <iisg:collectionName>nondig.serials</iisg:collectionName>
+                </xsl:when>
+                <xsl:when
+                        test="$material='ac' and //marc:datafield[@tag='245']/marc:subfield[@code='k' and text()='Serial collection']">
+                    <iisg:collectionName>nondig.serials</iisg:collectionName>
+                </xsl:when>
+                <xsl:when test="$material='gm'">
+                    <iisg:collectionName>nondig.video</iisg:collectionName>
+                </xsl:when>
+                <xsl:when test="contains(',im,jm,ic,jc,', $material)">
+                    <iisg:collectionName>nondig.audio</iisg:collectionName>
+                </xsl:when>
+                <xsl:when test="contains(',km,kc,', $material)">
+                    <iisg:collectionName>nondig.visual</iisg:collectionName>
+                </xsl:when>
+                <xsl:when test="contains(',rm,rc,', $material)">
+                    <iisg:collectionName>nondig.objects</iisg:collectionName>
+                </xsl:when>
+                <xsl:otherwise/>
+            </xsl:choose>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="collectionGeheugen">
