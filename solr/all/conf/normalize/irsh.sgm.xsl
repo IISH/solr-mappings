@@ -118,19 +118,19 @@
                         </marc:subfield>
                     </marc:datafield>
 
+                    <xsl:for-each select="ARTCON/GENHDR/TIG/ATL[1]/FNR">
+                        <xsl:call-template name="insertElement">
+                            <xsl:with-param name="tag">500</xsl:with-param>
+                            <xsl:with-param name="code">a</xsl:with-param>
+                            <xsl:with-param name="value" select="FN//text()"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+
                     <xsl:call-template name="insertElement">
                         <xsl:with-param name="tag">520</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
                         <xsl:with-param name="value" select="ARTCON/GENHDR/ABS/P"/>
                     </xsl:call-template>
-
-                    <xsl:for-each select="ARTCON/GENHDR/TIG/ATL[1]/FNR">
-                        <xsl:call-template name="insertElement">
-                            <xsl:with-param name="tag">520</xsl:with-param>
-                            <xsl:with-param name="code">a</xsl:with-param>
-                            <xsl:with-param name="value" select="FN//text()"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
 
                     <xsl:if test="//CRN">
                         <xsl:call-template name="insertSingleElement">
