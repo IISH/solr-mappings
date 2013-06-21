@@ -80,7 +80,7 @@
                     </xsl:for-each>
                     <marc:datafield tag="245" ind1=" " ind2=" ">
                         <marc:subfield code="a">
-                            <xsl:value-of select="ARTCON/GENHDR/TIG/ATL[1]"/>
+                            <xsl:value-of select="ARTCON/GENHDR/TIG/ATL[1]/text()"/>
                         </marc:subfield>
                         <xsl:if test="ARTCON/GENHDR/ARTINFO/ARTTY/DISPART">
                             <marc:subfield code="k">
@@ -123,6 +123,14 @@
                         <xsl:with-param name="code">a</xsl:with-param>
                         <xsl:with-param name="value" select="ARTCON/GENHDR/ABS/P"/>
                     </xsl:call-template>
+
+                    <xsl:for-each select="ARTCON/GENHDR/TIG/ATL[1]/FNR">
+                        <xsl:call-template name="insertElement">
+                            <xsl:with-param name="tag">520</xsl:with-param>
+                            <xsl:with-param name="code">a</xsl:with-param>
+                            <xsl:with-param name="value" select="FN//text()"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
 
                     <xsl:if test="//CRN">
                         <xsl:call-template name="insertSingleElement">
