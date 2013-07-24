@@ -4,7 +4,8 @@
                 exclude-result-prefixes="marc">
 
     <xsl:import href="../../../xslt/solrFields.xsl"/>
-    <xsl:output method="xml" indent="no"/>
+    <xsl:output method="xml" indent="no" omit-xml-declaration="yes"/>
+    <xsl:param name="resource" />
 
     <xsl:template match="record">
         <doc>
@@ -53,6 +54,12 @@
                 </xsl:call-template>
             </xsl:for-each>
         </xsl:for-each>
+        <xsl:if test="$resource">
+            <xsl:call-template name="insertSolrField">
+                <xsl:with-param name="field_name" select="'resource'"/>
+                <xsl:with-param name="field_value"><xsl:copy><xsl:copy-of select="$resource"/></xsl:copy></xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
     </xsl:template>
 
 </xsl:stylesheet>

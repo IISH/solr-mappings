@@ -4,7 +4,7 @@
         version="2.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:marc="http://www.loc.gov/MARC21/slim"
-        xmlns:iisg="http://www.iisg.nl/api/sru/"
+        xmlns:iisg="http://www.iisg.nl/api/sru/" xmlns:xls="http://www.w3.org/1999/XSL/Transform"
         exclude-result-prefixes="iisg">
 
     <xsl:import href="../../../xslt/insertElement.xsl"/>
@@ -29,9 +29,10 @@
                         <xsl:with-param name="collection" select="$collectionName"/>
                     </xsl:call-template>
                     <!-- Hope sets. See API-4 -->
-                    <xsl:call-template name="collectionGeheugen">
+                    <xsl:call-template name="collectionGeheugenAndNonEuropeanMovement">
                         <xsl:with-param name="material" select="substring(marc:leader, 7, 2)"/>
                     </xsl:call-template>
+                    <!-- See API-19  and API-22-->
                     <xsl:call-template name="non-digital">
                         <xsl:with-param name="material" select="substring(marc:leader, 7, 2)"/>
                     </xsl:call-template>
@@ -68,7 +69,8 @@
         <xsl:param name="material"/>
         <xsl:if test="not(//marc:datafield[@tag='856']/marc:subfield[@code='u']) and //marc:datafield[@tag='852']/marc:subfield[@code='c' and text()='IISG']">
             <iisg:collectionName>nondig</iisg:collectionName>
-            <xsl:choose>
+
+            <!--<xsl:choose>
                 <xsl:when test="$material='am'">
                     <iisg:collectionName>nondig.books</iisg:collectionName>
                 </xsl:when>
@@ -96,11 +98,43 @@
                     <iisg:collectionName>nondig.objects</iisg:collectionName>
                 </xsl:when>
                 <xsl:otherwise/>
+            </xsl:choose>-->
+
+            <xsl:choose>
+                <!-- Serials -->
+                <xsl:when test="contains('ar, as, ps', $material)">
+                    <iisg:collectionName>nondig.serials</iisg:collectionName>
+                </xsl:when>
+                <!-- Books and brochures -->
+                <xsl:when test="contains('am, pm', $material)">
+                    <iisg:collectionName>nondig.books_and_brochures</iisg:collectionName>
+                </xsl:when>
+                <!-- Music and sound -->
+                <xsl:when test="contains('im, pi, ic, jm', $material)">
+                    <iisg:collectionName>nondig.music_and_sound</iisg:collectionName>
+                </xsl:when>
+                <!-- Documentation -->
+                <xsl:when test="contains('do, oc', $material)">
+                    <iisg:collectionName>nondig.documentation</iisg:collectionName>
+                </xsl:when>
+                <!-- Archives -->
+                <xsl:when test="contains('bm, pc', $material)">
+                    <iisg:collectionName>nondig.archives</iisg:collectionName>
+                </xsl:when>
+                <!-- Visual documents -->
+                <xsl:when test="contains('av, rm, gm, pv, km, kc',$material)">
+                    <iisg:collectionName>nondig.visual_documents</iisg:collectionName>
+                </xsl:when>
+                <!-- Other -->
+                <xsl:otherwise>
+                    <iisg:collectionName>nondig.other</iisg:collectionName>
+                </xsl:otherwise>
             </xsl:choose>
+
         </xsl:if>
     </xsl:template>
 
-    <xsl:template name="collectionGeheugen">
+    <xsl:template name="collectionGeheugenAndNonEuropeanMovement">
         <xsl:param name="material"/>
         <xsl:if test="contains(',rm,gm,pv,km,kc,', $material)">
             <xsl:if test="//marc:datafield[@tag='852']/marc:subfield[@code='p' and starts-with( text(), '30051')]">
@@ -121,35 +155,42 @@
                         <xsl:value-of select="$setSpec"/>
                     </iisg:collectionName>
                 </xsl:for-each>
-                <xsl:if test="not(//marc:datafield[@tag='985']/marc:subfield[@code='a' and starts-with(text(), 'Geheugen')])
-                            and //marc:datafield[@tag='852']/marc:subfield[@code='c' and text()='IISG']
-                            and //marc:datafield[@tag='651']/marc:subfield[@code='a' and (
-                                contains(text(),'Albania')
-                                or contains(text(),'Austria')
-                                or contains(text(),'Belgium')
-                                or contains(text(),'Bulgaria')
-                                or contains(text(),'Cyprus')
-                                or contains(text(),'Czechoslovakia')
-                                or contains(text(),'Finland')
-                                or contains(text(),'France')
-                                or contains(text(),'Germany')
-                                or contains(text(),'Greece')
-                                or contains(text(),'Hungary')
-                                or contains(text(),'Ireland')
-                                or contains(text(),'Italy')
-                                or contains(text(),'Luxembourg')
-                                or contains(text(),'Malta')
-                                or contains(text(),'Netherlands')
-                                or contains(text(),'Poland')
-                                or contains(text(),'Portugal')
-                                or contains(text(),'Romania')
-                                or contains(text(),'Spain')
-                                or contains(text(),'Switzerland')
-                                or contains(text(),'Turkey')
-                                or contains(text(),'United Kingdom')
-                                or contains(text(),'Russia')
-                                or contains(text(),'Yugoslavia') )]">
-                    <iisg:collectionName>VIS-EuropeanSocialMovements</iisg:collectionName>
+                <xsl:if test="//marc:datafield[@tag='852']/marc:subfield[@code='c' and text()='IISG']">
+                    <xsl:if test="not(//marc:datafield[@tag='985']/marc:subfield[@code='a' and starts-with(text(), 'Geheugen')])">
+                        <xls:choose>
+                            <xsl:when test="//marc:datafield[@tag='651'] and //marc:datafield[@tag='651']/marc:subfield[@code='a' and (
+                                contains(normalize-space(text()),'Albania')
+                                or contains(normalize-space(text()),'Austria')
+                                or contains(normalize-space(text()),'Belgium')
+                                or contains(normalize-space(text()),'Bulgaria')
+                                or contains(normalize-space(text()),'Cyprus')
+                                or contains(normalize-space(text()),'Czechoslovakia')
+                                or contains(normalize-space(text()),'Finland')
+                                or contains(normalize-space(text()),'France')
+                                or contains(normalize-space(text()),'Germany')
+                                or contains(normalize-space(text()),'Greece')
+                                or contains(normalize-space(text()),'Hungary')
+                                or contains(normalize-space(text()),'Ireland')
+                                or contains(normalize-space(text()),'Italy')
+                                or contains(normalize-space(text()),'Luxembourg')
+                                or contains(normalize-space(text()),'Malta')
+                                or contains(normalize-space(text()),'Netherlands')
+                                or contains(normalize-space(text()),'Poland')
+                                or contains(normalize-space(text()),'Portugal')
+                                or contains(normalize-space(text()),'Romania')
+                                or contains(normalize-space(text()),'Spain')
+                                or contains(normalize-space(text()),'Switzerland')
+                                or contains(normalize-space(text()),'Turkey')
+                                or contains(normalize-space(text()),'United Kingdom')
+                                or contains(normalize-space(text()),'Russia')
+                                or contains(normalize-space(text()),'Yugoslavia'))]">
+                                <iisg:collectionName>VIS-EuropeanSocialMovements</iisg:collectionName>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <iisg:collectionName>VIS-NonEuropeanMovement</iisg:collectionName>
+                            </xsl:otherwise>
+                        </xls:choose>
+                    </xsl:if>
                 </xsl:if>
             </xsl:if>
         </xsl:if>

@@ -19,111 +19,6 @@
             <setSpec>iish.eci</setSpec>
             <setName>Audio and visual material</setName>
         </set>
-
-        <set>
-            <setSpec>ahm.afbeeldingen.1</setSpec>
-            <setName>Amsterdam Historisch Museum</setName>
-        </set>
-        <set>
-            <setSpec>aletta.afbeeldingen.1</setSpec>
-            <setName>Stichting Aletta</setName>
-        </set>
-        <set>
-            <setSpec>aletta.archieven.1</setSpec>
-            <setName>Stichting Aletta</setName>
-        </set>
-        <set>
-            <setSpec>aletta.bibliotheek.1</setSpec>
-            <setName>Stichting Aletta</setName>
-        </set>
-        <set>
-            <setSpec>aletta.verhalen.1</setSpec>
-            <setName>Stichting Aletta</setName>
-        </set>
-        <set>
-            <setSpec>continium.afbeeldingen.1</setSpec>
-            <setName>Continium</setName>
-        </set>
-        <set>
-            <setSpec>diep.afbeeldingen.1</setSpec>
-            <setName>Diep</setName>
-        </set>
-        <set>
-            <setSpec>diep.archieven.1</setSpec>
-            <setName>Diep</setName>
-        </set>
-        <set>
-            <setSpec>eemland.afbeeldingen.1a</setSpec>
-            <setName>Eemland</setName>
-        </set>
-        <set>
-            <setSpec>eemland.afbeeldingen.1b</setSpec>
-            <setName>Eemland</setName>
-        </set>
-        <set>
-            <setSpec>eemland.archieven.1</setSpec>
-            <setName>Eemland</setName>
-        </set>
-        <set>
-            <setSpec>gar.afbeeldingen.1</setSpec>
-            <setName>Gemeentearchief Rotterdam</setName>
-        </set>
-        <set>
-            <setSpec>gar.archieven.1</setSpec>
-            <setName>Gemeentearchief Rotterdam</setName>
-        </set>
-        <set>
-            <setSpec>harderwijk.afbeeldingen.1</setSpec>
-            <setName>Harderwijk</setName>
-        </set>
-        <set>
-            <setSpec>hbm.afbeeldingen.1</setSpec>
-            <setName>Hbm</setName>
-        </set>
-        <set>
-            <setSpec>hmr.afbeeldingen.1</setSpec>
-            <setName>Hbm</setName>
-        </set>
-        <set>
-            <setSpec>limburgsmuseum.afbeeldingen.1</setSpec>
-            <setName>limburgsmuseum</setName>
-        </set>
-        <set>
-            <setSpec>muma.afbeeldingen.1</setSpec>
-            <setName>muma</setName>
-        </set>
-        <set>
-            <setSpec>na.archieven.1</setSpec>
-            <setName>Nationaal Archief</setName>
-        </set>
-        <set>
-            <setSpec>openlucht.afbeeldingen.1</setSpec>
-            <setName>Openlucht</setName>
-        </set>
-        <set>
-            <setSpec>ral.afbeeldingen.1</setSpec>
-            <setName>Ral</setName>
-        </set>
-        <set>
-            <setSpec>ran.afbeeldingen.1</setSpec>
-            <setName>Ral</setName>
-        </set>
-        <set>
-            <setSpec>ran.turksecollectie.1</setSpec>
-            <setName>turksecollectie</setName>
-        </set>
-        <set>
-            <setSpec>saa.archieven.1</setSpec>
-            <setName>ssa</setName>
-        </set>
-        <set>
-            <setSpec>zeeuwsarchief.afbeeldingen.1</setSpec>
-            <setName>zeeuwsarchief</setName>
-        </set>
-        <set>
-            <setSpec>zeeuwsebibliotheek.afbeeldingen.1</setSpec>
-            <setName>zeeuwsebibliotheek</setName>
-        </set>
         <set>
             <setSpec>VIS-DutchLabourMovements</setSpec>
             <setName>Dutch labour Movements</setName>
@@ -151,6 +46,12 @@
             </setDescription>
         </set>
         <set>
+            <setSpec>VIS-NonEuropeanMovement</setSpec>
+            <setName>Social movements 19-20th century photo's en posters</setName>
+            <setDescription>Image and Sound collection, social movements 19-20th century photo's en posters
+            </setDescription>
+        </set>
+        <set>
             <setSpec>irsh</setSpec>
             <setName>International Review of Social History</setName>
         </set>
@@ -172,28 +73,32 @@
             <setName>No digital content</setName>
         </set>
         <set>
-            <setSpec>nondig.books</setSpec>
-            <setName>No digital content book type</setName>
-        </set>
-        <set>
             <setSpec>nondig.serials</setSpec>
-            <setName>No digital content serial type</setName>
+            <setName>No Digital Content Serial</setName>
         </set>
         <set>
-            <setSpec>nondig.video</setSpec>
-            <setName>No digital content video type</setName>
+            <setSpec>nondig.books_and_brochures</setSpec>
+            <setName>No Digital Content Book</setName>
         </set>
         <set>
-            <setSpec>nondig.audio</setSpec>
-            <setName>No digital content audio type</setName>
+            <setSpec>nondig.music_and_sound</setSpec>
+            <setName>No Digital Content Music and Sound</setName>
         </set>
         <set>
-            <setSpec>nondig.visual</setSpec>
-            <setName>No digital content visual type</setName>
+            <setSpec>nondig.documentation</setSpec>
+            <setName>No Digital Content Documentation</setName>
         </set>
         <set>
-            <setSpec>nondig.objects</setSpec>
-            <setName>No digital content objects type</setName>
+            <setSpec>nondig.archives</setSpec>
+            <setName>No Digital Content Archives</setName>
+        </set>
+        <set>
+            <setSpec>nondig.visual_documents</setSpec>
+            <setName>No Digital Content Visual documents</setName>
+        </set>
+        <set>
+            <setSpec>nondig.other</setSpec>
+            <setName>No Digital Content Miscellaneous</setName>
         </set>
     </ListSets>
 </OAI-PMH>
