@@ -20,7 +20,7 @@
     <xsl:template match="ead:ead">
 
         <xsl:variable name="identifier"
-                      select="ead:eadheader/ead:eadid/@identifier"/>
+                      select="substring(ead:eadheader/ead:eadid/@identifier, 5)"/>
 
         <record>
             <extraRecordData>
@@ -65,7 +65,7 @@
                     -->
                     <marc:controlfield tag="008">
                         <xsl:variable name="tmp"
-                                      select="normalize-space(//ead:controlaccess/ead:geogname[@encodinganalog='044$c']/@normal)"/>
+                                      select="lower-case(normalize-space(//ead:controlaccess/ead:geogname[@encodinganalog='044$c']/@normal))"/>
                         <xsl:variable name="geocode">
                             <xsl:choose>
                                 <xsl:when test="$tmp='ao'">ao</xsl:when>
@@ -94,6 +94,7 @@
                                 <xsl:when test="$tmp='fr'">fr</xsl:when>
                                 <xsl:when test="$tmp='ge'">gs</xsl:when>
                                 <xsl:when test="$tmp='de'">gw</xsl:when>
+                                <xsl:when test="$tmp='gb'">gb</xsl:when>
                                 <xsl:when test="$tmp='gr'">gr</xsl:when>
                                 <xsl:when test="$tmp='gd'">gd</xsl:when>
                                 <xsl:when test="$tmp='gt'">gt</xsl:when>
@@ -179,48 +180,51 @@
                         <marc:datafield tag="044" ind1=" " ind2=" ">
                             <xsl:for-each select="//node()[@encodinganalog='044$c']">
                                 <marc:subfield code="a">
-                                    <xsl:value-of select="@normal"/>
+                                    <xsl:value-of select="lower-case(@normal)"/>
                                 </marc:subfield>
                             </xsl:for-each>
                         </marc:datafield>
                     </xsl:if>
 
                     <xsl:for-each select="//node()[@encodinganalog='100$a']">
-                        <xsl:sort select="@encodinganalog" data-type="text"/>
-                        <marc:datafield tag="100" ind1="1" ind2=" ">
-                            <xsl:call-template name="subfield">
-                                <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
-                                <xsl:with-param name="text" select="normalize-space(text())"/>
-                            </xsl:call-template>
-                            <marc:subfield code="e">creator</marc:subfield>
-                        </marc:datafield>
+                            <xsl:if test="position()=1">
+                                <marc:datafield tag="100" ind1="1" ind2=" ">
+                                    <xsl:call-template name="subfield">
+                                        <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                        <xsl:with-param name="text" select="normalize-space(text())"/>
+                                    </xsl:call-template>
+                                    <marc:subfield code="e">creator</marc:subfield>
+                                </marc:datafield>
+                            </xsl:if>
                     </xsl:for-each>
 
                     <xsl:for-each select="//node()[@encodinganalog='110$a']">
-                        <xsl:sort select="@encodinganalog" data-type="text"/>
-                        <marc:datafield tag="110" ind1="2" ind2=" ">
-                            <xsl:call-template name="subfield">
-                                <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
-                                <xsl:with-param name="text" select="normalize-space(text())"/>
-                            </xsl:call-template>
-                            <xsl:if test="node()[@encodinganalog='110$b']">
-                                <marc:subfield code="b">
-                                    <xsl:value-of select="normalize-space(node()[@encodinganalog='110$b'])"/>
-                                </marc:subfield>
+                            <xsl:if test="position()=1">
+                                <marc:datafield tag="110" ind1="2" ind2=" ">
+                                    <xsl:call-template name="subfield">
+                                        <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                        <xsl:with-param name="text" select="normalize-space(text())"/>
+                                    </xsl:call-template>
+                                    <xsl:if test="node()[@encodinganalog='110$b']">
+                                        <marc:subfield code="b">
+                                            <xsl:value-of select="normalize-space(node()[@encodinganalog='110$b'])"/>
+                                        </marc:subfield>
+                                    </xsl:if>
+                                    <marc:subfield code="e">creator</marc:subfield>
+                                </marc:datafield>
                             </xsl:if>
-                            <marc:subfield code="e">creator</marc:subfield>
-                        </marc:datafield>
                     </xsl:for-each>
 
                     <xsl:for-each select="//node()[@encodinganalog='130$a']">
-                        <xsl:sort select="@encodinganalog" data-type="text"/>
-                        <marc:datafield tag="130" ind1="1" ind2=" ">
-                            <xsl:call-template name="subfield">
-                                <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
-                                <xsl:with-param name="text" select="normalize-space(text())"/>
-                            </xsl:call-template>
-                            <marc:subfield code="k">collection</marc:subfield>
-                        </marc:datafield>
+                            <xsl:if test="position()=1">
+                                <marc:datafield tag="130" ind1="1" ind2=" ">
+                                    <xsl:call-template name="subfield">
+                                        <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                        <xsl:with-param name="text" select="normalize-space(text())"/>
+                                    </xsl:call-template>
+                                    <marc:subfield code="k">collection</marc:subfield>
+                                </marc:datafield>
+                            </xsl:if>
                     </xsl:for-each>
 
                     <marc:datafield tag="245" ind1="1" ind2=" ">
@@ -238,10 +242,10 @@
                             <xsl:call-template name="subfield">
                                 <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
                                 <xsl:with-param name="text">
-                                        <xsl:value-of select="text()"/>
-                                        <xsl:if test="not(position()=last())">
-                                            <xsl:text> </xsl:text>
-                                        </xsl:if>
+                                    <xsl:value-of select="text()"/>
+                                    <xsl:if test="not(position()=last())">
+                                        <xsl:text> </xsl:text>
+                                    </xsl:if>
                                 </xsl:with-param>
                             </xsl:call-template>
                         </marc:datafield>
@@ -439,13 +443,38 @@
                         </marc:datafield>
                     </xsl:for-each>
 
-                    <xsl:for-each select="//ead:controlaccess[ead:controlaccess/ead:geogname]">
+                    <xsl:for-each select="//node()[starts-with(@encodinganalog,'650$a')]">
+                        <marc:datafield tag="650" ind1=" " ind2=" ">
+                            <xsl:call-template name="subfield">
+                                <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                <xsl:with-param name="text">
+                                    <xsl:value-of select="text()"/>
+                                    <xsl:if test="not(position()=last())">
+                                        <xsl:text> </xsl:text>
+                                    </xsl:if>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </marc:datafield>
+                    </xsl:for-each>
+                    <xsl:for-each select="//ead:controlaccess/ead:controlaccess/ead:geogname">
                         <xsl:call-template name="insertSingleElement">
                             <xsl:with-param name="tag" select="'651'"/>
                             <xsl:with-param name="code" select="'a'"/>
                             <xsl:with-param name="value"
-                                            select="normalize-space(ead:controlaccess/ead:geogname/@normal)"/>
+                                            select="normalize-space(lower-case(@normal))"/>
                         </xsl:call-template>
+                    </xsl:for-each>
+
+                    <xsl:for-each select="//node()[@encodinganalog='100$a']">
+                        <xsl:if test="position()>1">
+                            <marc:datafield tag="700" ind1="1" ind2=" ">
+                                <xsl:call-template name="subfield">
+                                    <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                    <xsl:with-param name="text" select="normalize-space(text())"/>
+                                </xsl:call-template>
+                                <marc:subfield code="e">contributor</marc:subfield>
+                            </marc:datafield>
+                        </xsl:if>
                     </xsl:for-each>
 
                     <xsl:for-each select="//node()[@encodinganalog='700$']">
@@ -457,6 +486,23 @@
                             </xsl:call-template>
                             <marc:subfield code="e">contributor</marc:subfield>
                         </marc:datafield>
+                    </xsl:for-each>
+
+                    <xsl:for-each select="//node()[@encodinganalog='110$a']">
+                        <xsl:if test="position()>1">
+                            <marc:datafield tag="110" ind1="2" ind2=" ">
+                                <xsl:call-template name="subfield">
+                                    <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                    <xsl:with-param name="text" select="normalize-space(text())"/>
+                                </xsl:call-template>
+                                <xsl:if test="node()[@encodinganalog='710$b']">
+                                    <marc:subfield code="b">
+                                        <xsl:value-of select="normalize-space(node()[@encodinganalog='710$b'])"/>
+                                    </marc:subfield>
+                                </xsl:if>
+                                <marc:subfield code="e">contributor</marc:subfield>
+                            </marc:datafield>
+                        </xsl:if>
                     </xsl:for-each>
 
                     <xsl:for-each select="//node()[@encodinganalog='710$']">
@@ -486,6 +532,18 @@
                         </marc:datafield>
                     </xsl:for-each>
 
+                    <xsl:for-each select="//node()[@encodinganalog='130$a']">
+                        <xsl:if test="position()>1">
+                            <marc:datafield tag="730" ind1="1" ind2=" ">
+                                <xsl:call-template name="subfield">
+                                    <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                    <xsl:with-param name="text" select="normalize-space(text())"/>
+                                </xsl:call-template>
+                                <marc:subfield code="k">contributor</marc:subfield>
+                            </marc:datafield>
+                        </xsl:if>
+                    </xsl:for-each>
+
                     <xsl:for-each select="//node()[@encodinganalog='730$']">
                         <xsl:sort select="@encodinganalog" data-type="text"/>
                         <marc:datafield tag="730" ind1="1" ind2=" ">
@@ -497,12 +555,14 @@
                         </marc:datafield>
                     </xsl:for-each>
 
-                    <xsl:call-template name="insertElement">
-                        <xsl:with-param name="tag" select="'852'"/>
-                        <xsl:with-param name="code" select="'a'"/>
-                        <xsl:with-param name="value"
-                                        select="//node()[starts-with(@encodinganalog,'852$')]/ead:corpname"/>
-                    </xsl:call-template>
+                    <marc:datafield tag="852" ind1=" " ind2=" ">
+                        <marc:subfield code="a">
+                            <xsl:value-of select="//node()[starts-with(@encodinganalog,'852$')]/ead:corpname"/>
+                        </marc:subfield>
+                        <marc:subfield code="j">
+                            <xsl:value-of select="//node()[@encodinganalog='852$j']"/><xsl:value-of select="text()"/>
+                        </marc:subfield>
+                    </marc:datafield>
 
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag" select="'856'"/>
