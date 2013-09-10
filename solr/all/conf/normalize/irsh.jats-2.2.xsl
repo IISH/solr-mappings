@@ -164,11 +164,11 @@
                         <marc:subfield code="j">IRSH</marc:subfield>
                     </marc:datafield>
 
-                    <marc:datafield tag="856" ind1=" " ind2=" ">
+                    <marc:datafield tag="856" ind1="4" ind2=" ">
+                        <marc:subfield code="q">application/pdf</marc:subfield>
                         <marc:subfield code="u">
                             <xsl:value-of select="$isShownBy"/>
                         </marc:subfield>
-                        <marc:subfield code="q">application/pdf</marc:subfield>
                     </marc:datafield>
 
                     <xsl:call-template name="insertSingleElement">

@@ -6,7 +6,8 @@
         xmlns:ead="urn:isbn:1-931666-22-9"
         xmlns:marc="http://www.loc.gov/MARC21/slim"
         xmlns:iisg="http://www.iisg.nl/api/sru/"
-        exclude-result-prefixes="ead iisg marc">
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        exclude-result-prefixes="ead iisg marc xlink">
 
     <xsl:import href="../../../xslt/insertElement.xsl"/>
     <xsl:import href="../../../xslt/punctionation.xsl"/>
@@ -21,6 +22,7 @@
 
         <xsl:variable name="identifier"
                       select="substring(ead:eadheader/ead:eadid/@identifier, 5)"/>
+        <!-- remove the hdl: part -->
 
         <record>
             <extraRecordData>
@@ -175,7 +177,6 @@
                         </marc:datafield>
                     </xsl:if>
 
-
                     <xsl:if test="//node()[@encodinganalog='044$c']">
                         <marc:datafield tag="044" ind1=" " ind2=" ">
                             <xsl:for-each select="//node()[@encodinganalog='044$c']">
@@ -187,44 +188,44 @@
                     </xsl:if>
 
                     <xsl:for-each select="//node()[@encodinganalog='100$a']">
-                            <xsl:if test="position()=1">
-                                <marc:datafield tag="100" ind1="1" ind2=" ">
-                                    <xsl:call-template name="subfield">
-                                        <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
-                                        <xsl:with-param name="text" select="normalize-space(text())"/>
-                                    </xsl:call-template>
-                                    <marc:subfield code="e">creator</marc:subfield>
-                                </marc:datafield>
-                            </xsl:if>
+                        <xsl:if test="position()=1">
+                            <marc:datafield tag="100" ind1="1" ind2=" ">
+                                <xsl:call-template name="subfield">
+                                    <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                    <xsl:with-param name="text" select="normalize-space(text())"/>
+                                </xsl:call-template>
+                                <marc:subfield code="e">creator</marc:subfield>
+                            </marc:datafield>
+                        </xsl:if>
                     </xsl:for-each>
 
                     <xsl:for-each select="//node()[@encodinganalog='110$a']">
-                            <xsl:if test="position()=1">
-                                <marc:datafield tag="110" ind1="2" ind2=" ">
-                                    <xsl:call-template name="subfield">
-                                        <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
-                                        <xsl:with-param name="text" select="normalize-space(text())"/>
-                                    </xsl:call-template>
-                                    <xsl:if test="node()[@encodinganalog='110$b']">
-                                        <marc:subfield code="b">
-                                            <xsl:value-of select="normalize-space(node()[@encodinganalog='110$b'])"/>
-                                        </marc:subfield>
-                                    </xsl:if>
-                                    <marc:subfield code="e">creator</marc:subfield>
-                                </marc:datafield>
-                            </xsl:if>
+                        <xsl:if test="position()=1">
+                            <marc:datafield tag="110" ind1="2" ind2=" ">
+                                <xsl:call-template name="subfield">
+                                    <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                    <xsl:with-param name="text" select="normalize-space(text())"/>
+                                </xsl:call-template>
+                                <xsl:if test="node()[@encodinganalog='110$b']">
+                                    <marc:subfield code="b">
+                                        <xsl:value-of select="normalize-space(node()[@encodinganalog='110$b'])"/>
+                                    </marc:subfield>
+                                </xsl:if>
+                                <marc:subfield code="e">creator</marc:subfield>
+                            </marc:datafield>
+                        </xsl:if>
                     </xsl:for-each>
 
                     <xsl:for-each select="//node()[@encodinganalog='130$a']">
-                            <xsl:if test="position()=1">
-                                <marc:datafield tag="130" ind1="1" ind2=" ">
-                                    <xsl:call-template name="subfield">
-                                        <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
-                                        <xsl:with-param name="text" select="normalize-space(text())"/>
-                                    </xsl:call-template>
-                                    <marc:subfield code="k">collection</marc:subfield>
-                                </marc:datafield>
-                            </xsl:if>
+                        <xsl:if test="position()=1">
+                            <marc:datafield tag="130" ind1="1" ind2=" ">
+                                <xsl:call-template name="subfield">
+                                    <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
+                                    <xsl:with-param name="text" select="normalize-space(text())"/>
+                                </xsl:call-template>
+                                <marc:subfield code="k">collection</marc:subfield>
+                            </marc:datafield>
+                        </xsl:if>
                     </xsl:for-each>
 
                     <marc:datafield tag="245" ind1="1" ind2=" ">
@@ -564,12 +565,24 @@
                         </marc:subfield>
                     </marc:datafield>
 
-                    <xsl:call-template name="insertSingleElement">
-                        <xsl:with-param name="tag" select="'856'"/>
-                        <xsl:with-param name="code" select="'u'"/>
-                        <xsl:with-param name="value"
-                                        select="concat('http://api.socialhistoryservices.org/solr/all/oai?verb=GetRecord&amp;identifier=oai:socialhistoryservices.org:',$identifier,'&amp;metadataPrefix=ead')"/>
-                    </xsl:call-template>
+                    <marc:datafield tag="856" ind1="4" ind2=" ">
+                        <marc:subfield code="q">text/xml</marc:subfield>
+                        <marc:subfield code="u">
+                            <xsl:value-of select="concat('http://hdl.handle.net/', $identifier, '?locatt=view:ead')"/>
+                        </marc:subfield>
+                    </marc:datafield>
+
+                    <!-- A representative image -->
+                    <xsl:variable name="digital_items"
+                                  select="//ead:daogrp[ead:daoloc[starts-with(@xlink:href, 'http://hdl.handle.net/10622/')]]"/>
+                    <xsl:if test="count($digital_items)>10">
+                        <marc:datafield tag="856" ind1="4" ind2="2">
+                            <marc:subfield code="q">image/jpeg</marc:subfield>
+                            <marc:subfield code="u">
+                                <xsl:value-of select="concat('http://hdl.handle.net/', $identifier, '?locatt=view:level3')"/>
+                            </marc:subfield>
+                        </marc:datafield>
+                    </xsl:if>
 
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag" select="'902'"/>
