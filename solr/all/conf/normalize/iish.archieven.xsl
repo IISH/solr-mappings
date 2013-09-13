@@ -51,7 +51,7 @@
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
 
-                    <marc:leader>00742nbm a22001930a 45 0</marc:leader>
+                    <marc:leader>00742npc a22001930a 45 0</marc:leader>
 
                     <marc:controlfield tag="001">
                         <xsl:value-of select="$identifier"/>
@@ -180,7 +180,7 @@
                     <xsl:if test="//node()[@encodinganalog='044$c']">
                         <marc:datafield tag="044" ind1=" " ind2=" ">
                             <xsl:for-each select="//node()[@encodinganalog='044$c']">
-                                <marc:subfield code="a">
+                                <marc:subfield code="c">
                                     <xsl:value-of select="lower-case(@normal)"/>
                                 </marc:subfield>
                             </xsl:for-each>
@@ -478,7 +478,7 @@
                         </xsl:if>
                     </xsl:for-each>
 
-                    <xsl:for-each select="//node()[@encodinganalog='700$']">
+                    <xsl:for-each select="//node()[@encodinganalog='700$a']">
                         <xsl:sort select="@encodinganalog" data-type="text"/>
                         <marc:datafield tag="700" ind1="1" ind2=" ">
                             <xsl:call-template name="subfield">
@@ -506,7 +506,7 @@
                         </xsl:if>
                     </xsl:for-each>
 
-                    <xsl:for-each select="//node()[@encodinganalog='710$']">
+                    <xsl:for-each select="//node()[@encodinganalog='710$a']">
                         <xsl:sort select="@encodinganalog" data-type="text"/>
                         <marc:datafield tag="710" ind1="2" ind2=" ">
                             <xsl:call-template name="subfield">
@@ -521,14 +521,7 @@
                         <marc:datafield tag="720" ind1=" " ind2=" ">
                             <xsl:call-template name="subfield">
                                 <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
-                                <xsl:with-param name="text">
-                                    <xsl:for-each select="ead:p">
-                                        <xsl:value-of select="text()"/>
-                                        <xsl:if test="not(position()=last())">
-                                            <xsl:text> </xsl:text>
-                                        </xsl:if>
-                                    </xsl:for-each>
-                                </xsl:with-param>
+                                <xsl:with-param name="text" select="normalize-space(text())"/>
                             </xsl:call-template>
                         </marc:datafield>
                     </xsl:for-each>
@@ -545,7 +538,7 @@
                         </xsl:if>
                     </xsl:for-each>
 
-                    <xsl:for-each select="//node()[@encodinganalog='730$']">
+                    <xsl:for-each select="//node()[@encodinganalog='730$a']">
                         <xsl:sort select="@encodinganalog" data-type="text"/>
                         <marc:datafield tag="730" ind1="1" ind2=" ">
                             <xsl:call-template name="subfield">
