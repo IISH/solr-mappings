@@ -12,11 +12,9 @@ else
 fi
 
 
-for i in {0..1}
-	do
+for i in {0..3}
+do
 		be=/data/solr-mappings.be"$i"/solr/
 		rsync --delete -av $index0 $be
 		chown -R tomcat6:tomcat6 $be
-		url=http://api.be"$i".socialhistoryservices.org:8080/solr/admin/multicore?action="RELOAD&core=all"
-		wget -O /tmp/reload.txt "$url"
 done
