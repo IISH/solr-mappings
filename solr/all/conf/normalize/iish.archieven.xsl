@@ -381,22 +381,6 @@
                         </marc:datafield>
                     </xsl:for-each>
 
-                    <xsl:for-each select="//node()[starts-with(@encodinganalog,'541$a')]">
-                        <marc:datafield tag="541" ind1=" " ind2=" ">
-                            <xsl:call-template name="subfield">
-                                <xsl:with-param name="encodinganalog" select="@encodinganalog"/>
-                                <xsl:with-param name="text">
-                                    <xsl:for-each select="ead:p">
-                                        <xsl:value-of select="text()"/>
-                                        <xsl:if test="not(position()=last())">
-                                            <xsl:text> </xsl:text>
-                                        </xsl:if>
-                                    </xsl:for-each>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </marc:datafield>
-                    </xsl:for-each>
-
                     <xsl:for-each select="//node()[starts-with(@encodinganalog,'544$a')]">
                         <marc:datafield tag="544" ind1=" " ind2=" ">
                             <xsl:call-template name="subfield">
