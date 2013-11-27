@@ -47,7 +47,8 @@
                     </xsl:for-each>
                     <iisg:date_modified>
                         <xsl:call-template name="insertDateModified">
-                            <xsl:with-param name="cfDate" select="marc:controlfield[@tag='005']"/>
+                            <!--<xsl:with-param name="cfDate" select="marc:controlfield[@tag='005']"/>-->
+                            <xsl:with-param name="cfDate" select="$date_modified"/>
                             <xsl:with-param name="fsDate" select="$date_modified"/>
                         </xsl:call-template>
                     </iisg:date_modified>
