@@ -13,7 +13,7 @@ if [ -d $d ];
 then
   # Write the desired harvest from parameter
   now=$(date +"%Y-%m-%d")
-  php $VUFIND_HOME/harvest/LastHarvestFile.php "$now" "-61 day" "$d"last_harvest.txt
+  php $VUFIND_HOME/harvest/LastHarvestFile.php "$now" "-31 day" "$d"last_harvest.txt
 else
     echo "Not a valid folder: " . $d
     exit 1
@@ -34,7 +34,7 @@ chmod -R 744 $d
   # To speed the import up, we collate all to a single file.
   app=/usr/bin/vufind/import-1.0.jar
   xsl=$2
-  java -Dxsl=$xsl -cp $app org.socialhistoryservices.solr.importer.Collate $d $f
+  java -Dxsl=$xsl -cp $app org.socialhistory.solr.importer.Collate $d $f
 
   # Then upload
   # For this we need stylesheets to normalize the marc documents into our model
