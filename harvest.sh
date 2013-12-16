@@ -32,7 +32,7 @@ chmod -R 744 $d
 
   # We import all records.
   # To speed the import up, we collate all to a single file.
-  app=/usr/bin/vufind/import-1.0.jar
+  app=/data/solr-mappings.index0/solr/lib/import-1.0.jar
   xsl=$2
   java -Dxsl=$xsl -cp $app org.socialhistory.solr.importer.Collate $d $f
 
