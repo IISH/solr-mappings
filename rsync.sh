@@ -6,16 +6,17 @@
 # If no parameter was given, we replicate the master index
 if [ "$1" == "" ];
 then
-	index0=/data/solr-mappings.index0/solr/
+	index0=/data/solr-mappings.index0/
 else
 	index0=$1
 fi
 
 
-for f in *.be?
+for f in /data/*.be?
 do
-		be=/data/$f/solr/
-		rsync --delete -av $index0 $be
-		touch ${be}restart.txt
-		chown -R tomcat6:tomcat6 $be
+	be=$f/
+	echo "Processing $be"
+	rsync --exclude '.git' --delete -av $index0 $be
+	touch ${be}restart.txt
+	chown -R tomcat6:tomcat6 $be
 done
