@@ -12,9 +12,10 @@ else
 fi
 
 
-for i in {0..3}
+for f in *.be?
 do
-		be=/data/solr-mappings.be"$i"/solr/
+		be=/data/$f/solr/
 		rsync --delete -av $index0 $be
+		touch ${be}restart.txt
 		chown -R tomcat6:tomcat6 $be
 done
