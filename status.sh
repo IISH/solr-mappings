@@ -1,6 +1,6 @@
 #!/bin/bash
 
-restart=/usr/local/api/solr/restart.txt
+restart=/usr/local/api/restart.txt
 if [ -f $restart ] ; then
     service tomcat6 stop
     pause 3

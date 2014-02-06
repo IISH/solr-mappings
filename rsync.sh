@@ -17,6 +17,5 @@ do
 	be=$f/
 	echo "Processing $be"
 	rsync --exclude '.git' --delete -av $index0 $be
-	touch ${be}restart.txt
 	chown -R tomcat6:tomcat6 $be
 done
