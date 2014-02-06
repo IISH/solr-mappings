@@ -610,6 +610,14 @@ limitations under the License.
         </index>
 
         <index>
+            <title>Piece</title>
+            <map>
+                <name set="marc">852$p</name>
+                <name set="solr" search="marc_852_p"/>
+            </map>
+        </index>
+
+        <index>
             <title>Cataloging Source</title>
             <map>
                 <name set="marc">040</name>
