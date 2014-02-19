@@ -67,7 +67,7 @@
                     -->
                     <marc:controlfield tag="008">
                         <xsl:variable name="tmp"
-                                      select="lower-case(normalize-space(//ead:controlaccess/ead:geogname[@encodinganalog='044$c']/@normal))"/>
+                                      select="lower-case(normalize-space(//ead:controlaccess/ead:geogname[@encodinganalog='044$c'][0]/@normal))"/>
                         <xsl:variable name="geocode">
                             <xsl:choose>
                                 <xsl:when test="$tmp='ao'">ao</xsl:when>
