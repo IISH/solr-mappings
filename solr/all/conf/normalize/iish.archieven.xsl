@@ -552,7 +552,7 @@
                     <!-- A representative image -->
                     <xsl:variable name="digital_items"
                                   select="//ead:daogrp[ead:daoloc[starts-with(@xlink:href, 'http://hdl.handle.net/10622/')]]"/>
-                    <xsl:if test="count($digital_items)>10">
+                    <xsl:if test="count($digital_items)>0">
                         <marc:datafield tag="856" ind1="4" ind2="2">
                             <marc:subfield code="q">image/jpeg</marc:subfield>
                             <marc:subfield code="u">
