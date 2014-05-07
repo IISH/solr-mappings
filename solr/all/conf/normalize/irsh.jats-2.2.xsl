@@ -50,7 +50,7 @@
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
 
-                    <marc:leader>00857nas a22001810a 45 0</marc:leader>
+                    <marc:leader>00857nab a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
                         <xsl:value-of select="front/article-meta/article-id[@pub-id-type='pii']"/>
                     </marc:controlfield>
@@ -107,6 +107,7 @@
                         </xsl:if>
                     </marc:datafield>
 
+<!--
                     <marc:datafield tag="260" ind1=" " ind2=" ">
                         <marc:subfield code="a">
                             <xsl:value-of select="concat(front/journal-meta/publisher/publisher-loc, ' :')"/>
@@ -118,13 +119,16 @@
                             <xsl:value-of select="front/article-meta/pub-date[1]/year"/>
                         </marc:subfield>
                     </marc:datafield>
+-->
 
+<!--
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">300</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
                         <xsl:with-param name="value"
                                         select="concat(front/article-meta/counts/page-count/@count, ' p.')"/>
                     </xsl:call-template>
+-->
 
                     <xsl:call-template name="insertElement">
                         <xsl:with-param name="tag">520</xsl:with-param>
@@ -132,10 +136,6 @@
                         <xsl:with-param name="value" select="front/article-meta/abstract"/>
                     </xsl:call-template>
                     <marc:datafield tag="773" ind1="0" ind2="#">
-                        <marc:subfield code="a">
-                            <xsl:value-of
-                                    select="front/journal-meta/journal-title"/>
-                        </marc:subfield>
                         <marc:subfield code="g">
                             <xsl:choose>
                                 <xsl:when test="front/article-meta/issue">
@@ -147,6 +147,10 @@
                                             select="concat('vol. ', front/article-meta/volume, '(', front/article-meta/pub-date[1]/year, ') p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
                                 </xsl:otherwise>
                             </xsl:choose>
+                        </marc:subfield>
+                        <marc:subfield code="t">
+                            <xsl:value-of
+                                    select="front/journal-meta/journal-title"/>
                         </marc:subfield>
                     </marc:datafield>
                     <xsl:if test="front/article-meta/permissions/copyright-statement">

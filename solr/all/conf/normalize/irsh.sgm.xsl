@@ -53,7 +53,7 @@
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
 
-                    <marc:leader>00857nas a22001810a 45 0</marc:leader>
+                    <marc:leader>00857nab a22001810a 45 0</marc:leader>
                     <marc:controlfield tag="001">
                         <xsl:value-of select="ARTCON/GENHDR/ARTINFO/ALTID/PII"/>
                     </marc:controlfield>
@@ -88,6 +88,7 @@
                             </marc:subfield>
                         </xsl:if>
                     </marc:datafield>
+<!--
                     <marc:datafield tag="260" ind1=" " ind2=" ">
                         <marc:subfield code="a">
                             <xsl:value-of select="concat(ISSUE/PINFO/LOC, ' :')"/>
@@ -99,22 +100,25 @@
                             <xsl:value-of select="ISSUE/PUBINFO/CD/@YEAR"/>
                         </marc:subfield>
                     </marc:datafield>
+-->
 
+<!--
                     <xsl:call-template name="insertSingleElement">
                         <xsl:with-param name="tag">300</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
                         <xsl:with-param name="value"
                                         select="concat(ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/@COUNT, ' p.')"/>
                     </xsl:call-template>
+-->
 
                     <marc:datafield tag="773" ind1="0" ind2="#">
-                        <marc:subfield code="a">
-                            <xsl:value-of
-                                    select="ISSUE/JINFO/JTL"/>
-                        </marc:subfield>
                         <marc:subfield code="g">
                             <xsl:value-of
                                     select="concat(ISSUE/PUBINFO/VID, '(', ISSUE/PUBINFO/CD/@YEAR, ') no.', ISSUE/PUBINFO/IID, ', p. ',ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPF, '-', ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPL, '.')"/>
+                        </marc:subfield>
+                        <marc:subfield code="t">
+                            <xsl:value-of
+                                    select="ISSUE/JINFO/JTL"/>
                         </marc:subfield>
                     </marc:datafield>
 
