@@ -18,26 +18,18 @@
 
 <config>
 
-<!--
-    <requestHandler name="/replication" class="solr.ReplicationHandler" enable="${enable.master:false}">
-        <lst name="master">
-            <str name="replicateAfter">optimize</str>
-            <str name="confFiles"/>
-            <str name="commitReserveDuration">00:00:10</str>
-        </lst>
-    </requestHandler>
-    <requestHandler name="/replication" class="solr.ReplicationHandler" enable="${enable.slave:false}">
-        <lst name="slave">
-            <str name="masterUrl">http://api.index0.socialhistoryservices.org:8080/solr/all/replication</str>
-            <str name="pollInterval">00:00:20</str>
-            <str name="compression">internal</str>
-            <str name="httpConnTimeout">5000</str>
-            <str name="httpReadTimeout">10000</str>
-            <str name="httpBasicAuthUser">username</str>
-            <str name="httpBasicAuthPassword">password</str>
-        </lst>
-    </requestHandler>
--->
+	<requestHandler name="/replication" class="solr.ReplicationHandler">
+ 		<lst name="master">
+			<str name="enable">${enable.master:false}</str>
+        		<str name="replicateAfter">startup</str>
+        		<str name="replicateAfter">commit</str>
+    		</lst>
+		<lst name="slave">
+			<str name="enable">${enable.slave:false}</str>
+        		<str name="masterUrl">http://api.index0.socialhistoryservices.org:8080/solr/all/replication</str>
+			<str name="pollInterval">00:01:00</str>
+ 		</lst>
+	</requestHandler>
 
     <luceneMatchVersion>LUCENE_34</luceneMatchVersion>
 
