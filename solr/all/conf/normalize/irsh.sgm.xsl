@@ -112,13 +112,13 @@
 -->
 
                     <marc:datafield tag="773" ind1="0" ind2="#">
-                        <marc:subfield code="g">
-                            <xsl:value-of
-                                    select="concat(ISSUE/PUBINFO/VID, '(', ISSUE/PUBINFO/CD/@YEAR, ') no.', ISSUE/PUBINFO/IID, ', p. ',ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPF, '-', ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPL, '.')"/>
-                        </marc:subfield>
                         <marc:subfield code="t">
                             <xsl:value-of
                                     select="ISSUE/JINFO/JTL"/>
+                        </marc:subfield>
+                        <marc:subfield code="g">
+                            <xsl:value-of
+                                    select="concat(ISSUE/PUBINFO/VID, '(', ISSUE/PUBINFO/CD/@YEAR, ') no.', ISSUE/PUBINFO/IID, ', p. ',ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPF, '-', ARTCON/GENHDR/ARTINFO/ARTTY/PPCT/PPL, '.')"/>
                         </marc:subfield>
                     </marc:datafield>
 

@@ -136,6 +136,10 @@
                         <xsl:with-param name="value" select="front/article-meta/abstract"/>
                     </xsl:call-template>
                     <marc:datafield tag="773" ind1="0" ind2="#">
+                        <marc:subfield code="t">
+                            <xsl:value-of
+                                    select="front/journal-meta/journal-title"/>
+                        </marc:subfield>
                         <marc:subfield code="g">
                             <xsl:choose>
                                 <xsl:when test="front/article-meta/issue">
@@ -147,10 +151,6 @@
                                             select="concat('vol. ', front/article-meta/volume, '(', front/article-meta/pub-date[1]/year, ') p. ', front/article-meta/fpage, '-', front/article-meta/lpage, '.')"/>
                                 </xsl:otherwise>
                             </xsl:choose>
-                        </marc:subfield>
-                        <marc:subfield code="t">
-                            <xsl:value-of
-                                    select="front/journal-meta/journal-title"/>
                         </marc:subfield>
                     </marc:datafield>
                     <xsl:if test="front/article-meta/permissions/copyright-statement">
