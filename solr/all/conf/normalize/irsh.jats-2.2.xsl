@@ -131,6 +131,12 @@
 -->
 
                     <xsl:call-template name="insertElement">
+                        <xsl:with-param name="tag">452</xsl:with-param>
+                        <xsl:with-param name="code">m</xsl:with-param>
+                        <xsl:with-param name="value">open</xsl:with-param>
+                    </xsl:call-template>
+
+                    <xsl:call-template name="insertElement">
                         <xsl:with-param name="tag">520</xsl:with-param>
                         <xsl:with-param name="code">a</xsl:with-param>
                         <xsl:with-param name="value" select="front/article-meta/abstract"/>
