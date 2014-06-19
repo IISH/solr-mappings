@@ -50,7 +50,7 @@
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
 
-                    <marc:leader>00857nab a22001810a 45 0</marc:leader>
+                    <marc:leader>00857nab a22001810a 4500</marc:leader>
                     <marc:controlfield tag="001">
                         <xsl:value-of select="front/article-meta/article-id[@pub-id-type='pii']"/>
                     </marc:controlfield>
@@ -133,7 +133,7 @@
                     <xsl:call-template name="insertElement">
                         <xsl:with-param name="tag">452</xsl:with-param>
                         <xsl:with-param name="code">m</xsl:with-param>
-                        <xsl:with-param name="value">open</xsl:with-param>
+                        <xsl:with-param name="value">irsh</xsl:with-param>
                     </xsl:call-template>
 
                     <xsl:call-template name="insertElement">

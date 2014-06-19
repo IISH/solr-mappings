@@ -53,7 +53,7 @@
             <recordData>
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
 
-                    <marc:leader>00857nab a22001810a 45 0</marc:leader>
+                    <marc:leader>00857nab a22001810a 4500</marc:leader>
                     <marc:controlfield tag="001">
                         <xsl:value-of select="ARTCON/GENHDR/ARTINFO/ALTID/PII"/>
                     </marc:controlfield>
@@ -143,6 +143,12 @@
                             <xsl:with-param name="value" select="//CRN[1]"/>
                         </xsl:call-template>
                     </xsl:if>
+
+                    <xsl:call-template name="insertSingleElement">
+                        <xsl:with-param name="tag">452</xsl:with-param>
+                        <xsl:with-param name="code">m</xsl:with-param>
+                        <xsl:with-param name="value">irsh</xsl:with-param>
+                    </xsl:call-template>
 
                     <marc:datafield tag="852" ind1=" " ind2=" ">
                         <marc:subfield code="a">IISG</marc:subfield>
