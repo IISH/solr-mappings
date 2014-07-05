@@ -19,16 +19,21 @@ else
     exit 1
 fi
 
+f=/data/datasets/"$dataset".xml
+if [ -f $f ];
+then
+	echo "Already processing... ${f}"
+	exit 1
+else
+	touch $f
+fi
+
 rm -r "$d"20*
 cd $VUFIND_HOME/harvest
 php harvest_oai.php $dataset > /data/log/$dataset.$now.harvest.log
 
 #Setting permissions
 chmod -R 744 $d
-
-  # Now collate our material
-  f=/data/datasets/"$dataset".xml
-  rm $f
 
   # We import all records.
   # To speed the import up, we collate all to a single file.
@@ -39,5 +44,7 @@ chmod -R 744 $d
   # Then upload
   # For this we need stylesheets to normalize the marc documents into our model
   java -cp $app org.socialhistory.solr.importer.BatchImport $f "http://localhost:8080/solr/all/update" "/data/solr-mappings.index0/solr/all/conf/normalize/$dataset.xsl,/data/solr-mappings.index0/solr/all/conf/import/add.xsl,/data/solr-mappings.index0/solr/all/conf/import/addSolrDocument.xsl" "collectionName:$dataset"
+
+	rm $f
 
 wget -O /tmp/commit.txt http://localhost:8080/solr/all/update?commit=true
