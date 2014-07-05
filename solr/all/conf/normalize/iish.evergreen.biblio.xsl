@@ -45,13 +45,21 @@
                             <xsl:value-of select="text()"/>
                         </iisg:isShownBy>
                     </xsl:for-each>
+
                     <iisg:date_modified>
-                        <xsl:call-template name="insertDateModified">
-                            <!--<xsl:with-param name="cfDate" select="marc:controlfield[@tag='005']"/>-->
-                            <xsl:with-param name="cfDate" select="$date_modified"/>
-                            <xsl:with-param name="fsDate" select="$date_modified"/>
-                        </xsl:call-template>
+                        <xsl:choose>
+                            <xsl:when test="marc:datafield[@tag='903']">
+                                <xsl:value-of select="marc:datafield[@tag='903']/marc:subfield[@code='a']"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:call-template name="insertDateModified">
+                                    <xsl:with-param name="cfDate" select="$date_modified"/>
+                                    <xsl:with-param name="fsDate" select="$date_modified"/>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </iisg:date_modified>
+
                 </iisg:iisg>
             </extraRecordData>
 
@@ -59,47 +67,22 @@
                 <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
                     <xsl:copy-of select="marc:leader"/>
                     <xsl:copy-of select="marc:controlfield"/>
-                    <xsl:copy-of select="marc:datafield"/>
+                   <xsl:apply-templates select="marc:datafield"/>
                 </marc:record>
             </recordData>
         </record>
 
     </xsl:template>
 
+    <xsl:template match="marc:datafield">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="marc:datafield[@tag='903']"/>
+
     <xsl:template name="non-digital">
         <xsl:param name="material"/>
         <xsl:if test="not(//marc:datafield[@tag='856']/marc:subfield[@code='u']) and //marc:datafield[@tag='852']/marc:subfield[@code='c' and text()='IISG']">
             <iisg:collectionName>nondig</iisg:collectionName>
-
-            <!--<xsl:choose>
-                <xsl:when test="$material='am'">
-                    <iisg:collectionName>nondig.books</iisg:collectionName>
-                </xsl:when>
-                <xsl:when
-                        test="$material='ac' and //marc:datafield[@tag='245']/marc:subfield[@code='k' and text()='Book collection']">
-                    <iisg:collectionName>nondig.books</iisg:collectionName>
-                </xsl:when>
-                <xsl:when test="$material='as'">
-                    <iisg:collectionName>nondig.serials</iisg:collectionName>
-                </xsl:when>
-                <xsl:when
-                        test="$material='ac' and //marc:datafield[@tag='245']/marc:subfield[@code='k' and text()='Serial collection']">
-                    <iisg:collectionName>nondig.serials</iisg:collectionName>
-                </xsl:when>
-                <xsl:when test="$material='gm'">
-                    <iisg:collectionName>nondig.video</iisg:collectionName>
-                </xsl:when>
-                <xsl:when test="contains(',im,jm,ic,jc,', $material)">
-                    <iisg:collectionName>nondig.audio</iisg:collectionName>
-                </xsl:when>
-                <xsl:when test="contains(',km,kc,', $material)">
-                    <iisg:collectionName>nondig.visual</iisg:collectionName>
-                </xsl:when>
-                <xsl:when test="contains(',rm,rc,', $material)">
-                    <iisg:collectionName>nondig.objects</iisg:collectionName>
-                </xsl:when>
-                <xsl:otherwise/>
-            </xsl:choose>-->
 
             <xsl:choose>
                 <!-- Serials -->
