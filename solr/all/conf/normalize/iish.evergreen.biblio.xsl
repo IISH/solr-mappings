@@ -17,13 +17,49 @@
 
     <xsl:template match="marc:record">
 
-        <xsl:variable name="identifier" select="marc:datafield[@tag='902']/marc:subfield[@code='a']"/>
+        <xsl:variable name="status_deleted">
+            <xsl:choose>
+                <xsl:when test="status['deleted']">true</xsl:when>
+                <xsl:otherwise>false</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="datestamp">
+            <xsl:choose>
+                <xsl:when test="datestamp">
+                    <xsl:value-of select="datestamp"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="insertDateModified">
+                        <xsl:with-param name="cfDate" select="$date_modified"/>
+                        <xsl:with-param name="fsDate" select="$date_modified"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="pid">
+            <xsl:choose>
+                <xsl:when test="marc:datafield[@tag='902']/marc:subfield[@code='a']">
+                    <xsl:value-of select="marc:datafield[@tag='902']/marc:subfield[@code='a']"/>
+                </xsl:when>
+                <xsl:otherwise>10622/1</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="oai_identifier">
+            <xsl:choose>
+                <xsl:when
+                        test="marc:datafield[@tag='852']/marc:subfield[@code='n' and text()='Available'] or $status_deleted = 'true'">
+                    <xsl:value-of select="marc:datafield[@tag='901']/marc:subfield[@code='a']/text()"/>
+                </xsl:when>
+                <!-- anything else than available or deleted will be removed -->
+                <xsl:otherwise>0</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
 
         <record>
             <extraRecordData>
                 <iisg:iisg>
                     <xsl:call-template name="insertIISHIdentifiers">
-                        <xsl:with-param name="identifier" select="$identifier"/>
+                        <xsl:with-param name="identifier" select="$oai_identifier"/>
                     </xsl:call-template>
                     <xsl:call-template name="insertCollection">
                         <xsl:with-param name="collection" select="$collectionName"/>
@@ -38,38 +74,31 @@
                     </xsl:call-template>
                     <xsl:call-template name="collector"/>
                     <iisg:isShownAt>
-                        <xsl:value-of select="concat('http://hdl.handle.net/', $identifier)"/>
+                        <xsl:value-of select="concat('http://hdl.handle.net/', $pid)"/>
                     </iisg:isShownAt>
                     <xsl:for-each select="marc:datafield[@tag='856']/marc:subfield[@code='u']">
                         <iisg:isShownBy>
                             <xsl:value-of select="text()"/>
                         </iisg:isShownBy>
                     </xsl:for-each>
-
                     <iisg:date_modified>
-                        <xsl:choose>
-                            <xsl:when test="marc:datafield[@tag='903']">
-                                <xsl:value-of select="marc:datafield[@tag='903']/marc:subfield[@code='a']"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:call-template name="insertDateModified">
-                                    <xsl:with-param name="cfDate" select="$date_modified"/>
-                                    <xsl:with-param name="fsDate" select="$date_modified"/>
-                                </xsl:call-template>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <xsl:value-of select="$datestamp"/>
                     </iisg:date_modified>
-
+                    <iisg:deleted>
+                        <xsl:value-of select="$status_deleted"/>
+                    </iisg:deleted>
                 </iisg:iisg>
             </extraRecordData>
 
-            <recordData>
-                <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
-                    <xsl:copy-of select="marc:leader"/>
-                    <xsl:copy-of select="marc:controlfield"/>
-                   <xsl:apply-templates select="marc:datafield"/>
-                </marc:record>
-            </recordData>
+            <xsl:if test="$status_deleted='false'">
+                <recordData>
+                    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">
+                        <xsl:copy-of select="marc:leader"/>
+                        <xsl:copy-of select="marc:controlfield"/>
+                        <xsl:apply-templates select="marc:datafield"/>
+                    </marc:record>
+                </recordData>
+            </xsl:if>
         </record>
 
     </xsl:template>
@@ -77,7 +106,6 @@
     <xsl:template match="marc:datafield">
         <xsl:copy-of select="."/>
     </xsl:template>
-    <xsl:template match="marc:datafield[@tag='903']"/>
 
     <xsl:template name="non-digital">
         <xsl:param name="material"/>
