@@ -8,12 +8,14 @@ then
     exit 1
 fi
 
+cd /data/solr-mappings.index0/harvest
 d=/data/datasets/$dataset/
+
 if [ -d $d ];
 then
   # Write the desired harvest from parameter
   now=$(date +"%Y-%m-%d")
-  php $VUFIND_HOME/harvest/LastHarvestFile.php "$now" "-10 day" "$d"last_harvest.txt
+  php LastHarvestFile.php "$now" "-10 day" "$d"last_harvest.txt
 else
     echo "Not a valid folder: " . $d
     exit 1
@@ -29,7 +31,6 @@ else
 fi
 
 rm -r "$d"20*
-cd $VUFIND_HOME/harvest
 php harvest_oai.php $dataset > /data/log/$dataset.$now.harvest.log
 
 #Setting permissions
