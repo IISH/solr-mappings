@@ -80,6 +80,7 @@ limitations under the License.
                 <name set="solr" search="marc_856_u"/>
                 <name set="solr" search="marc_852_p"/>
                 <name set="solr" search="marc_901_a"/>
+                <name set="solr" search="marc_902_a"/>
             </map>
             <map>
                 <name set="iisg">identifier</name>
