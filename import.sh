@@ -10,17 +10,12 @@ then
   exit 1
 fi
 
-
 if [ -n "$2" ];
 then
   filter=$2
-    # Set the permissions to that tomcat can read the files.
-    chmod -R 664 /data/datasets/$filter
 else
   filter="*.xml"
 fi
-
-
 
 
 # Load all of the .xml import files and call the import handler.

@@ -95,9 +95,7 @@
                     <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"
                                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                                  xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
-                        <xsl:copy-of select="marc:leader"/>
-                        <xsl:copy-of select="marc:controlfield"/>
-                        <xsl:apply-templates select="marc:datafield"/>
+                        <xsl:apply-templates select="marc:*"/>
                     </marc:record>
                 </recordData>
             </xsl:if>
@@ -105,17 +103,24 @@
 
     </xsl:template>
 
-    <xsl:template match="marc:datafield">
-        <xsl:choose>
-            <xsl:when test="@tag='852'">
-                <xsl:if test="marc:subfield[@code='n' and text()='Available']">
-                    <xsl:copy-of select="."/>
-                </xsl:if>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy-of select="."/>
-            </xsl:otherwise>
-        </xsl:choose>
+    <xsl:template match="@*|node()">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="marc:datafield[@tag='852']">
+        <xsl:if test="marc:subfield[@code='n' and text()='Available']">
+            <xsl:copy-of select="."/>
+            <xsl:if test="marc:subfield[@code='p' and starts-with( text(), '30051')]">
+                <marc:datafield tag="856" ind1="4" ind2="0">
+                    <marc:subfield code="u">
+                        <xsl:value-of
+                                select="concat('http://hdl.handle.net/10622/', normalize-space(marc:subfield[@code='p']))"/>
+                    </marc:subfield>
+                </marc:datafield>
+            </xsl:if>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="non-digital">
