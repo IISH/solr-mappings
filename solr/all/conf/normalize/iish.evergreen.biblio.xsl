@@ -5,7 +5,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:marc="http://www.loc.gov/MARC21/slim"
         xmlns:iisg="http://www.iisg.nl/api/sru/" xmlns:xls="http://www.w3.org/1999/XSL/Transform"
-        exclude-result-prefixes="iisg">
+        exclude-result-prefixes="iisg marc">
 
     <xsl:import href="../../../xslt/insertElement.xsl"/>
     <xsl:output method="xml" indent="no" omit-xml-declaration="yes"/>
@@ -92,7 +92,9 @@
 
             <xsl:if test="$status_deleted='false'">
                 <recordData>
-                    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
+                    <marc:record xmlns:marc="http://www.loc.gov/MARC21/slim"
+                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                 xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">
                         <xsl:copy-of select="marc:leader"/>
                         <xsl:copy-of select="marc:controlfield"/>
                         <xsl:apply-templates select="marc:datafield"/>
@@ -104,7 +106,16 @@
     </xsl:template>
 
     <xsl:template match="marc:datafield">
-        <xsl:copy-of select="."/>
+        <xsl:choose>
+            <xsl:when test="@tag='852'">
+                <xsl:if test="marc:subfield[@code='n' and text()='Available']">
+                    <xsl:copy-of select="."/>
+                </xsl:if>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="non-digital">
