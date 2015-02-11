@@ -1,2 +1,0 @@
-Do not remove this file 'restart.txt'
-It is used in status.sh

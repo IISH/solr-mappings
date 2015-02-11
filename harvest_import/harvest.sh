@@ -8,7 +8,7 @@ then
     exit 1
 fi
 
-cd /data/solr-mappings.index0/harvest
+cd /data/solr-mappings.index0/harvest_import
 d=/data/datasets/$dataset/
 
 if [ -d $d ];
