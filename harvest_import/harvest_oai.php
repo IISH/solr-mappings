@@ -227,7 +227,7 @@ class HarvestOAI
         }
 
         // Build the full harvest path:
-        $this->_basePath = $home . '/harvest/' . $target . '/';
+        $this->_basePath = $home . '/harvest_import/' . $target . '/';
 
         // Create the directory if it does not already exist:
         if (!is_dir($this->_basePath)) {

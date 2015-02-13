@@ -11,6 +11,7 @@ fi
 cd /data/solr-mappings.index0/harvest_import
 d=/data/datasets/$dataset
 mkdir -p $d
+ln -s $d $dataset
 
   # Write the desired harvest from parameter
   now=$(date +"%Y-%m-%d")
