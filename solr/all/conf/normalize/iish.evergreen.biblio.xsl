@@ -19,7 +19,10 @@
 
         <xsl:variable name="status_deleted">
             <xsl:choose>
-                <xsl:when test="status['deleted'] or not(marc:datafield[@tag='852']/marc:subfield[@code='n' and text()='Available'])">true</xsl:when>
+                <xsl:when
+                        test="status['deleted'] or not(marc:datafield[@tag='852']/marc:subfield[@code='n' and text()='Available'])">
+                    true
+                </xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -49,7 +52,8 @@
             <extraRecordData>
                 <iisg:iisg>
                     <xsl:call-template name="insertIISHIdentifiers">
-                        <xsl:with-param name="identifier" select="marc:datafield[@tag='901']/marc:subfield[@code='a']/text()"/>
+                        <xsl:with-param name="identifier"
+                                        select="marc:datafield[@tag='901']/marc:subfield[@code='a']/text()"/>
                     </xsl:call-template>
                     <xsl:call-template name="insertCollection">
                         <xsl:with-param name="collection" select="$collectionName"/>
@@ -66,9 +70,12 @@
                     <iisg:isShownAt>
                         <xsl:value-of select="concat('http://hdl.handle.net/', $pid)"/>
                     </iisg:isShownAt>
-                    <xsl:for-each select="marc:datafield[@tag='852' and marc:subfield[@code='n' and text()='Available'] and marc:subfield[@code='p' and starts-with( text(), '30051')]]">
-                            <iisg:isShownBy><xsl:value-of
-                                            select="concat('http://hdl.handle.net/10622/', normalize-space(marc:subfield[@code='p']))"/></iisg:isShownBy>
+                    <xsl:for-each
+                            select="marc:datafield[@tag='852' and marc:subfield[@code='n' and text()='Available'] and marc:subfield[@code='p' and starts-with( text(), '30051')]]">
+                        <iisg:isShownBy>
+                            <xsl:value-of
+                                    select="concat('http://hdl.handle.net/10622/', normalize-space(marc:subfield[@code='p']))"/>
+                        </iisg:isShownBy>
                     </xsl:for-each>
                     <iisg:date_modified>
                         <xsl:value-of select="$datestamp"/>
@@ -106,6 +113,14 @@
                     <marc:subfield code="u">
                         <xsl:value-of
                                 select="concat('http://hdl.handle.net/10622/', normalize-space(marc:subfield[@code='p']))"/>
+                    </marc:subfield>
+                </marc:datafield>
+            </xsl:if>
+            <xsl:if test="marc:subfield[@code='p' and starts-with( text(), '10622/30051')]">
+                <marc:datafield tag="856" ind1="4" ind2="0">
+                    <marc:subfield code="u">
+                        <xsl:value-of
+                                select="concat('http://hdl.handle.net/', normalize-space(marc:subfield[@code='p']))"/>
                     </marc:subfield>
                 </marc:datafield>
             </xsl:if>

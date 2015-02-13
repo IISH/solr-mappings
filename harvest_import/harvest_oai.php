@@ -90,7 +90,7 @@ class HarvestOAI
     private $_setNames = array(); // Associative array of setSpec => setName
     private $_harvestedIdLog = false; // Filename for logging harvested IDs.
     private $_verbose = false; // Should we display debug output?
-    private $_catalog = null ; // filename of the document that stored all records.
+    private $_catalog = null; // filename of the document that stored all records.
 
     // As we harvest records, we want to track the most recent date encountered
     // so we can set a start point for the next harvest.
@@ -207,7 +207,7 @@ class HarvestOAI
         }
 
         # Close the XML document
-        file_put_contents($this->_catalog, '</marc:catalog>', FILE_APPEND) ;
+        file_put_contents($this->_catalog, '</marc:catalog>', FILE_APPEND);
     }
 
     /**
@@ -416,8 +416,10 @@ class HarvestOAI
         }
         $filename = $this->_getFilename($id, 'xml');
         $id = explode(':', $id); // oai:domain:identifier
-        if (sizeof($id) == 3)
-            file_put_contents($filename, "<marc:record xmlns:marc=\"http://www.loc.gov/MARC21/slim\">" . $insert . "<marc:datafield tag=\"901\"><marc:subfield code=\"a\">" . $id[2] . "</marc:subfield></marc:datafield></marc:record>");
+        if (sizeof($id) == 3) {
+            $xml = '<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">' . $insert . '<marc:datafield tag="901"><marc:subfield code="a">' . $id[2] . '</marc:subfield></marc:datafield></marc:record>';
+            file_put_contents($this->_catalog, $xml . "\n", FILE_APPEND);
+        }
     }
 
     /**
@@ -442,8 +444,8 @@ class HarvestOAI
         $xml = preg_replace('/(^<metadata>)|(<\/metadata>$)/m', '', $xml);
 
         $marc = new DOMDocument();
-        if ($marc->loadXML($xml) ) {
-            if ( ! $marc->schemaValidate('marc21slim_custom.xsd') ) {
+        if ($marc->loadXML($xml)) {
+            if (!$marc->schemaValidate('marc21slim_custom.xsd')) {
                 print("XML not valid for " . $id . "\n");
                 return;
             }
