@@ -414,7 +414,6 @@ class HarvestOAI
                 htmlspecialchars((string)$record->header->datestamp) .
                 "</{$this->_injectDate}>";
         }
-        $filename = $this->_getFilename($id, 'xml');
         $id = explode(':', $id); // oai:domain:identifier
         if (sizeof($id) == 3) {
             $xml = '<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim">' . $insert . '<marc:datafield tag="901"><marc:subfield code="a">' . $id[2] . '</marc:subfield></marc:datafield></marc:record>';

@@ -15,7 +15,7 @@ ln -s $d $dataset
 
   # Write the desired harvest from parameter
   now=$(date +"%Y-%m-%d")
-  php LastHarvestFile.php "$now" "-10 day" "$d"last_harvest.txt
+  php LastHarvestFile.php "$now" "-10 day" "$d"/last_harvest.txt
 
 f=$d/catalog.xml
 # Any process older than 3 days we assume has a problem. We remove the file.
