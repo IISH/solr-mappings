@@ -109,7 +109,7 @@
         <xsl:if test="marc:subfield[@code='n' and text()='Available']">
             <xsl:copy-of select="."/>
             <xsl:if test="marc:subfield[@code='p' and starts-with( text(), '30051')]">
-                <marc:datafield tag="856" ind1="4" ind2="0">
+                <marc:datafield ind1="4" ind2="0" tag="856">
                     <marc:subfield code="u">
                         <xsl:value-of
                                 select="concat('http://hdl.handle.net/10622/', normalize-space(marc:subfield[@code='p']))"/>
@@ -117,7 +117,7 @@
                 </marc:datafield>
             </xsl:if>
             <xsl:if test="marc:subfield[@code='p' and starts-with( text(), '10622/30051')]">
-                <marc:datafield tag="856" ind1="4" ind2="0">
+                <marc:datafield ind1="4" ind2="0" tag="856">
                     <marc:subfield code="u">
                         <xsl:value-of
                                 select="concat('http://hdl.handle.net/', normalize-space(marc:subfield[@code='p']))"/>
