@@ -77,6 +77,13 @@
                                     select="concat('http://hdl.handle.net/10622/', normalize-space(marc:subfield[@code='p']))"/>
                         </iisg:isShownBy>
                     </xsl:for-each>
+                    <xsl:for-each
+                            select="marc:datafield[@tag='852' and marc:subfield[@code='n' and text()='Available'] and marc:subfield[@code='p' and starts-with( text(), '10622/30051')]]">
+                        <iisg:isShownBy>
+                            <xsl:value-of
+                                    select="concat('http://hdl.handle.net/', normalize-space(marc:subfield[@code='p']))"/>
+                        </iisg:isShownBy>
+                    </xsl:for-each>
                     <iisg:date_modified>
                         <xsl:value-of select="$datestamp"/>
                     </iisg:date_modified>
@@ -127,6 +134,10 @@
         </xsl:if>
     </xsl:template>
 
+    <xsl:template match="marc:subfield[@code='p' and starts-with( text(), '10622/30051')]/text()">
+        <xsl:value-of select="substring-after(text(), '/')"/>
+    </xsl:template>
+
     <xsl:template name="non-digital">
         <xsl:param name="material"/>
         <xsl:if test="not(//marc:datafield[@tag='856']/marc:subfield[@code='u']) and //marc:datafield[@tag='852']/marc:subfield[@code='c' and text()='IISG']">
@@ -169,7 +180,7 @@
     <xsl:template name="collectionGeheugenAndNonEuropeanMovement">
         <xsl:param name="material"/>
         <xsl:if test="contains(',rm,gm,pv,km,kc,', $material)">
-            <xsl:if test="//marc:datafield[@tag='852']/marc:subfield[@code='p' and starts-with( text(), '30051')]">
+            <xsl:if test="//marc:datafield[@tag='852']/marc:subfield[@code='p' and (starts-with( text(), '30051') or starts-with( text(), '10622/30051'))]">
                 <xsl:for-each
                         select="marc:datafield[@tag='985']/marc:subfield[@code='a' and starts-with(text(), 'Geheugen')]">
                     <xsl:variable name="setSpec">
