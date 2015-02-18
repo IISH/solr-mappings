@@ -114,7 +114,7 @@
 
     <xsl:template match="marc:datafield[@tag='852']">
         <xsl:if test="marc:subfield[@code='n' and text()='Available']">
-            <xsl:copy-of select="."/>
+            <xsl:copy><xsl:apply-templates select="@*|node()"/></xsl:copy>
             <xsl:if test="marc:subfield[@code='p' and starts-with( text(), '30051')]">
                 <marc:datafield ind1="4" ind2="0" tag="856">
                     <marc:subfield code="u">
@@ -135,7 +135,7 @@
     </xsl:template>
 
     <xsl:template match="marc:subfield[@code='p' and starts-with( text(), '10622/30051')]/text()">
-        <xsl:value-of select="substring-after(text(), '/')"/>
+        <xsl:value-of select="substring-after(., '/')"/>
     </xsl:template>
 
     <xsl:template name="non-digital">
