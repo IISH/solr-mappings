@@ -10,7 +10,7 @@
                     processor="FileListEntityProcessor"
                     baseDir="/data/datasets/iish.archieven.deleted"
                     filename="^.*\.xml$"
-                    recursive="true"
+                    recursive="false"
                     rootEntity="true"
                     transformer="org.socialhistory.solr.transformers.FSTransformer"
             />
