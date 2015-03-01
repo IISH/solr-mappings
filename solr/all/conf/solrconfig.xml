@@ -717,6 +717,7 @@ concurrently.  An error is returned if this limit is exceeded. Recommend
             <str name="iish.archieven.delete"/>
             <str name="iish.evergreen.biblio"/>
             <str name="iish.eci"/>
+            <str name="iish.eci.delete"/>
             <str name="limburgsmuseum.afbeeldingen.1"/>
             <str name="muma.afbeeldingen.1"/>
             <str name="na.archieven.1"/>
