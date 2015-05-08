@@ -20,9 +20,7 @@
         <xsl:variable name="status_deleted">
             <xsl:choose>
                 <xsl:when
-                        test="status['deleted'] or not(marc:datafield[@tag='852']/marc:subfield[@code='n' and text()='Available'])">
-                    true
-                </xsl:when>
+                        test="status['deleted']">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -71,14 +69,14 @@
                         <xsl:value-of select="concat('http://hdl.handle.net/', $pid)"/>
                     </iisg:isShownAt>
                     <xsl:for-each
-                            select="marc:datafield[@tag='852' and marc:subfield[@code='n' and text()='Available'] and marc:subfield[@code='p' and starts-with( text(), '30051')]]">
+                            select="marc:subfield[@code='p' and starts-with( text(), '30051')]">
                         <iisg:isShownBy>
                             <xsl:value-of
                                     select="concat('http://hdl.handle.net/10622/', normalize-space(marc:subfield[@code='p']))"/>
                         </iisg:isShownBy>
                     </xsl:for-each>
                     <xsl:for-each
-                            select="marc:datafield[@tag='852' and marc:subfield[@code='n' and text()='Available'] and marc:subfield[@code='p' and starts-with( text(), '10622/30051')]]">
+                            select="marc:subfield[@code='p' and starts-with( text(), '10622/30051')]">
                         <iisg:isShownBy>
                             <xsl:value-of
                                     select="concat('http://hdl.handle.net/', normalize-space(marc:subfield[@code='p']))"/>
@@ -113,7 +111,6 @@
     </xsl:template>
 
     <xsl:template match="marc:datafield[@tag='852']">
-        <xsl:if test="marc:subfield[@code='n' and text()='Available']">
             <xsl:copy><xsl:apply-templates select="@*|node()"/></xsl:copy>
             <xsl:if test="marc:subfield[@code='p' and starts-with( text(), '30051')]">
                 <marc:datafield ind1="4" ind2="0" tag="856">
@@ -131,7 +128,6 @@
                     </marc:subfield>
                 </marc:datafield>
             </xsl:if>
-        </xsl:if>
     </xsl:template>
 
     <xsl:template match="marc:subfield[@code='p' and starts-with( text(), '10622/30051')]/text()">
